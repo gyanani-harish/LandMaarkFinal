@@ -13,19 +13,19 @@ const TownshipCard: React.FC<TownshipCardProps> = ({ item, onSelect }) => {
    return (
     <div
       onClick={() => onSelect(item)}
-      className="header group bg-white mb-20 mt-20 rounded-xl shadow-md overflow-hidden cursor-pointer hover:shadow-xl transition duration-300"
+      className="group bg-white rounded-xl shadow-md overflow-hidden cursor-pointer hover:shadow-xl transition duration-300"
     >
       {/* City Image */}
-      <div className=" h-70 overflow-hidden">
+      <div className="w-full aspect-[4/3] overflow-hidden">
         <img
           src={item.image || "https://images.unsplash.com/photo-1568605114967-8130f3a36994"}
           alt={cityName}
-          className="w-full aspect-square object-cover group-hover:scale-110 transition duration-300"
+          className="w-full h-full object-cover group-hover:scale-110 transition duration-300"
         />
       </div>
 
       {/* City Info */}
-      <div className="p-7 flex justify-between items-center">
+      <div className="p-4 md:p-6 flex justify-between items-center">
         <h3 className="font-semibold text-lg text-gray-800">{cityName}</h3>
 
 
@@ -34,7 +34,7 @@ const TownshipCard: React.FC<TownshipCardProps> = ({ item, onSelect }) => {
         </p>
       </div>
 
-      <p className="px-7 pb-7 text-left text-gray-600">{description}</p> 
+      <p className="px-4 pb-4 md:px-6 md:pb-6 text-left text-gray-600 line-clamp-3">{description}</p> 
     </div>
   );
 };

@@ -75,6 +75,23 @@ aside::-webkit-scrollbar-thumb:hover {
   aside {
     width: 100% !important;
   }
+  
+  .vertical-btn {
+    top: auto;
+    bottom: 20px;
+    right: 50%;
+    transform: translateX(50%);
+    width: 180px;
+    height: 40px;
+  }
+  
+  .vertical-btn span {
+    transform: none;
+  }
+  
+  .vertical-btn:hover {
+    transform: translateX(50%) scale(1.05);
+  }
 }
 
 /* Ensure proper spacing for fixed navbar */

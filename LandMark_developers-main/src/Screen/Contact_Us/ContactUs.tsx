@@ -7,9 +7,8 @@ import Navbar from "../Navbar/Navbar";
   const mapUrl = `https://www.google.com/maps?q=26.5395603,74.662056&output=embed`;
   return (
     <>
-      <Navbar />
       <div
-        className="relative md:left-1/2 -m-0 md:-m-8 md:right-1/2 md:-ml-[50vw] md:-mr-[50vw] w-full md:w-screen min-h-screen pt-20 sm:pt-24 md:pt-32 lg:pt-40
+        className="w-full min-h-screen pt-24 sm:pt-28 md:pt-32
         bg-[radial-gradient(circle_at_top,_#1e293b,_#0f172a_40%,_#020617_100%)]
         text-white overflow-hidden"
       >

@@ -54,17 +54,24 @@ const Navbar: React.FC = () => {
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between">
-            {/* Logo */}
-            <Link
-              to="/"
-              className="flex items-center gap-2 flex-shrink-0 transition-transform duration-300 hover:scale-105"
-            >
-              <img
-                src="https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=768,fit=scale-down,q=100/YNqMEWZ1PXT9OR5G/untitled-removebg-preview---edited-ad0zeWFJjhv7eqm2.png"
-                alt="Real Estate"
-                className="h-12 sm:h-14 md:h-16 lg:h-20 object-contain w-auto"
-              />
-            </Link>
+            {/* Logo / Page Title for Mobile */}
+            <div className="flex items-center">
+              <Link
+                to="/"
+                className={`flex items-center gap-2 flex-shrink-0 transition-transform duration-300 hover:scale-105 ${location.pathname.toLowerCase() === '/township' ? 'hidden md:flex' : ''}`}
+              >
+                <img
+                  src="https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=768,fit=scale-down,q=100/YNqMEWZ1PXT9OR5G/untitled-removebg-preview---edited-ad0zeWFJjhv7eqm2.png"
+                  alt="Real Estate"
+                  className="h-12 sm:h-14 md:h-16 lg:h-20 object-contain w-auto"
+                />
+              </Link>
+              {location.pathname.toLowerCase() === '/township' && (
+                <span className="text-white text-xl font-bold md:hidden">
+                  Our Townships
+                </span>
+              )}
+            </div>
 
             {/* Desktop Menu */}
             <nav className="hidden md:flex items-center gap-4 lg:gap-8">

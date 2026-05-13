@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 const About: React.FC = () => {
   return (
     // <div className="bg-white max-w-7xl mx-auto -mt-8 min-h-screen">
-<div className="relative left-1/2 right-1/2 w-screen -ml-[50vw] -mr-[50vw] bg-white -mt-8 min-h-screen">
+<div className="bg-white pt-24 min-h-screen">
   <section className="relative h-[80vh] flex items-center justify-center text-center text-white">
         <img
           src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c"

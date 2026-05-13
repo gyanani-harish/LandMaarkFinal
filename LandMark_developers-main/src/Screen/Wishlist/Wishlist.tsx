@@ -351,9 +351,7 @@ const Wishlist = () => {
   }
 
   return (
-    <div className="relative left-1/2 -m-8 right-1/2 mt-20 -ml-[50vw] -mr-[50vw] w-screen min-h-screen
-      
-      text-black overflow-hidden">
+    <div className="w-full min-h-screen pt-24 pb-12 bg-amber-50/30 text-black overflow-hidden">
       <WishlistHeader 
         total={wishlistProperties.length}
         selectedCount={selectedIds.length}

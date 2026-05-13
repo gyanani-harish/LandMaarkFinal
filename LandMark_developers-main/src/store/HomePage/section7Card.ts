@@ -42,37 +42,5 @@ export const Section7Data: Section7Type[] = [
     title: "DAMAC Hills 2 Hotel",
     subtitle:
       "An exquisite three-star property managed by Edge by Rotana",
-  }, {
-    id: 5,
-    image:
-      "https://v.fastcdn.co/u/a43967b2/65553307-0-DAMAC-Casa.webp",
-    brand: "Rotana",
-    title: "DAMAC Hills 2 Hotel",
-    subtitle:
-      "An exquisite three-star property managed by Edge by Rotana",
-  }, {
-    id: 6,
-    image:
-      "https://v.fastcdn.co/u/a43967b2/65553307-0-DAMAC-Casa.webp",
-    brand: "Rotana",
-    title: "DAMAC Hills 2 Hotel",
-    subtitle:
-      "An exquisite three-star property managed by Edge by Rotana",
-  }, {
-    id: 7,
-    image:
-      "https://v.fastcdn.co/u/a43967b2/65553307-0-DAMAC-Casa.webp",
-    brand: "Rotana",
-    title: "DAMAC Hills 2 Hotel",
-    subtitle:
-      "An exquisite three-star property managed by Edge by Rotana",
-  }, {
-    id: 8,
-    image:
-      "https://v.fastcdn.co/u/a43967b2/65553307-0-DAMAC-Casa.webp",
-    brand: "Rotana",
-    title: "DAMAC Hills 2 Hotel",
-    subtitle:
-      "An exquisite three-star property managed by Edge by Rotana",
-  }, 
+  },
 ];

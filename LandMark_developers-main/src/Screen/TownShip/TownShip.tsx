@@ -15,7 +15,11 @@ const TownShip: React.FC = () => {
   const closeButtonRef = useRef<HTMLButtonElement>(null);
 
   const openCity = (item: Township) => {
-    setSelectedCity(item);
+    if (window.innerWidth < 1024) {
+      navigate(`/search2/${item.township_id}`);
+    } else {
+      setSelectedCity(item);
+    }
   };
 
   const closeDrawer = () => {
@@ -38,21 +42,21 @@ const TownShip: React.FC = () => {
   }, []);
 
   return (
-     <div className="relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] w-screen min-h-screen bg-gray-100 -mt-10 flex overflow-x-hidden pb-10">
+     <div className="w-full min-h-screen bg-gray-100 flex overflow-x-hidden pb-10 pt-24">
        {/* LEFT CITY GRID */}
        <div
-         className={`transition-all duration-300 px-6 md:px-10  py-0 ${
+         className={`transition-all duration-300 px-4 sm:px-6 md:px-10 py-0 ${
            selectedCity ? "lg:w-[65%]" : "w-full"
          }`}
        >
-         <h1 className="text-3xl font-bold mt-30 mb-8">Our Townships</h1>
+         <h1 className="text-3xl font-bold mb-8 hidden md:block">Our Townships</h1>
 
          {loading ? (
            <div className="flex justify-center items-center py-20">
              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
            </div>
          ) : (
-           <div className="grid gap-6 grid-cols-[repeat(auto-fit,minmax(260px,1fr))]">
+           <div className="grid gap-4 md:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
              {townships.map((item) => (
                <TownshipCard key={item.township_id || item.id} item={item} onSelect={openCity} />
              ))}
@@ -75,14 +79,14 @@ const TownShip: React.FC = () => {
       <aside
         role="dialog"
         aria-modal="true"
-        className={` lg:relative right-0 top-0
-        h-180
-        w-full sm:w-[50%] md:w-[50%] lg:w-[65%]
+        className={`fixed lg:relative right-0 top-0
+        h-full lg:h-180
+        w-full sm:w-[50%] md:w-[50%] lg:w-[35%]
         bg-white shadow-2xl
         transition-transform duration-300
         z-50
         ${selectedCity ? "translate-x-0" : "translate-x-full lg:translate-x-0"}
-        ${selectedCity ? "lg:block" : "lg:hidden"}`}
+        ${selectedCity ? "block" : "hidden"}`}
       >
         {selectedCity && (
           <div className="h-full overflow-y-auto p-6 pr-20 relative">

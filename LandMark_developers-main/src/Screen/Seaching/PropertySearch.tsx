@@ -243,9 +243,7 @@ const PropertySearch = () => {
 
   return (
  
- <div className="relative left-1/2 -m-8 right-1/2 mt-20 -ml-[50vw] -mr-[50vw] w-screen min-h-screen
-      
-      text-black overflow-y-auto">
+ <div className="w-full min-h-screen pt-24 pb-12 text-black overflow-y-auto">
 
   {/* Sticky Filters */}
   <div className="sticky top-0 z-10 bg-white shadow-sm">  

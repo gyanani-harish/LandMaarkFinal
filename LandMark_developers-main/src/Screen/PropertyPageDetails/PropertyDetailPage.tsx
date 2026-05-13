@@ -171,7 +171,7 @@ const PropertyDetailPage = () => {
 
       {/* Price Card */}
       <div className="bg-white py-6 px-8 mt-0 shadow-sm mb-6">
-        <div className="grid grid-cols-4 text-center divide-x divide-gray-200">
+        <div className="grid grid-cols-2 md:grid-cols-4 text-center divide-x divide-gray-200">
           <div>
             <p className="text-lg font-semibold   text-gray-900">
               {property.bhk} BHK {property.propertyType}

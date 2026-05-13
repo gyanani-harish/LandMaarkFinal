@@ -514,11 +514,11 @@ const Home: React.FC = () => {
   
   return (
      
-    <div className="-m-8">
+    <div className="w-full">
     
       
   {/* Desktop / Laptop UI */}
-  <section className="hidden md:block relative w-screen h-screen overflow-hidden left-1/2 right-1/2 -ml-[50vw] -mr-[50vw]">
+  <section className="hidden md:block relative w-full h-screen overflow-hidden">
 
     <div className="absolute inset-0">
       <img
@@ -613,7 +613,7 @@ const Home: React.FC = () => {
  
 
      {/* Second Section */}
-      <section className="relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] w-screen bg-gray-100 py-8 sm:py-10 md:py-12 px-4 sm:px-8 md:px-32">
+      <section className="relative w-full bg-gray-100 py-12 md:py-20 px-6 md:px-12 lg:px-24">
         
         <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl tracking-[3px] sm:tracking-[6px] font-serif text-teal-950 mb-8 md:mb-10">
           FIND YOUR PERFECT HOME
@@ -650,7 +650,7 @@ const Home: React.FC = () => {
       </section>
       {/* Third Section */}
         
-      <section className="relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] w-screen bg-[#f5f2ec] py-8 sm:py-10 md:py-12 px-4 sm:px-6 md:px-32">
+      <section className="relative w-full bg-[#f5f2ec] py-12 md:py-20 px-6 md:px-12 lg:px-24">
         <div className="w-full px-2 sm:px-4 lg:px-20">
           <div className="text-center mb-8 md:mb-10">
             <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl tracking-wider text-teal-900 font-light">
@@ -677,7 +677,7 @@ const Home: React.FC = () => {
          </div>
       </section>
 
-      <section className="bg-[#f4f4f2] relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] w-screen py-8 sm:py-10 md:py-12 px-4 sm:px-6 md:px-32">
+      <section className="bg-[#f4f4f2] relative w-full py-12 md:py-20 px-6 md:px-12 lg:px-24">
         <div className="max-w-7xl mx-auto text-center">
           <h2 className="text-2xl sm:text-3xl md:text-4xl tracking-[2px] md:tracking-[3px] font-semibold text-[#1c3b2a] mb-6 md:mb-8">
             EXPLORE OUR ICONIC PROPERTIES
@@ -718,7 +718,7 @@ const Home: React.FC = () => {
       </section>
       
        
-      <section className="bg-[#f6f3ee] relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] w-screen py-8 sm:py-10 md:py-12 px-4 sm:px-6 md:px-32">
+      <section className="bg-[#f6f3ee] relative w-full py-12 md:py-20 px-6 md:px-12 lg:px-24">
         <div className="max-w-6xl mx-auto text-center">
           <h2 className="text-3xl sm:text-4xl md:text-5xl tracking-[2px] md:tracking-[3px] font-semibold text-[#1c3b2a] mb-6 md:mb-8">
             A WORLD OF LUXURY
@@ -742,7 +742,7 @@ const Home: React.FC = () => {
           </div>
         </div>
       </section>
-      <section className="bg-white relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] w-screen py-8 sm:py-10 md:py-12 px-4 sm:px-6 md:px-32">
+      <section className="bg-white relative w-full py-12 md:py-20 px-6 md:px-12 lg:px-24">
         <div className="max-w-7xl mx-auto mb-8 md:mb-10 mt-1 text-center">
           <h2 className="text-3xl sm:text-4xl md:text-5xl tracking-[4px] md:tracking-[6px] font-semibold text-[#1c3b2a] mb-6 md:mb-8">
             CURATED COLLABORATIONS
@@ -761,7 +761,7 @@ const Home: React.FC = () => {
           </div>
         </div>
       </section>
-      <section className="bg-[#f4f1ea] relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] w-screen  py-5 px-4 md:px-32">
+      <section className="bg-[#f4f1ea] relative w-full py-12 md:py-20 px-6 md:px-12 lg:px-24">
         <div className="max-w-8xl mx-auto text-center">
           <h2 className="text-4xl md:text-5xl tracking-[6px] font-semibold text-[#0d2c24] mb-8">
             EMPOWERING COMMUNITIES, BUILDING FUTURES
