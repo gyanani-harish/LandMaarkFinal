@@ -42,7 +42,7 @@ const TownShip: React.FC = () => {
   }, []);
 
   return (
-    <div className="w-full min-h-screen bg-gray-100 flex overflow-x-hidden pb-10 pt-24">
+    <div className="w-full min-h-screen bg-gray-100 flex overflow-x-hidden pb-10 pt-16">
       {/* LEFT CITY GRID */}
       <div
         className={`transition-all duration-300 px-4 sm:px-6 md:px-10 pt-4 pb-10 ${selectedCity ? "lg:w-[65%]" : "w-full"

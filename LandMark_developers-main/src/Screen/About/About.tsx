@@ -5,8 +5,8 @@ import { motion } from "framer-motion";
 const About: React.FC = () => {
   return (
     // <div className="bg-white max-w-7xl mx-auto -mt-8 min-h-screen">
-<div className="bg-white pt-24 min-h-screen">
-  <section className="relative h-[80vh] flex items-center justify-center text-center text-white">
+<div className="bg-white pt-16 sm:pt-20 md:pt-24 min-h-screen">
+  <section className="relative h-[50vh] sm:h-[60vh] md:h-[80vh] flex items-center justify-center text-center text-white">
         <img
           src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c"
           className="absolute inset-0 w-full h-full object-cover"
@@ -15,18 +15,18 @@ const About: React.FC = () => {
         <div className="absolute inset-0 bg-black/70"></div>
 
         <div className="relative z-10 px-4">
-          <h1 className="text-5xl md:text-7xl font-light mb-6">
+          <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-7xl font-light mb-4 sm:mb-6">
             About <span className="font-bold">LANDMAARK DEVELOPERS</span>
           </h1>
 
-          <p className="text-lg md:text-xl max-w-3xl mx-auto text-gray-200">
+          <p className="text-sm sm:text-lg md:text-xl max-w-3xl mx-auto text-gray-200 px-2">
             Building Trust. Creating Landmaarks. Delivering Excellence in Real Estate.
           </p>
         </div>
       </section>
 
       {/* WHO WE ARE */}
-      <section className="py-28 px-6 md:px-20">
+      <section className="py-12 sm:py-16 md:py-28 px-4 sm:px-6 md:px-20">
         <div className="grid md:grid-cols-2 gap-16 items-center">
 
           {/* TEXT */}
@@ -39,18 +39,18 @@ const About: React.FC = () => {
               ESTABLISHED
             </span>
 
-            <h2 className="text-4xl md:text-5xl font-light mb-6">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-light mb-4 sm:mb-6">
               Who <span className="font-bold">We Are</span>
             </h2>
 
-            <p className="text-gray-700 text-lg mb-6 leading-relaxed">
+            <p className="text-gray-700 text-sm sm:text-base md:text-lg mb-4 sm:mb-6 leading-relaxed">
               LaandMark Developers was founded with a vision to transform
               property aspirations into reality. We specialize in premium
               residential and commercial developments designed to deliver
               long-term value and modern living experiences.
             </p>
 
-            <p className="text-gray-600 text-lg leading-relaxed">
+            <p className="text-gray-600 text-sm sm:text-base md:text-lg leading-relaxed">
               With a strong commitment to quality construction, transparency,
               and customer satisfaction, we help clients confidently invest,
               buy, and build their future.
@@ -66,7 +66,7 @@ const About: React.FC = () => {
           >
             <img
               src="https://images.unsplash.com/photo-1560518883-ce09059eeffa"
-              className="rounded-xl shadow-2xl w-full h-[420px] object-cover"
+              className="rounded-xl shadow-2xl w-full h-[250px] sm:h-[320px] md:h-[420px] object-cover"
             />
 
             <div className="absolute inset-0 bg-black/10 group-hover:bg-black/30 transition rounded-xl"></div>
@@ -76,24 +76,24 @@ const About: React.FC = () => {
       </section>
 
       {/* FEATURES */}
-      <section className="py-28 bg-gray-50 px-6 md:px-20">
+      <section className="py-12 sm:py-16 md:py-28 bg-gray-50 px-4 sm:px-6 md:px-20">
 
-        <div className="text-center mb-20">
+        <div className="text-center mb-10 sm:mb-14 md:mb-20">
           <span className="text-sm tracking-widest text-gray-400 block mb-3">
             OUR ADVANTAGE
           </span>
 
-          <h2 className="text-4xl md:text-5xl font-light mb-6">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-light mb-4 sm:mb-6">
             What Makes Us <span className="font-bold">Different</span>
           </h2>
 
-          <p className="text-gray-600 max-w-3xl mx-auto text-lg">
+          <p className="text-gray-600 max-w-3xl mx-auto text-sm sm:text-base md:text-lg">
             In a competitive real estate market, we stand out through strategic planning,
             premium quality, and long-term client relationships.
           </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8 md:gap-10">
 
           {[
             {
@@ -122,8 +122,8 @@ const About: React.FC = () => {
       </section>
 
       {/* CTA */}
-<section className="py-28 text-center bg-[#f5f2ec] text-black px-6">
-        <h2 className="text-4xl md:text-5xl font-light mb-6">
+<section className="py-12 sm:py-16 md:py-28 text-center bg-[#f5f2ec] text-black px-4 sm:px-6">
+        <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-light mb-4 sm:mb-6">
           Ready to Find Your <span className="font-bold">Dream Property?</span>
         </h2>
 

@@ -47,8 +47,8 @@ const Navbar: React.FC = () => {
       <header
         className={`fixed top-0 left-0 w-full z-50 transition-all duration-500
           ${scrolled
-            ? "bg-black/95 backdrop-blur-md py-2 shadow-lg"
-            : "bg-gradient-to-r from-black/90 to-black/70 py-3"
+            ? "bg-black/80 backdrop-blur-md py-2 shadow-lg"
+            : "bg-black/80 backdrop-blur-md py-3"
           }`}
       >
         <div className="w-full px-4 sm:px-8 lg:px-12">
@@ -107,56 +107,78 @@ const Navbar: React.FC = () => {
         </div>
       </header>
 
-      {/* Mobile Menu Overlay */}
-      <div
-        className={`fixed inset-0 bg-black/80 backdrop-blur-sm z-40 transition-all duration-500 md:hidden
-          ${isOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`}
-        onClick={() => setIsOpen(false)}
-        aria-hidden="true"
-      />
-
-      {/* Mobile Menu Panel */}
-      <div
-        className={`fixed top-0 right-0 h-full w-[280px] sm:w-80 bg-gradient-to-b from-black/95 to-black/98 backdrop-blur-md shadow-2xl z-50 transition-transform duration-500 ease-out md:hidden
-          ${isOpen ? "translate-x-0" : "translate-x-full"}`}
-      >
-        {/* Mobile Menu Header with Yellow Accent */}
-        <div className="flex justify-between items-center px-6 h-20 border-b border-yellow-500/30">
-          <span className="text-lg font-semibold text-white tracking-wide">Menu</span>
-          <button
+      {/* Mobile Menu Overlay + Panel — only rendered when open */}
+      {isOpen && (
+        <>
+          <div
+            className="md:hidden"
+            style={{
+              position: 'fixed',
+              top: 0,
+              left: 0,
+              width: '100vw',
+              height: '100vh',
+              background: 'rgba(0,0,0,0.8)',
+              backdropFilter: 'blur(4px)',
+              zIndex: 9998,
+            }}
             onClick={() => setIsOpen(false)}
-            className="text-gray-400 hover:text-white transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-yellow-500/50 rounded-lg p-1"
-            aria-label="Close menu"
-          >
-            <X size={24} />
-          </button>
-        </div>
+            aria-hidden="true"
+          />
 
-        {/* Mobile Navigation Links */}
-        <nav className="flex flex-col p-6 gap-5">
-          {navLinks.map((link, index) => (
-            <Link
-              key={link.name}
-              to={link.path}
-              onClick={() => setIsOpen(false)}
-              className={`relative text-gray-300 hover:text-yellow-400 text-lg font-medium transition-all duration-300 py-2 group
-                ${location.pathname === link.path ? "text-yellow-400" : ""}`}
-              style={{
-                animation: isOpen ? `slideIn 0.3s ease-out ${index * 0.07}s forwards` : "none",
-                opacity: 0,
-                transform: "translateX(20px)",
-              }}
-            >
-              {link.name}
-              {/* Animated underline for mobile */}
-              <span
-                className={`absolute left-0 -bottom-1 h-0.5 bg-yellow-400 transition-all duration-300 ${location.pathname === link.path ? "w-8" : "w-0 group-hover:w-8"
-                  }`}
-              />
-            </Link>
-          ))}
-        </nav>
-      </div>
+          <div
+            className="md:hidden"
+            style={{
+              position: 'fixed',
+              top: 0,
+              right: 0,
+              height: '100vh',
+              width: '280px',
+              background: 'linear-gradient(to bottom, rgba(0,0,0,0.95), rgba(0,0,0,0.98))',
+              backdropFilter: 'blur(12px)',
+              boxShadow: '0 25px 50px -12px rgba(0,0,0,0.25)',
+              zIndex: 9999,
+            }}
+          >
+            {/* Mobile Menu Header with Yellow Accent */}
+            <div className="flex justify-between items-center px-6 h-20 border-b border-yellow-500/30">
+              <span className="text-lg font-semibold text-white tracking-wide">Menu</span>
+              <button
+                onClick={() => setIsOpen(false)}
+                className="text-gray-400 hover:text-white transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-yellow-500/50 rounded-lg p-1"
+                aria-label="Close menu"
+              >
+                <X size={24} />
+              </button>
+            </div>
+
+            {/* Mobile Navigation Links */}
+            <nav className="flex flex-col p-6 gap-5">
+              {navLinks.map((link, index) => (
+                <Link
+                  key={link.name}
+                  to={link.path}
+                  onClick={() => setIsOpen(false)}
+                  className={`relative text-gray-300 hover:text-yellow-400 text-lg font-medium transition-all duration-300 py-2 group
+                    ${location.pathname === link.path ? "text-yellow-400" : ""}`}
+                  style={{
+                    animation: `slideIn 0.3s ease-out ${index * 0.07}s forwards`,
+                    opacity: 0,
+                    transform: "translateX(20px)",
+                  }}
+                >
+                  {link.name}
+                  {/* Animated underline for mobile */}
+                  <span
+                    className={`absolute left-0 -bottom-1 h-0.5 bg-yellow-400 transition-all duration-300 ${location.pathname === link.path ? "w-8" : "w-0 group-hover:w-8"
+                      }`}
+                  />
+                </Link>
+              ))}
+            </nav>
+          </div>
+        </>
+      )}
 
       {/* Animation Keyframes */}
       <style>{`
