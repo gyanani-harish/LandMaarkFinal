@@ -60,83 +60,98 @@ const PropertyFilters2: React.FC<Props> = ({
     <div className="filter-container">
       <form onSubmit={handleSubmit} className="filter-form">
         <div className="filter-group">
-          <select
-            value={filters.bhk}
-            onChange={(e) => handleFilterChange("bhk", e.target.value)}
-            className="filter-select"
-          >
-            <option value="">BHK</option>
-            {bhkOptions.map((opt, i) => (
-              <option key={i} value={getOptionValue(opt, 'bhk')}>
-                {getOptionLabel(opt, 'bhk')}
-              </option>
-            ))}
-          </select>
-
-          <select
-            value={filters.property_type}
-            onChange={(e) => handleFilterChange("property_type", e.target.value)}
-            className="filter-select"
-          >
-            <option value="">Property Type</option>
-            {propertyTypeOptions.map((opt, i) => (
-              <option key={i} value={getOptionValue(opt, 'property')}>
-                {getOptionLabel(opt, 'property')}
-              </option>
-            ))}
-          </select>
-
-          <select
-            value={filters.construction_status}
-            onChange={(e) => handleFilterChange("construction_status", e.target.value)}
-            className="filter-select"
-          >
-            <option value="">Construction Status</option>
-            {constructionStatusOptions.map((opt, i) => (
-              <option key={i} value={getOptionValue(opt, 'status')}>
-                {getOptionLabel(opt, 'status')}
-              </option>
-            ))}
-          </select>
-
-          <div className="price-input-group">
-            <CurrencyRupeeIcon className="price-icon" />
-            <input
-              type="number"
-              placeholder="Min"
-              value={filters.minPrice}
-              onChange={(e) => handleFilterChange("minPrice", e.target.value)}
-              className="price-input"
-            />
-            <span className="price-separator">-</span>
-            <input
-              type="number"
-              placeholder="Max"
-              value={filters.maxPrice}
-              onChange={(e) => handleFilterChange("maxPrice", e.target.value)}
-              className="price-input"
-            />
-          </div>
-
-          {constructionTypeOptions.length > 0 && (
+          <div className="filter-field">
+            <label className="filter-label">BHK</label>
             <select
-              value={filters.construction_type}
-              onChange={(e) => handleFilterChange("construction_type", e.target.value)}
+              value={filters.bhk}
+              onChange={(e) => handleFilterChange("bhk", e.target.value)}
               className="filter-select"
             >
-              <option value="">Construction Type</option>
-              {constructionTypeOptions.map((opt, i) => (
-                <option key={i} value={getOptionValue(opt, 'type')}>
-                  {getOptionLabel(opt, 'type')}
+              <option value="">All BHK</option>
+              {bhkOptions.map((opt, i) => (
+                <option key={i} value={getOptionValue(opt, 'bhk')}>
+                  {getOptionLabel(opt, 'bhk')}
                 </option>
               ))}
             </select>
+          </div>
+
+          <div className="filter-field">
+            <label className="filter-label">PROPERTY TYPE</label>
+            <select
+              value={filters.property_type}
+              onChange={(e) => handleFilterChange("property_type", e.target.value)}
+              className="filter-select"
+            >
+              <option value="">All Property Types</option>
+              {propertyTypeOptions.map((opt, i) => (
+                <option key={i} value={getOptionValue(opt, 'property')}>
+                  {getOptionLabel(opt, 'property')}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div className="filter-field">
+            <label className="filter-label">STATUS</label>
+            <select
+              value={filters.construction_status}
+              onChange={(e) => handleFilterChange("construction_status", e.target.value)}
+              className="filter-select"
+            >
+              <option value="">All Statuses</option>
+              {constructionStatusOptions.map((opt, i) => (
+                <option key={i} value={getOptionValue(opt, 'status')}>
+                  {getOptionLabel(opt, 'status')}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div className="filter-field">
+            <label className="filter-label">PRICE RANGE</label>
+            <div className="price-input-group">
+              <CurrencyRupeeIcon className="price-icon" />
+              <input
+                type="number"
+                placeholder="Min"
+                value={filters.minPrice}
+                onChange={(e) => handleFilterChange("minPrice", e.target.value)}
+                className="price-input"
+              />
+              <span className="price-separator">-</span>
+              <input
+                type="number"
+                placeholder="Max"
+                value={filters.maxPrice}
+                onChange={(e) => handleFilterChange("maxPrice", e.target.value)}
+                className="price-input"
+              />
+            </div>
+          </div>
+
+          {constructionTypeOptions.length > 0 && (
+            <div className="filter-field">
+              <label className="filter-label">CONSTRUCTION TYPE</label>
+              <select
+                value={filters.construction_type}
+                onChange={(e) => handleFilterChange("construction_type", e.target.value)}
+                className="filter-select"
+              >
+                <option value="">All Types</option>
+                {constructionTypeOptions.map((opt, i) => (
+                  <option key={i} value={getOptionValue(opt, 'type')}>
+                    {getOptionLabel(opt, 'type')}
+                  </option>
+                ))}
+              </select>
+            </div>
           )}
         </div>
 
         <div className="filter-actions">
-          <button type="submit" className="btn-apply">Apply Filters</button>
           <button type="button" onClick={resetFilters} className="btn-reset">Reset</button>
+          <button type="submit" className="btn-apply">Apply</button>
         </div>
       </form>
       {priceError && <p className="price-error">{priceError}</p>}

@@ -1,5 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
+import { SlidersHorizontal, X } from "lucide-react";
 import PropertyFilters from "./PropertyFilter2";
 import PropertyCards from "./PropertyCards2";
 import { Property, Filters } from "./types";
@@ -34,6 +35,19 @@ const PropertySearch2 = () => {
     loadProperties();
   }, []);
 
+  const isFirstRender = useRef(true);
+
+  useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
+    const timer = setTimeout(() => {
+      loadProperties();
+    }, 600);
+    return () => clearTimeout(timer);
+  }, [filters.search]);
+
   const handleFilterChange = (name: string, value: string) => {
     setFilters((prev) => ({ ...prev, [name]: value }));
   };
@@ -51,7 +65,7 @@ const PropertySearch2 = () => {
     };
     setFilters(clearedFilters);
     setPriceError("");
-    
+
     // Call load with cleared filters
     setLoading(true);
     setTimeout(async () => {
@@ -65,31 +79,42 @@ const PropertySearch2 = () => {
 
   return (
     <div className="search-container">
-      <div className="sm:hidden px-4 mb-4">
-        <button 
-          className="w-full bg-white border border-gray-200 text-gray-800 py-3 rounded-xl font-semibold shadow-sm flex items-center justify-center gap-2"
-          onClick={() => setShowFilters(true)}
-          type="button"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-            <path fillRule="evenodd" d="M3 3a1 1 0 011-1h12a1 1 0 011 1v3a1 1 0 01-.293.707L12 11.414V15a1 1 0 01-.293.707l-2 2A1 1 0 018 17v-5.586L3.293 6.707A1 1 0 013 6V3z" clipRule="evenodd" />
+      <div className="sm:hidden px-4 mb-4 flex gap-2 items-center">
+        <div className="flex-1 relative">
+          <svg className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+            <circle cx="11" cy="11" r="8" />
+            <path d="m21 21-4.35-4.35" />
           </svg>
-          Filters
-        </button>
+          <input
+            type="text"
+            placeholder="Search by city, project..."
+            value={filters.search}
+            onChange={(e) => handleFilterChange("search", e.target.value)}
+            className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-gray-200 bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
+        <span
+          className="prop-search-filter-toggle shadow-sm hover:shadow-md"
+          onClick={() => setShowFilters(true)}
+          aria-label="Show Filters"
+        >
+          <SlidersHorizontal size={20} className="text-slate-800" />
+        </span>
       </div>
 
-      <div 
+      <div
         className={`filter-overlay ${showFilters ? 'mobile-show' : ''}`}
         onClick={() => setShowFilters(false)}
       />
 
       <div className={`filter-wrapper ${showFilters ? 'mobile-show' : ''}`}>
-        <div className="sm:hidden flex justify-between items-center mb-4 pb-3 border-b border-gray-200">
-          <h3 className="text-lg font-bold text-gray-800">Filters</h3>
-          <button onClick={() => setShowFilters(false)} className="p-2 -mr-2 text-gray-500 hover:bg-gray-100 rounded-full transition-colors">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-            </svg>
+        <div className="sm:hidden flex justify-between items-center mb-6">
+          <h3 className="text-xl font-bold text-gray-900">Filters</h3>
+          <button
+            onClick={() => setShowFilters(false)}
+            className="p-1.5 bg-gray-100 text-gray-600 hover:bg-gray-200 rounded-full transition-colors"
+          >
+            <X size={20} />
           </button>
         </div>
         <PropertyFilters

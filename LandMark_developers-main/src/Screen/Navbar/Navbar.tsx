@@ -46,13 +46,12 @@ const Navbar: React.FC = () => {
       {/* Navbar */}
       <header
         className={`fixed top-0 left-0 w-full z-50 transition-all duration-500
-          ${
-            scrolled
-              ? "bg-black/95 backdrop-blur-md py-2 shadow-lg"
-              : "bg-gradient-to-r from-black/90 to-black/70 py-3"
+          ${scrolled
+            ? "bg-black/95 backdrop-blur-md py-2 shadow-lg"
+            : "bg-gradient-to-r from-black/90 to-black/70 py-3"
           }`}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="w-full px-4 sm:px-8 lg:px-12">
           <div className="flex items-center justify-between">
             {/* Logo / Page Title for Mobile */}
             <div className="flex items-center">
@@ -65,9 +64,10 @@ const Navbar: React.FC = () => {
                   alt="Real Estate"
                   className="h-12 sm:h-14 md:h-16 lg:h-20 object-contain w-auto"
                 />
+
               </Link>
               {location.pathname.toLowerCase() === '/township' && (
-                <span className="text-white text-xl font-bold md:hidden">
+                <span className="text-white text-xl md:text-2xl font-bold md:ml-4">
                   Our Townships
                 </span>
               )}
@@ -85,11 +85,10 @@ const Navbar: React.FC = () => {
                   {link.name}
                   {/* Animated underline */}
                   <span
-                    className={`absolute left-0 bottom-0 h-0.5 bg-yellow-400 transition-all duration-300 ${
-                      location.pathname === link.path
-                        ? "w-full"
-                        : "w-0 group-hover:w-full"
-                    }`}
+                    className={`absolute left-0 bottom-0 h-0.5 bg-yellow-400 transition-all duration-300 ${location.pathname === link.path
+                      ? "w-full"
+                      : "w-0 group-hover:w-full"
+                      }`}
                   />
                 </Link>
               ))}
@@ -151,9 +150,8 @@ const Navbar: React.FC = () => {
               {link.name}
               {/* Animated underline for mobile */}
               <span
-                className={`absolute left-0 -bottom-1 h-0.5 bg-yellow-400 transition-all duration-300 ${
-                  location.pathname === link.path ? "w-8" : "w-0 group-hover:w-8"
-                }`}
+                className={`absolute left-0 -bottom-1 h-0.5 bg-yellow-400 transition-all duration-300 ${location.pathname === link.path ? "w-8" : "w-0 group-hover:w-8"
+                  }`}
               />
             </Link>
           ))}

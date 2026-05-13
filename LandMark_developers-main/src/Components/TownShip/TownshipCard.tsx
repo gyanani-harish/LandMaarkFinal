@@ -8,7 +8,7 @@ interface TownshipCardProps {
 
 const TownshipCard: React.FC<TownshipCardProps> = ({ item, onSelect }) => {
   const cityName =  item.name || 'Unknown';
-  const propertiesCount = item.properties?.length || 0;
+  const propertiesCount = (item as any).property_count || item.properties?.length || 0;
   const description = item.description ||  '';
    return (
     <div

@@ -60,16 +60,16 @@ const Footer = () => {
     <footer className="bg-black text-white w-full pt-12 pb-8 px-6 md:px-12 lg:px-24">
       <div className="max-w-7xl mx-auto">
         {/* Logo Section */}
-        <div className="mb-12 text-center md:text-left">
+        <div className=" text-center md:text-left">
           <h1 className="text-3xl md:text-4xl font-bold tracking-wider text-white">
             LandMaark
           </h1>
         </div>
 
         {/* Main Content Grid */}
-        <div className="border-t border-gray-900 pt-10">
+        <div className="border-t border-gray-900">
           <div className="flex flex-col lg:flex-row justify-between items-center md:items-start gap-12 text-center md:text-left">
-            
+
             {/* Locations */}
             <div className="flex-1 w-full">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-10">
@@ -124,7 +124,7 @@ const Footer = () => {
         </div>
 
         {/* Contact Info Bar */}
-        <div className="border-t border-gray-800 mt-16 pt-8">
+        <div className="border-t border-gray-800 ">
           <div className="flex flex-col md:flex-row justify-between items-center gap-8">
             <div className="flex flex-col sm:flex-row items-center gap-6 sm:gap-10 text-sm text-gray-400">
               <a

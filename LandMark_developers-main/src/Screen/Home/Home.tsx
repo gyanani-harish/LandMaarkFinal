@@ -530,9 +530,6 @@ const Home: React.FC = () => {
     </div>
 
     <div className="absolute top-27 right-15 z-20 text-right">
-      <h2 className="text-2xl font-bold tracking-widest text-white">
-        LANDMAARK
-      </h2>
     </div>
 
     <div className="relative z-10 h-full flex items-center pl-10">
@@ -581,9 +578,6 @@ const Home: React.FC = () => {
     </div>
 
     <div className="relative z-10 min-h-screen flex flex-col items-center justify-center px-4 sm:px-6 text-center py-10">
-      <h2 className="text-2xl sm:text-3xl font-bold tracking-widest text-white mb-8 drop-shadow-lg">
-        LANDMAARK
-      </h2>
       <h1 className="text-2xl sm:text-3xl font-bold leading-tight tracking-wide text-white mb-4 drop-shadow-lg">
         LEGACY OF EXCELLENCE IN LUXURY REAL ESTATE
       </h1>

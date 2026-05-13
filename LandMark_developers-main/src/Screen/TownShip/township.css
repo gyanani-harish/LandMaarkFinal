@@ -1,107 +1,106 @@
- 
+ .vertical-btn {
+   position: fixed;
+   right: 20px;
+   top: 50%;
+   transform: translateY(-50%);
 
-.vertical-btn {
-  position: fixed;
-  right: 20px;
-  top: 60%;
-  transform: translateY(-50%);
+   background: #2563eb;
+   color: white;
 
-  background: #2563eb;
-  color: white;
+   height: 180px;
+   width: 40px;
 
-  height: 180px;
-  width: 40px;
+   border: none;
+   border-radius: 30px;
 
-  border: none;
-  border-radius: 30px;
+   font-weight: 600;
+   cursor: pointer;
 
-  font-weight: 600;
-  cursor: pointer;
+   display: flex;
+   align-items: center;
+   justify-content: center;
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
+   box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
 
-  box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+   transition: all 0.3s ease;
+ }
 
-  transition: all 0.3s ease;
-}
+ .vertical-btn span {
+   transform: rotate(-90deg);
+   /* makes text parallel */
+   white-space: nowrap;
+ }
 
-.vertical-btn span {
-  transform: rotate(-90deg); /* makes text parallel */
-  white-space: nowrap;
-}
+ .vertical-btn:hover {
+   background: #1e40af;
+   transform: translateY(-50%) scale(1.05);
+ }
 
-.vertical-btn:hover {
-  background: #1e40af;
-  transform: translateY(-50%) scale(1.05);
-}
- 
-/* Custom scrollbar */
-aside::-webkit-scrollbar {
-  width: 6px;
-}
+ /* Custom scrollbar */
+ aside::-webkit-scrollbar {
+   width: 6px;
+ }
 
-aside::-webkit-scrollbar-track {
-  background: #f1f1f1;
-}
+ aside::-webkit-scrollbar-track {
+   background: #f1f1f1;
+ }
 
-aside::-webkit-scrollbar-thumb {
-  background: #888;
-  border-radius: 3px;
-}
+ aside::-webkit-scrollbar-thumb {
+   background: #888;
+   border-radius: 3px;
+ }
 
-aside::-webkit-scrollbar-thumb:hover {
-  background: #555;
-}
+ aside::-webkit-scrollbar-thumb:hover {
+   background: #555;
+ }
 
-/* Line clamp utility */
-.line-clamp-2 {
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
+ /* Line clamp utility */
+ .line-clamp-2 {
+   display: -webkit-box;
+   -webkit-line-clamp: 2;
+   -webkit-box-orient: vertical;
+   overflow: hidden;
+ }
 
-/* Smooth transitions */
-.transition-all {
-  transition-property: all;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: 300ms;
-}
+ /* Smooth transitions */
+ .transition-all {
+   transition-property: all;
+   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+   transition-duration: 300ms;
+ }
 
-/* Responsive adjustments */
-@media (max-width: 1024px) {
-  aside {
-    width: 100% !important;
-  }
-  
-  .vertical-btn {
-    top: auto;
-    bottom: 20px;
-    right: 50%;
-    transform: translateX(50%);
-    width: 180px;
-    height: 40px;
-  }
-  
-  .vertical-btn span {
-    transform: none;
-  }
-  
-  .vertical-btn:hover {
-    transform: translateX(50%) scale(1.05);
-  }
-}
+ /* Responsive adjustments */
+ @media (max-width: 1024px) {
+   aside {
+     width: 100% !important;
+   }
 
-/* Ensure proper spacing for fixed navbar */
-.pt-16 {
-  padding-top: 4rem;
-}
+   .vertical-btn {
+     top: auto;
+     bottom: 20px;
+     right: 50%;
+     transform: translateX(50%);
+     width: 180px;
+     height: 40px;
+   }
 
-/* Grid background pattern */
-.bg-grid-pattern {
-  background-image: linear-gradient(#1d1d1d 1px, transparent 1px),
-    linear-gradient(90deg, #1d1d1d 1px, transparent 1px);
-  background-size: 40px 40px;
-}
+   .vertical-btn span {
+     transform: none;
+   }
+
+   .vertical-btn:hover {
+     transform: translateX(50%) scale(1.05);
+   }
+ }
+
+ /* Ensure proper spacing for fixed navbar */
+ .pt-16 {
+   padding-top: 4rem;
+ }
+
+ /* Grid background pattern */
+ .bg-grid-pattern {
+   background-image: linear-gradient(#1d1d1d 1px, transparent 1px),
+     linear-gradient(90deg, #1d1d1d 1px, transparent 1px);
+   background-size: 40px 40px;
+ }

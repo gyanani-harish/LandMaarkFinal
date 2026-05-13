@@ -1,4 +1,4 @@
- 
+
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { Township } from "../../store/TownShip/TownshipTypes";
@@ -6,7 +6,7 @@ import TownshipCard from "../../Components/TownShip/TownshipCard";
 import { useTownships } from "../../Hooks/useTownships";
 import { useTownshipProperties } from "../../Hooks/useTownshipProperties";
 import "./township.css";
- 
+
 const TownShip: React.FC = () => {
   const navigate = useNavigate();
   const [selectedCity, setSelectedCity] = useState<Township | null>(null);
@@ -42,27 +42,25 @@ const TownShip: React.FC = () => {
   }, []);
 
   return (
-     <div className="w-full min-h-screen bg-gray-100 flex overflow-x-hidden pb-10 pt-24">
-       {/* LEFT CITY GRID */}
-       <div
-         className={`transition-all duration-300 px-4 sm:px-6 md:px-10 py-0 ${
-           selectedCity ? "lg:w-[65%]" : "w-full"
-         }`}
-       >
-         <h1 className="text-3xl font-bold mb-8 hidden md:block">Our Townships</h1>
+    <div className="w-full min-h-screen bg-gray-100 flex overflow-x-hidden pb-10 pt-24">
+      {/* LEFT CITY GRID */}
+      <div
+        className={`transition-all duration-300 px-4 sm:px-6 md:px-10 pt-4 pb-10 ${selectedCity ? "lg:w-[65%]" : "w-full"
+          }`}
+      >
 
-         {loading ? (
-           <div className="flex justify-center items-center py-20">
-             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
-           </div>
-         ) : (
-           <div className="grid gap-4 md:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-             {townships.map((item) => (
-               <TownshipCard key={item.township_id || item.id} item={item} onSelect={openCity} />
-             ))}
-           </div>
-         )}
-       </div>
+        {loading ? (
+          <div className="flex justify-center items-center py-20">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+          </div>
+        ) : (
+          <div className="grid gap-4 md:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            {townships.map((item) => (
+              <TownshipCard key={item.township_id || item.id} item={item} onSelect={openCity} />
+            ))}
+          </div>
+        )}
+      </div>
       {/* MOBILE BACKDROP */}
       {selectedCity && (
         <div
@@ -95,25 +93,24 @@ const TownShip: React.FC = () => {
               ref={closeButtonRef}
               aria-label="Close drawer"
               onClick={closeDrawer}
-              className="absolute top-30 right-4 z-50
-              bg-white shadow-md rounded-full
-              w-10 h-10 flex items-center justify-center
-              text-xl hover:bg-gray-100"
+              className="absolute top-6 right-6 z-50
+              p-1.5 bg-gray-100 text-gray-600 hover:bg-gray-200 rounded-full transition-colors"
             >
-              ✕
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              </svg>
             </button>
             {/* CITY TITLE */}
-            <h2 className="text-4xl font-bold mt-40">
+            <h2 className="text-3xl font-bold mt-8 pr-12 text-gray-800">
               {(selectedCity.city || selectedCity.name)} Projects
             </h2>
-            <p className="mt-3 text-gray-600">{selectedCity.description || selectedCity.location}</p>
+            <p className="mt-2 text-gray-600 text-sm">{selectedCity.description || selectedCity.location}</p>
             {/* PROPERTY GRID */}
             {propertiesLoading ? (
               <div className="flex justify-center items-center py-10">
                 <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
               </div>
             ) : properties.length > 0 ? (
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-6 mt-10">
+              <div className="grid grid-cols-1 xl:grid-cols-2 gap-5 mt-8 pr-8 pb-20">
                 {properties.map((property) => (
                   <div
                     key={property.property_id}
@@ -149,14 +146,14 @@ const TownShip: React.FC = () => {
               </div>
             )}
             {/* VERTICAL BUTTON */}
-            <button 
+            <button
               className="vertical-btn"
               onClick={() => navigate(`/search2/${selectedCity.township_id}`)}
             >
               <span>View More</span>
             </button>
           </div>
-        )} 
+        )}
       </aside>
     </div>
   );
