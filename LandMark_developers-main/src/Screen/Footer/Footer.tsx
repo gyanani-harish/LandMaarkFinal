@@ -57,7 +57,7 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="bg-black text-white w-full pt-12 pb-8 px-6 md:px-12 lg:px-24">
+    <footer className="bg-black text-white w-full pt-4 pb-8 px-6 md:px-12 lg:px-24">
       <div className="max-w-7xl mx-auto">
         {/* Logo Section */}
         <div className=" text-center md:text-left">
