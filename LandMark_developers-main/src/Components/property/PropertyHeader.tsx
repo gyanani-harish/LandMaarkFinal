@@ -40,7 +40,7 @@ const PropertyHeader: React.FC<PropertyHeaderProps> = ({ property }) => {
   const emi = property?.price?.emi || 0;
 
   return (
-    <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-6">
+    <div className="w-full flex flex-col md:flex-row md:justify-between md:items-start gap-6">
       
       {/* Left Section - Property Details */}
       <div className="flex-1">
@@ -48,7 +48,7 @@ const PropertyHeader: React.FC<PropertyHeaderProps> = ({ property }) => {
         {/* Property Name */}
         <div className="flex items-center gap-2 mb-1">
           <Home className="w-5 h-5 text-blue-600" />
-          <h2 className="text-2xl font-bold text-gray-900">
+          <h2 className="text-lg sm:text-2xl font-bold text-gray-900">
             {propertyName}
           </h2>
         </div>
@@ -83,9 +83,9 @@ const PropertyHeader: React.FC<PropertyHeaderProps> = ({ property }) => {
       </div>
 
       {/* Right Section - Price & CTA */}
-      <div className="text-right min-w-[220px]">
+      <div className="text-left sm:text-right min-w-0 sm:min-w-[220px]">
         
-        <p className="text-xl font-semibold">
+        <p className="text-lg sm:text-xl font-semibold">
           {priceMin > 0 || priceMax > 0 ? (
             `₹${priceMin.toLocaleString()} L - ${priceMax.toLocaleString()} L`
           ) : (

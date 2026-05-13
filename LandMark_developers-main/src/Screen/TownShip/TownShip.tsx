@@ -42,10 +42,10 @@ const TownShip: React.FC = () => {
   }, []);
 
   return (
-    <div className="w-full min-h-screen bg-gray-100 flex overflow-x-hidden pb-10 pt-16">
+    <div className="w-full min-h-screen bg-gray-100 flex overflow-x-hidden pb-10 pt-16 lg:pt-28">
       {/* LEFT CITY GRID */}
       <div
-        className={`transition-all duration-300 px-4 sm:px-6 md:px-10 pt-4 pb-10 ${selectedCity ? "lg:w-[65%]" : "w-full"
+        className={`transition-all duration-300 px-4 sm:px-6 md:px-10 pt-8 lg:pt-14 pb-10 w-full ${selectedCity ? "lg:w-[65%]" : ""
           }`}
       >
 
@@ -82,12 +82,12 @@ const TownShip: React.FC = () => {
         w-full sm:w-[50%] md:w-[50%] lg:w-[35%]
         bg-white shadow-2xl
         transition-transform duration-300
-        z-50
+        z-[9999]
         ${selectedCity ? "translate-x-0" : "translate-x-full lg:translate-x-0"}
         ${selectedCity ? "block" : "hidden"}`}
       >
         {selectedCity && (
-          <div className="h-full overflow-y-auto p-6 pr-20 relative">
+          <div className="h-full overflow-y-auto p-6  relative">
             {/* CLOSE BUTTON */}
             <button
               ref={closeButtonRef}
@@ -96,7 +96,8 @@ const TownShip: React.FC = () => {
               className="absolute top-6 right-6 z-50
               p-1.5 bg-gray-100 text-gray-600 hover:bg-gray-200 rounded-full transition-colors"
             >
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-800" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
               </svg>
             </button>
             {/* CITY TITLE */}

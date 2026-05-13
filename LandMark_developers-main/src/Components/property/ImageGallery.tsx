@@ -31,9 +31,9 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images, propertyId, propert
 
   return (
     <>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
+      <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-2 sm:gap-4 mt-4 sm:mt-6">
         {/* Main large image */}
-        <div className="relative md:col-span-2 w-full h-[450px] overflow-hidden cursor-pointer">
+        <div className="relative md:col-span-2 w-full h-[220px] sm:h-[320px] md:h-[450px] overflow-hidden cursor-pointer rounded-lg">
           <img
             src={displayImages[currentImageIndex]}
             alt="property"
@@ -53,11 +53,11 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images, propertyId, propert
           </div>
         </div>
         {/* Sidebar images */}
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-row md:flex-col gap-2 sm:gap-4">
           <img
             src={displayImages[0]}
             alt="Side"
-            className="w-full h-[210px] object-cover cursor-pointer"
+            className="w-1/2 md:w-full h-[120px] sm:h-[160px] md:h-[210px] object-cover cursor-pointer rounded-lg"
             onClick={() => handleImageClick(0)}
           />
 
@@ -65,11 +65,11 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images, propertyId, propert
             <img
               src={displayImages[1] || displayImages[0]}
               alt="Side"
-              className="w-full h-[210px] object-cover"
+              className="w-full h-[120px] sm:h-[160px] md:h-[210px] object-cover rounded-lg"
             />
-            <div className="absolute inset-0 bg-black/40 flex items-center justify-center rounded-xl">
+            <div className="absolute inset-0 bg-black/40 flex items-center justify-center rounded-lg">
               <span className="text-white text-lg font-semibold">
-                +{displayImages.length - 2} more
+                {displayImages.length > 2 ? `+${displayImages.length - 2} more` : 'View More'}
               </span>
             </div>
           </div>
