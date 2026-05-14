@@ -18,6 +18,7 @@ import useIsMobile from '../../Hooks/useIsMobile';
 const PropertyDetailPage = () => {
   const [activeTab, setActiveTab] = useState('overview');
   const [property, setProperty] = useState<CityProperty | null>(null);
+  const [allTownshipProperties, setAllTownshipProperties] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   
@@ -44,6 +45,7 @@ const PropertyDetailPage = () => {
         
         const result = await response.json();
         const properties: any[] = result.data || result;
+        setAllTownshipProperties(properties);
         
         // Find the specific property by ID
         let propertyData = properties.find((p: any) => String(p.property_id) === id);
@@ -232,9 +234,9 @@ const PropertyDetailPage = () => {
           </div>
         </div>
 
-        {/* <div className="mt-10">
-          <PropertyListings />
-        </div> */}
+        <div className="mt-10">
+          <PropertyListings initialData={allTownshipProperties} />
+        </div>
       </div>
     );
   }
@@ -289,7 +291,7 @@ const PropertyDetailPage = () => {
 
       <PropertyOverview property={property} pricePerSqft={pricePerSqft} />
       <AmenitiesSpecs property={property} />
-      {/* <PropertyListings /> */}
+      <PropertyListings initialData={allTownshipProperties} />
     </div>
   );
 };

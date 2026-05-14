@@ -1,21 +1,22 @@
 // PropertyListings.tsx
 import React, { useState, useEffect } from 'react';
 import './PropertyListings.css'; // Import the CSS file for styling
+import PropertyFilters from './PropertyFilters';
+import { SlidersHorizontal } from 'lucide-react';
 
 interface Property {
   sno: number;
+  id: string;
   plotNo: string;
   size: string;
-  dimension: string;
-  builtUpArea: string;
-  plc: string;
+  sizeRaw: number;
   type: string;
   price: number;
   priceRaw: number;
-  sizeRaw: number;
   description: string;
   location: string;
   bhk: string;
+  rawKeyValues: { key: string; value: any }[];
 }
 
 interface ApiResponse {
@@ -25,16 +26,13 @@ interface ApiResponse {
 }
 
 interface ApiProperty {
+  property_id: number;
   plot_number: string;
   price: string;
-  size?: string;
-  dimension?: string;
-  built_up_area?: string;
-  area_sqft?: string;
-  plc?: string;
   property_type?: string;
   description?: string;
   location?: string;
+  key_values?: { key: string; value: any }[];
 }
 
 interface Stats {
@@ -47,7 +45,11 @@ interface Stats {
   bhkMax: number;
 }
 
-const PropertyListings: React.FC = () => {
+interface PropertyListingsProps {
+  initialData?: any[];
+}
+
+const PropertyListings: React.FC<PropertyListingsProps> = ({ initialData }) => {
   const [plotData, setPlotData] = useState<Property[]>([]);
   const [filteredData, setFilteredData] = useState<Property[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
@@ -62,16 +64,16 @@ const PropertyListings: React.FC = () => {
     bhkMax: 0,
   });
   const [activeDetails, setActiveDetails] = useState<number | null>(null);
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
 
   const [filters, setFilters] = useState({
     bhk: '',
-    size: '',
-    price: '',
-    plc: '',
+    status: '',
+    subTownship: '',
     sortBy: '',
   });
 
-  const API_URL = `https://unimmunized-rosella-hedonistically.ngrok-free.dev/api/townships/${localStorage.getItem('selectedTownshipId') || 9}/properties`;
+  const API_URL = `https://unimmunized-rosella-hedonistically.ngrok-free.dev/api/townships/${localStorage.getItem('selectedTownshipId') || 10}/properties`;
 
   const extractBhk = (type: string): string => {
     const match = type.match(/(\d+)\s*BHK/i);
@@ -86,7 +88,43 @@ const PropertyListings: React.FC = () => {
     return '';
   };
 
+  const processApiData = (data: ApiProperty[]) => {
+    const properties: Property[] = data
+      .map((p, index) => {
+        const kv = p.key_values?.reduce((acc: any, item: any) => {
+          acc[item.key] = item.value;
+          return acc;
+        }, {}) || {};
+
+        const sizeVal = parseFloat(String(kv.Size || kv['Sq Yds'] || '0').replace(/[^0-9.]/g, '')) || 0;
+
+        return {
+          sno: index + 1,
+          id: kv.ID || String(p.property_id),
+          plotNo: kv.Plot || p.plot_number || '-',
+          size: kv.Size || kv['Sq Yds'] || '-',
+          sizeRaw: sizeVal,
+          type: p.property_type || '-',
+          price: Math.round(parseFloat(p.price) / 100000),
+          priceRaw: parseFloat(p.price) || 0,
+          description: p.description || '-',
+          location: p.location || '-',
+          bhk: extractBhk(p.property_type || ''),
+          rawKeyValues: p.key_values || [],
+        };
+      });
+
+    setPlotData(properties);
+    updateStats(properties);
+  };
+
   const fetchData = async () => {
+    if (initialData && initialData.length > 0) {
+      processApiData(initialData);
+      setLoading(false);
+      return;
+    }
+
     setLoading(true);
     setError(null);
     try {
@@ -94,26 +132,7 @@ const PropertyListings: React.FC = () => {
       const result: ApiResponse = await response.json();
 
       if (result.success) {
-        const properties: Property[] = result.data
-          .filter(p => p.plot_number && p.price && parseFloat(p.price) > 0)
-          .map((p, index) => ({
-            sno: index + 1,
-            plotNo: p.plot_number,
-            size: p.size || '-',
-            dimension: p.dimension || '-',
-            builtUpArea: p.built_up_area || p.area_sqft || '-',
-            plc: p.plc || 'Normal',
-            type: p.property_type || '-',
-            price: Math.round(parseFloat(p.price) / 100000),
-            priceRaw: parseFloat(p.price),
-            sizeRaw: parseFloat(String(p.size).split('-')[0]) || 0,
-            description: p.description || '-',
-            location: p.location || '-',
-            bhk: extractBhk(p.property_type || ''),
-          }));
-
-        setPlotData(properties);
-        updateStats(properties);
+        processApiData(result.data);
       } else {
         setError('Failed to load data');
       }
@@ -156,48 +175,47 @@ const PropertyListings: React.FC = () => {
 
     // BHK filter
     if (filters.bhk) {
-      filtered = filtered.filter(p => p.type === filters.bhk);
+      filtered = filtered.filter(p => p.bhk === filters.bhk);
     }
 
-    // Size filter
-    if (filters.size) {
-      const minSize = parseInt(filters.size);
-      filtered = filtered.filter(p => p.sizeRaw >= minSize && p.sizeRaw < minSize + 50);
+    // Status filter
+    if (filters.status) {
+      filtered = filtered.filter(p => {
+        const kv = p.rawKeyValues?.reduce((acc: any, item: any) => {
+          acc[item.key] = item.value;
+          return acc;
+        }, {}) || {};
+        return (kv['Construction Status'] || '').toLowerCase() === filters.status.toLowerCase();
+      });
     }
 
-    // Price filter
-    if (filters.price) {
-      const maxPrice = parseInt(filters.price);
-      if (filters.price === '150') {
-        filtered = filtered.filter(p => p.price >= maxPrice);
-      } else {
-        filtered = filtered.filter(p => p.price <= maxPrice);
-      }
-    }
-
-    // PLC filter
-    if (filters.plc) {
-      if (filters.plc === 'corner') {
-        filtered = filtered.filter(p => p.plc.toLowerCase().includes('corner'));
-      } else {
-        filtered = filtered.filter(p => !p.plc.toLowerCase().includes('corner'));
-      }
+    // Sub Township filter
+    if (filters.subTownship) {
+      filtered = filtered.filter(p => {
+        const kv = p.rawKeyValues?.reduce((acc: any, item: any) => {
+          acc[item.key] = item.value;
+          return acc;
+        }, {}) || {};
+        return (kv['Sub Township'] || '').toLowerCase() === filters.subTownship.toLowerCase();
+      });
     }
 
     // Sorting
     if (filters.sortBy) {
       switch (filters.sortBy) {
-        case 'price-asc':
-          filtered.sort((a, b) => a.priceRaw - b.priceRaw);
-          break;
-        case 'price-desc':
-          filtered.sort((a, b) => b.priceRaw - a.priceRaw);
-          break;
         case 'size-asc':
-          filtered.sort((a, b) => a.sizeRaw - b.sizeRaw);
+          filtered.sort((a, b) => {
+            const aSize = parseFloat(String(a.size).replace(/[^0-9.]/g, '')) || 0;
+            const bSize = parseFloat(String(b.size).replace(/[^0-9.]/g, '')) || 0;
+            return aSize - bSize;
+          });
           break;
         case 'size-desc':
-          filtered.sort((a, b) => b.sizeRaw - a.sizeRaw);
+          filtered.sort((a, b) => {
+            const aSize = parseFloat(String(a.size).replace(/[^0-9.]/g, '')) || 0;
+            const bSize = parseFloat(String(b.size).replace(/[^0-9.]/g, '')) || 0;
+            return bSize - aSize;
+          });
           break;
       }
     }
@@ -241,72 +259,70 @@ const PropertyListings: React.FC = () => {
 
   return (
     <div className="container">
-    
 
       <div className="table-container">
         <div className="table-header">
-          <h2>
-            <i className="fas fa-list"></i> Plot Details
-          </h2>
-          <span className="count">{filteredData.length} Plots</span>
+          <div className="header-title-section">
+            <h2>Property List</h2>
+            <div className="count">({filteredData.length})</div>
+          </div>
+
+          <div className="header-right">
+            <PropertyFilters
+              filters={filters}
+              plotData={plotData}
+              onFilterChange={handleFilterChange}
+              isMobileOpen={isFilterOpen}
+              setIsMobileOpen={setIsFilterOpen}
+            />
+          </div>
         </div>
 
-        <div className="filters">
-          <select
-            value={filters.bhk}
-            onChange={(e) => handleFilterChange('bhk', e.target.value)}
-          >
-            <option value="">All BHK Types</option>
-            {getUniqueTypes().map(type => (
-              <option key={type} value={type}>{type}</option>
-            ))}
-          </select>
+        <div className="mobile-cards">
+          {error ? (
+            <div className="empty-state">
+              <i className="fas fa-exclamation-circle"></i>
+              <p>{error}</p>
+            </div>
+          ) : filteredData.length === 0 ? (
+            <div className="empty-state">
+              <i className="fas fa-search"></i>
+              <p>No plots found matching your criteria</p>
+            </div>
+          ) : (
+            filteredData.map((plot, index) => (
+              <div key={plot.sno} className="mobile-card">
+                <div
+                  className="card-header-compact"
+                  onClick={() => toggleDetails(index)}
+                >
+                  <div className="card-plot-badge">
+                    Plot: #{plot.plotNo}
+                  </div>
+                  <div className="card-size-text">
+                    {plot.size}
+                  </div>
+                </div>
 
-          <select
-            value={filters.size}
-            onChange={(e) => handleFilterChange('size', e.target.value)}
-          >
-            <option value="">All Sizes</option>
-            <option value="80">80-100 sq.yd</option>
-            <option value="100">100-150 sq.yd</option>
-            <option value="150">150-200 sq.yd</option>
-            <option value="200">200+ sq.yd</option>
-          </select>
-
-          <select
-            value={filters.price}
-            onChange={(e) => handleFilterChange('price', e.target.value)}
-          >
-            <option value="">All Prices</option>
-            <option value="60">Under 60L</option>
-            <option value="80">60-80L</option>
-            <option value="100">80-100L</option>
-            <option value="120">100-120L</option>
-            <option value="150">Above 120L</option>
-          </select>
-
-          <select
-            value={filters.plc}
-            onChange={(e) => handleFilterChange('plc', e.target.value)}
-          >
-            <option value="">All Plots</option>
-            <option value="corner">Corner Plots</option>
-            <option value="normal">Normal Plots</option>
-          </select>
-
-          <select
-            value={filters.sortBy}
-            onChange={(e) => handleFilterChange('sortBy', e.target.value)}
-          >
-            <option value="">Sort By</option>
-            <option value="price-asc">Price: Low to High</option>
-            <option value="price-desc">Price: High to Low</option>
-            <option value="size-asc">Size: Low to High</option>
-            <option value="size-desc">Size: High to Low</option>
-          </select>
+                {activeDetails === index && (
+                  <div className="card-content">
+                    {plot.rawKeyValues
+                      .filter((kv: any) => !['Is Deleted', 'ID', 'Plot', 'Price', 'Price (Lakhs)', 'Total Price'].includes(kv.key))
+                      .map((kv: any, i: number) => (
+                        <div key={i} className="card-detail">
+                          <p className="detail-label">{kv.key}</p>
+                          <p className="detail-value">{kv.value}</p>
+                        </div>
+                      ))}
+                  </div>
+                )}
+              </div>
+            ))
+          )}
         </div>
 
-        <div className="table-wrapper">
+        {/* Desktop View - Table */}
+        <div className="desktop-table table-wrapper">
           {error ? (
             <div className="empty-state">
               <i className="fas fa-exclamation-circle"></i>
@@ -321,85 +337,32 @@ const PropertyListings: React.FC = () => {
             <table>
               <thead>
                 <tr>
-                  <th style={{ width: '50px' }}></th>
-                  <th>S.No.</th>
                   <th>Plot No.</th>
-                  <th>Size (Sq.Yd)</th>
-                  <th>Dimension</th>
-                  <th>Built-up Area</th>
-                  <th>PLC</th>
-                  <th>Type</th>
-                  <th>Price (Lakhs)</th>
+                  <th>Size</th>
+                  <th>Sub Township</th>
+                  <th>Project Area</th>
+                  <th>Configuration</th>
+                  <th>Construction Status</th>
                 </tr>
               </thead>
               <tbody>
-                {filteredData.map((plot, index) => (
-                  <React.Fragment key={plot.sno}>
-                    <tr onClick={() => toggleDetails(index)}>
-                      <td>
-                        <button className={`expand-btn ${activeDetails === index ? 'active' : ''}`}>
-                          <i className="fas fa-chevron-down"></i>
-                        </button>
-                      </td>
-                      <td className="sno">{plot.sno}</td>
+                {filteredData.map((plot) => {
+                  const kv = plot.rawKeyValues?.reduce((acc: any, item: any) => {
+                    acc[item.key] = item.value;
+                    return acc;
+                  }, {} as any) || {};
+
+                  return (
+                    <tr key={plot.sno} className="no-expand">
                       <td className="plot-no">{plot.plotNo}</td>
                       <td>{plot.size}</td>
-                      <td>{plot.dimension}</td>
-                      <td>{plot.builtUpArea}</td>
-                      <td>{plot.plc}</td>
-                      <td>
-                        <span className={`type-badge ${getTypeBadgeClass(plot.type)}`}>
-                          {plot.type}
-                        </span>
-                      </td>
-                      <td className="price">₹{plot.price}L</td>
+                      <td>{kv['Sub Township'] || '-'}</td>
+                      <td>{kv['Project Area'] || '-'}</td>
+                      <td>{kv.Configuration || '-'}</td>
+                      <td>{kv['Construction Status'] || '-'}</td>
                     </tr>
-                    <tr className={`details-row ${activeDetails === index ? 'active' : ''}`}>
-                      <td colSpan={9}>
-                        <div className="details-content">
-                          <div className="detail-card">
-                            <div className="label">Plot Number</div>
-                            <div className="value">{plot.plotNo}</div>
-                          </div>
-                          <div className="detail-card">
-                            <div className="label">Plot Size</div>
-                            <div className="value">{plot.size} Sq.Yd</div>
-                          </div>
-                          <div className="detail-card">
-                            <div className="label">Dimension</div>
-                            <div className="value">{plot.dimension}</div>
-                          </div>
-                          <div className="detail-card">
-                            <div className="label">Built-up Area</div>
-                            <div className="value">{plot.builtUpArea} Sq.Ft</div>
-                          </div>
-                          <div className="detail-card">
-                            <div className="label">Property Type</div>
-                            <div className="value">{plot.type}</div>
-                          </div>
-                          <div className="detail-card">
-                            <div className="label">PLC</div>
-                            <div className="value">{plot.plc}</div>
-                          </div>
-                          <div className="detail-card">
-                            <div className="label">Total Price</div>
-                            <div className="value highlight">₹{plot.price.toLocaleString()} Lakhs</div>
-                          </div>
-                          <div className="detail-card">
-                            <div className="label">Price per Sq.Yd</div>
-                            <div className="value">
-                              ₹{plot.sizeRaw ? Math.round(plot.priceRaw / plot.sizeRaw).toLocaleString() : '-'}
-                            </div>
-                          </div>
-                          <div className="detail-card" style={{ gridColumn: 'span 2' }}>
-                            <div className="label">Description</div>
-                            <div className="value">{plot.description}</div>
-                          </div>
-                        </div>
-                      </td>
-                    </tr>
-                  </React.Fragment>
-                ))}
+                  );
+                })}
               </tbody>
             </table>
           )}
