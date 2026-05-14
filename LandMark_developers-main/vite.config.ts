@@ -6,6 +6,7 @@ export default defineConfig({
   plugins: [react(), tailwindcss()],
   server: {
     port: 5173,
+    allowedHosts: ["smokiness-armful-wackiness.ngrok-free.dev"],
     proxy: {
       '/api': {
         target: 'https://biotic-shasta-undeliberative.ngrok-free.dev', // Use the working URL
