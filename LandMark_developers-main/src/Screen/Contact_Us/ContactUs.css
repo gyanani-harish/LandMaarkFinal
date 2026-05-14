@@ -1,6 +1,6 @@
 .cu-page {
   width: 100%;
-  padding-top: 5rem;
+  padding-top: 6rem; /* Increased to clear fixed navbar */
   padding-bottom: 0;
   margin-bottom: 0;
   background: #ffffff;
@@ -192,7 +192,7 @@
 /* ===== Tablet ===== */
 @media (min-width: 640px) {
   .cu-page {
-    padding-top: 1rem;
+    padding-top: 7rem; /* Increased for tablet */
   }
 
   .cu-map-section {
@@ -229,7 +229,7 @@
 /* ===== Desktop ===== */
 @media (min-width: 1024px) {
   .cu-page {
-    padding-top: 1.5rem;
+    padding-top: 8rem; /* Increased for desktop */
   }
 
   .cu-map-section {

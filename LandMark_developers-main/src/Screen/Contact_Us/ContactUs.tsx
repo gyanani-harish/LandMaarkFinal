@@ -27,7 +27,7 @@ const ContactUs: React.FC = () => {
       {/* MAIN CONTENT */}
       <main className="cu-main">
         {/* LEFT TEXT */}
-        <div>
+        <div className="cu-text-content">
           <h2 className="cu-heading">
             Let's Build Your
             <span className="cu-heading-highlight">Luxury Future</span>
