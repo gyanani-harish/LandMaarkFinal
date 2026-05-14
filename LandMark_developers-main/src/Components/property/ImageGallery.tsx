@@ -55,21 +55,21 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images, propertyId, propert
         {/* Sidebar images */}
         <div className="flex flex-row md:flex-col gap-2 sm:gap-4">
           <img
-            src={displayImages[0]}
+            src={displayImages[1] || displayImages[0]}
             alt="Side"
             className="w-1/2 md:w-full h-[120px] sm:h-[160px] md:h-[210px] object-cover cursor-pointer rounded-lg"
-            onClick={() => handleImageClick(0)}
+            onClick={() => handleImageClick(1)}
           />
 
-          <div className="relative cursor-pointer" onClick={handleMoreClick}>
+          <div className="relative cursor-pointer" onClick={() => handleImageClick(2)}>
             <img
-              src={displayImages[1] || displayImages[0]}
+              src={displayImages[2] || displayImages[0]}
               alt="Side"
               className="w-full h-[120px] sm:h-[160px] md:h-[210px] object-cover rounded-lg"
             />
             <div className="absolute inset-0 bg-black/40 flex items-center justify-center rounded-lg">
               <span className="text-white text-lg font-semibold">
-                {displayImages.length > 2 ? `+${displayImages.length - 2} more` : 'View More'}
+                {displayImages.length > 3 ? `+${displayImages.length - 2} more` : 'View More'}
               </span>
             </div>
           </div>

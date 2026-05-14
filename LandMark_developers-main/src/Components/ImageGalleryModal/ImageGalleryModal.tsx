@@ -195,54 +195,10 @@ const ImageGalleryModal: React.FC<ImageGalleryModalProps> = ({ isOpen, onClose, 
           <X className="w-6 h-6" />
         </button>
 
-        {/* Header with property info */}
-        {property?.title && (
-          <div className="absolute top-4 left-4 z-20 bg-black/50 backdrop-blur-md rounded-lg px-4 py-2 text-white">
-            <h3 className="text-sm font-medium">{property.title}</h3>
-            {property?.location && (
-              <p className="text-xs text-gray-300">{property.location}</p>
-            )}
-          </div>
-        )}
-
         {/* Image counter */}
         {!loading && images.length > 0 && (
           <div className="absolute top-4 left-1/2 transform -translate-x-1/2 z-20 bg-black/50 backdrop-blur-md rounded-full px-4 py-2 text-white text-sm">
             <span>{currentIndex + 1} / {images.length}</span>
-          </div>
-        )}
-
-        {/* Action buttons */}
-        {!loading && images.length > 0 && (
-          <div className="absolute bottom-4 right-4 z-20 flex gap-2">
-            <button
-              onClick={toggleZoom}
-              className="p-2 bg-white/10 hover:bg-white/20 rounded-full text-white transition-all duration-200 hover:scale-110"
-              title={isZoomed ? "Zoom out" : "Zoom in"}
-            >
-              {isZoomed ? <Minimize2 className="w-5 h-5" /> : <Maximize2 className="w-5 h-5" />}
-            </button>
-            <button
-              onClick={handleShare}
-              className="p-2 bg-white/10 hover:bg-white/20 rounded-full text-white transition-all duration-200 hover:scale-110"
-              title="Share"
-            >
-              <Share2 className="w-5 h-5" />
-            </button>
-            <button
-              onClick={handleDownload}
-              className="p-2 bg-white/10 hover:bg-white/20 rounded-full text-white transition-all duration-200 hover:scale-110"
-              title="Download"
-            >
-              <Download className="w-5 h-5" />
-            </button>
-            <button
-              onClick={handleFavorite}
-              className="p-2 bg-white/10 hover:bg-white/20 rounded-full text-white transition-all duration-200 hover:scale-110"
-              title="Add to favorites"
-            >
-              <Heart className="w-5 h-5" />
-            </button>
           </div>
         )}
 

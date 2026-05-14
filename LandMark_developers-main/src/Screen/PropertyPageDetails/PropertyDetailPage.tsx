@@ -30,11 +30,11 @@ const PropertyDetailPage = () => {
       try {
         setLoading(true);
         
-        // Get township_id from localStorage or use 9 as default
-        const townshipId = localStorage.getItem('selectedTownshipId') || '9';
+        // Use the id from the URL as the townshipId
+        const townshipId = id || '9';
         
-        // Fetch all properties from township API
-        const url = `${ApiConstants.API_BASE_URL}${ApiEndPoints.TOWNSHIP_PROPERTIES_FULL(9)}`;
+        // Fetch all properties from the specific township API
+        const url = `${ApiConstants.API_BASE_URL}${ApiEndPoints.TOWNSHIP_PROPERTIES_FULL(townshipId)}`;
         
         const response = await fetch(url);
         
@@ -46,7 +46,12 @@ const PropertyDetailPage = () => {
         const properties: any[] = result.data || result;
         
         // Find the specific property by ID
-        const propertyData = properties.find((p: any) => String(p.property_id) === id);
+        let propertyData = properties.find((p: any) => String(p.property_id) === id);
+        
+        // Fallback: If not found by ID, just take the first property from the list
+        if (!propertyData && properties.length > 0) {
+          propertyData = properties[0];
+        }
         
         if (propertyData) {
           // Transform API data to match CityProperty interface
@@ -70,9 +75,9 @@ const PropertyDetailPage = () => {
             construction_status: propertyData.construction_status,
             latitude: propertyData.latitude,
             longitude: propertyData.longitude,
-            image: propertyData.image || '',
-            images: propertyData.image ? [propertyData.image] : [],
-            allImages: propertyData.image ? [propertyData.image] : [],
+            image: propertyData.image || (propertyData.images && propertyData.images[0]) || '',
+            images: properties.flatMap((p: any) => p.images || (p.image ? [p.image] : [])),
+            allImages: properties.flatMap((p: any) => p.images || (p.image ? [p.image] : [])),
             amenities: propertyData.amenities?.map((a: any) => ({ 
               amenity_id: a.amenity_id || a.id || 0, 
               amenity_name: a.amenity_name || a.name || '' 
@@ -84,7 +89,10 @@ const PropertyDetailPage = () => {
               distance_meters: String(p.distance_meters || p.distance || 0)
             })) || [],
             specifications: propertyData.specifications,
-            overview: propertyData.overview || {},
+            overview: propertyData.overview || propertyData.key_values?.reduce((acc: any, kv: any) => {
+              acc[kv.key] = kv.value;
+              return acc;
+            }, {}) || {},
             verified: true,
             tag: '',
           };
@@ -174,7 +182,7 @@ const PropertyDetailPage = () => {
 
         {/* Mobile Gallery */}
         <div className="w-full px-2 mt-4">
-          <ImageGallery images={[property.image]} propertyId={property.id} property={property} />
+          <ImageGallery images={property.images} propertyId={property.id} property={property} />
         </div>
 
         {/* Mobile Price Highlights */}
@@ -224,9 +232,9 @@ const PropertyDetailPage = () => {
           </div>
         </div>
 
-        <div className="mt-10">
+        {/* <div className="mt-10">
           <PropertyListings />
-        </div>
+        </div> */}
       </div>
     );
   }
@@ -236,7 +244,7 @@ const PropertyDetailPage = () => {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 bg-gray-50 mt-18">
       <PropertyHeader property={headerData} />
 
-      <ImageGallery images={[property.image]} propertyId={property.id} property={property} />
+      <ImageGallery images={property.images} propertyId={property.id} property={property} />
 
       <div className="bg-white py-6 px-8 mt-0 shadow-sm mb-6">
         <div className="grid grid-cols-4 text-center divide-x divide-gray-200">
@@ -281,7 +289,7 @@ const PropertyDetailPage = () => {
 
       <PropertyOverview property={property} pricePerSqft={pricePerSqft} />
       <AmenitiesSpecs property={property} />
-      <PropertyListings />
+      {/* <PropertyListings /> */}
     </div>
   );
 };
