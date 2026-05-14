@@ -1,56 +1,48 @@
- 
- import React from "react";
+import React from "react";
 import { motion } from "framer-motion";
+import "./About.css";
 
 const About: React.FC = () => {
   return (
-    // <div className="bg-white max-w-7xl mx-auto -mt-8 min-h-screen">
-<div className="bg-white pt-16 sm:pt-20 md:pt-24 min-h-screen">
-  <section className="relative h-[50vh] sm:h-[60vh] md:h-[80vh] flex items-center justify-center text-center text-white">
+    <div className="ab-page">
+      {/* HERO SECTION */}
+      <section className="ab-hero">
         <img
           src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c"
-          className="absolute inset-0 w-full h-full object-cover"
+          className="ab-hero-img"
+          alt="Luxury Home"
         />
-
-        <div className="absolute inset-0 bg-black/70"></div>
-
-        <div className="relative z-10 px-4">
-          <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-7xl font-light mb-4 sm:mb-6">
-            About <span className="font-bold">LANDMAARK DEVELOPERS</span>
+        <div className="ab-hero-overlay"></div>
+        <div className="ab-hero-content">
+          <h1 className="ab-hero-title">
+            About <span>LANDMAARK DEVELOPERS</span>
           </h1>
-
-          <p className="text-sm sm:text-lg md:text-xl max-w-3xl mx-auto text-gray-200 px-2">
+          <p className="ab-hero-desc">
             Building Trust. Creating Landmaarks. Delivering Excellence in Real Estate.
           </p>
         </div>
       </section>
 
       {/* WHO WE ARE */}
-      <section className="py-12 sm:py-16 md:py-28 px-4 sm:px-6 md:px-20">
-        <div className="grid md:grid-cols-2 gap-16 items-center">
-
+      <section className="ab-section">
+        <div className="ab-grid">
           {/* TEXT */}
           <motion.div
             initial={{ opacity: 0, x: -40 }}
             whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: .6 }}
+            transition={{ duration: 0.6 }}
           >
-            <span className="text-sm tracking-widest text-gray-800 block mb-3">
-              ESTABLISHED
-            </span>
-
-            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-light mb-4 sm:mb-6">
-              Who <span className="font-bold">We Are</span>
+            <span className="ab-label">ESTABLISHED</span>
+            <h2 className="ab-heading">
+              Who <span>We Are</span>
             </h2>
-
-            <p className="text-gray-700 text-sm sm:text-base md:text-lg mb-4 sm:mb-6 leading-relaxed">
+            <p className="ab-text">
               LaandMark Developers was founded with a vision to transform
               property aspirations into reality. We specialize in premium
               residential and commercial developments designed to deliver
               long-term value and modern living experiences.
             </p>
-
-            <p className="text-gray-600 text-sm sm:text-base md:text-lg leading-relaxed">
+            <p className="ab-text ab-text-muted">
               With a strong commitment to quality construction, transparency,
               and customer satisfaction, we help clients confidently invest,
               buy, and build their future.
@@ -61,40 +53,33 @@ const About: React.FC = () => {
           <motion.div
             initial={{ opacity: 0, x: 40 }}
             whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: .6 }}
-            className="relative group"
+            transition={{ duration: 0.6 }}
+            className="ab-image-wrapper"
           >
             <img
               src="https://images.unsplash.com/photo-1560518883-ce09059eeffa"
-              className="rounded-xl shadow-2xl w-full h-[250px] sm:h-[320px] md:h-[420px] object-cover"
+              className="ab-img"
+              alt="Our Office"
             />
-
-            <div className="absolute inset-0 bg-black/10 group-hover:bg-black/30 transition rounded-xl"></div>
+            <div className="ab-img-overlay"></div>
           </motion.div>
-
         </div>
       </section>
 
       {/* FEATURES */}
-      <section className="py-12 sm:py-16 md:py-28 bg-gray-50 px-4 sm:px-6 md:px-20">
-
-        <div className="text-center mb-10 sm:mb-14 md:mb-20">
-          <span className="text-sm tracking-widest text-gray-400 block mb-3">
-            OUR ADVANTAGE
-          </span>
-
-          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-light mb-4 sm:mb-6">
-            What Makes Us <span className="font-bold">Different</span>
+      <section className="ab-section ab-section-light">
+        <div className="ab-centered">
+          <span className="ab-label">OUR ADVANTAGE</span>
+          <h2 className="ab-heading">
+            What Makes Us <span>Different</span>
           </h2>
-
-          <p className="text-gray-600 max-w-3xl mx-auto text-sm sm:text-base md:text-lg">
+          <p className="ab-text ab-text-muted mx-auto" style={{ maxWidth: '48rem' }}>
             In a competitive real estate market, we stand out through strategic planning,
             premium quality, and long-term client relationships.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8 md:gap-10">
-
+        <div className="ab-feature-grid">
           {[
             {
               title: "Prime Locations",
@@ -109,34 +94,27 @@ const About: React.FC = () => {
               desc: "Transparent dealings and dedicated support build lasting client relationships.",
             },
           ].map((item, i) => (
-            <div
-              key={i}
-              className="bg-white p-10 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 border-t-4 border-black"
-            >
-              <h3 className="text-2xl font-bold mb-4">{item.title}</h3>
-              <p className="text-gray-600">{item.desc}</p>
+            <div key={i} className="ab-feature-card">
+              <h3 className="ab-feature-title">{item.title}</h3>
+              <p className="ab-feature-desc">{item.desc}</p>
             </div>
           ))}
-
         </div>
       </section>
 
       {/* CTA */}
-<section className="py-12 sm:py-16 md:py-28 text-center bg-[#f5f2ec] text-black px-4 sm:px-6">
-        <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-light mb-4 sm:mb-6">
-          Ready to Find Your <span className="font-bold">Dream Property?</span>
+      <section className="ab-cta">
+        <h2 className="ab-heading">
+          Ready to Find Your <span>Dream Property?</span>
         </h2>
-
-<p className="max-w-2xl mx-auto mb-10 text-gray-900">          Let us help you invest in a property that offers comfort,
+        <p className="ab-text mx-auto" style={{ maxWidth: '42rem', marginBottom: '2.5rem' }}>
+          Let us help you invest in a property that offers comfort,
           growth, and long-term value.
         </p>
-
-        <button className="px-12 py-4 bg-white text-black font-semibold rounded-lg hover:bg-gray-200 transition">
+        <button className="ab-cta-btn">
           Contact Us Today
         </button>
-
       </section>
-
     </div>
   );
 };
