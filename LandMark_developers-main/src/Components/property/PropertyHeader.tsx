@@ -22,6 +22,7 @@ interface PropertyHeaderProps {
       max?: number;
       perSqft?: number;
       emi?: number;
+      display?: string;
     };
   };
 }
@@ -53,6 +54,7 @@ const PropertyHeader: React.FC<PropertyHeaderProps> = ({ property }) => {
   };
 
   const priceDisplay = () => {
+    if (property?.price?.display) return property.price.display;
     if (priceMin === 0 && priceMax === 0) return 'Contact for Price';
     if (priceMin === priceMax || priceMax === 0) return formatPrice(priceMin);
     return `${formatPrice(priceMin)} - ${formatPrice(priceMax)}`;

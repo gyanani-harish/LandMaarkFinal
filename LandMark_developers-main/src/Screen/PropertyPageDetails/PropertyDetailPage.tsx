@@ -76,23 +76,29 @@ const PropertyDetailPage = () => {
           const transformedProperty: CityProperty = {
             id: propertyData.property_id,
             title: topLevelData.name || propertyData.title,
-            price: propertyData.price || kvMap['Price'] || '0',
+            price: topLevelData.avg_price || propertyData.price || kvMap['Price'] || '0',
             image_url: (topLevelData.images && topLevelData.images[0]) || propertyData.image || '',
             description: topLevelData.description || propertyData.description || kvMap['Description'] || '',
             location: topLevelData.location || propertyData.location,
-            propertyType: propertyData.property_type || kvMap['Configuration'] || kvMap['Property Type'],
+            propertyType: topLevelData.configurations || propertyData.property_type || kvMap['Configuration'] || kvMap['Property Type'],
             bhk: propertyData.bhk || kvMap['Bhk'],
             area_sqft: propertyData.area_sqft || fallbackArea,
             raw_price: parseFloat(propertyData.price || kvMap['Price']) || 0,
-            area: String(propertyData.area_sqft || fallbackArea),
-            size: propertyData.size || kvMap['Dimension'] || kvMap['Size'],
-            project_size: propertyData.project_size || topLevelData.project_size || kvMap['Project Size'],
-            launch_date: propertyData.launch_date || topLevelData.launch_date || kvMap['Launch Date'],
-            rera_id: propertyData.rera_id || topLevelData.rera_id || kvMap['RERA ID'],
+            area: topLevelData.project_area || String(propertyData.area_sqft || fallbackArea),
+            size: topLevelData.sizes || propertyData.size || kvMap['Dimension'] || kvMap['Size'],
+            project_size: topLevelData.project_size || propertyData.project_size || kvMap['Project Size'],
+            launch_date: topLevelData.launch_date || propertyData.launch_date || kvMap['Launch Date'],
+            rera_id: topLevelData.rera_id || propertyData.rera_id || kvMap['RERA ID'],
             construction_type: propertyData.construction_type || kvMap['Construction Type'],
             construction_status: propertyData.construction_status || kvMap['Construction Status'],
+            possession_starts: topLevelData.possession_starts || propertyData.possession_starts,
             latitude: topLevelData.latitude || propertyData.latitude,
             longitude: topLevelData.longitude || propertyData.longitude,
+            area_unit: topLevelData.area_unit,
+            configurations: topLevelData.configurations,
+            property_count: topLevelData.property_count,
+            sizes: topLevelData.sizes,
+            avg_price: topLevelData.avg_price,
             image: (topLevelData.images && topLevelData.images[0]) || propertyData.image || '',
             images: (topLevelData.images && topLevelData.images.length > 0) 
               ? topLevelData.images 
@@ -196,13 +202,14 @@ const PropertyDetailPage = () => {
     type: property.propertyType,
     area: property.area,
     rating: property.bhk,
-    possession: property.construction_status || 'Ready to Move',
+    possession: property.possession_starts || property.construction_status || 'Ready to Move',
     rera_id: property.rera_id || '',
     price: {
       min: property.raw_price || 0,
       max: property.raw_price || 0,
       perSqft: pricePerSqft,
-      emi: emiApprox
+      emi: emiApprox,
+      display: property.avg_price
     }
   };
 
@@ -222,17 +229,17 @@ const PropertyDetailPage = () => {
         {/* Mobile Price Highlights */}
         <div className="mobile-price-highlights">
           <div className="highlight-item">
-            <p className="highlight-title">{property.propertyType || `${property.bhk} BHK`}</p>
-            <p className="highlight-label">Configuration</p>
+            <p className="highlight-title">{property.configurations || property.propertyType || 'N/A'}</p>
+            <p className="highlight-label">Configurations</p>
           </div>
 
-          <div className="highlight-item-no-border">
-            <p className="highlight-title">₹{pricePerSqft.toLocaleString()}/sq.ft</p>
+          <div className="highlight-item">
+            <p className="highlight-title">{property.avg_price || 'Contact'}</p>
             <p className="highlight-label">Avg. Price</p>
           </div>
           <div className="highlight-item-no-border">
-            <p className="highlight-title">{property.area_sqft?.toLocaleString()} sq.ft</p>
-            <p className="highlight-label">Area</p>
+            <p className="highlight-title">{property.area || 'N/A'}</p>
+            <p className="highlight-label">Project Area</p>
           </div>
         </div>
 
@@ -295,17 +302,17 @@ const PropertyDetailPage = () => {
       {/* Feature Highlights Grid */}
       <div className="feature-highlights-desktop">
         <div className="feature-item">
-          <p className="feature-value">{property.propertyType || `${property.bhk} BHK Apartments`}</p>
+          <p className="feature-value">{property.configurations || property.propertyType || 'N/A'}</p>
           <p className="feature-label">Configurations</p>
         </div>
 
         <div className="feature-item">
-          <p className="feature-value">Price on request</p>
+          <p className="feature-value">{property.avg_price || 'Contact'}</p>
           <p className="feature-label">Avg. Price</p>
         </div>
         <div className="feature-item">
-          <p className="feature-value">{property.area_sqft?.toLocaleString()} sq.ft</p>
-          <p className="feature-label">Super Builtup Area</p>
+          <p className="feature-value">{property.area || 'N/A'}</p>
+          <p className="feature-label">Project Area</p>
         </div>
       </div>
 

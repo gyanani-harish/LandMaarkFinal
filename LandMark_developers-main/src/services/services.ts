@@ -45,9 +45,14 @@ construction_type?:string;  property_type?: string;
   launch_date?: string;
   avg_price?: string;
   possession_date?: string;
+  possession_starts?: string;
   configuration?: string;
   rera_id?: string;
   nearby_places?: Array<{ name: string; distance: string }>;
+  area_unit?: string;
+  configurations?: string;
+  property_count?: number;
+  sizes?: string;
   created_at?: string;
 }
 
@@ -171,9 +176,14 @@ export const fetchProperties = async (townshipId: number = 9): Promise<CityPrope
         launch_date: item.launch_date,
         avg_price: item.avg_price,
         possession_date: item.possession_date,
+        possession_starts: item.possession_starts,
         configuration: item.configuration,
         rera_id: item.rera_id,
         nearby_places: item.nearby_places,
+        area_unit: item.area_unit,
+        configurations: item.configurations,
+        property_count: item.property_count,
+        sizes: item.sizes,
         created_at: item.created_at,
         // Removed duplicate image assignment here
       };

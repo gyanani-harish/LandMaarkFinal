@@ -38,7 +38,7 @@
 .tab-content-card {
   background-color: white;
   border-radius: 0.75rem;
-  padding: 1.5rem;
+  padding: 0.5rem;
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
 }
 
@@ -48,7 +48,8 @@
   font-weight: 600;
   margin-bottom: 1.5rem;
   display: block;
-  width: 100%; /* Force full width to prevent two lines */
+  width: 100%;
+  /* Force full width to prevent two lines */
 }
 
 .title-underline {
@@ -61,8 +62,6 @@
 .overview-stats-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1rem;
-  margin-bottom: 4rem;
 }
 
 @media (min-width: 768px) {
@@ -79,4 +78,42 @@
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1rem;
+}
+
+.tab-description-wrapper {
+  margin-top: 1rem;
+}
+
+.tab-description-text {
+  color: #4b5563;
+  line-height: 1.625;
+  padding: 0.5rem 0.25rem;
+}
+
+.additional-details-section {
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid #e2e8f0;
+}
+
+.detail-info-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.detail-info-label {
+  font-size: 0.875rem;
+  color: #6b7280;
+  margin: 0;
+}
+
+.detail-info-value {
+  font-weight: 500;
+  color: #1a202c;
+  margin: 0;
+}
+
+.verified-status {
+  color: #16a34a;
 }

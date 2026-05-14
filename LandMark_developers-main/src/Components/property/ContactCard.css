@@ -1,5 +1,6 @@
 /* ContactCard.css */
 .contact-card-container {
+  display: none;
   background-color: white;
   border-radius: 0.75rem;
   padding: 1.5rem;

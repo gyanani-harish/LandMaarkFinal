@@ -1,12 +1,12 @@
- 
+
 import React from 'react';
-import { 
-  Bed, Bath, Square, Calendar, Star, Check, X, TrendingDown, 
+import {
+  Bed, Bath, Square, Calendar, Star, Check, X, TrendingDown,
   MapPin, Building2, Home, Ruler, Car, Trees, Wifi, Dumbbell,
   Waves, Shield, Zap, ArrowUpDown, ParkingCircle
 } from 'lucide-react';
 import { CityProperty } from '../../services/services';
- 
+
 interface PropertyTabsProps {
   activeTab: string;
   setActiveTab: (tab: string) => void;
@@ -14,15 +14,15 @@ interface PropertyTabsProps {
   property: CityProperty;
   pricePerSqft: number;
 }
- 
+
 import './PropertyTabs.css';
 
-const PropertyTabs: React.FC<PropertyTabsProps> = ({ 
-  activeTab, 
-  setActiveTab, 
-  tabs, 
+const PropertyTabs: React.FC<PropertyTabsProps> = ({
+  activeTab,
+  setActiveTab,
+  tabs,
   property,
-  pricePerSqft 
+  pricePerSqft
 }) => {
   const renderTabContent = () => {
     switch (activeTab) {
@@ -34,69 +34,71 @@ const PropertyTabs: React.FC<PropertyTabsProps> = ({
                 Property Overview
               </span>
             </h2>
-            
+
             <div className="overview-stats-grid">
               <div className="stat-item">
                 <div className="flex items-center gap-2 mb-2">
-                  <Bed className="w-5 h-5 text-gray-600" />
-                  <p className="text-sm text-gray-500">Bedrooms</p>
-                </div>
-                <p className="font-lg text-left">{property.bhk} BedRoom</p>
-              </div>
-              
-              <div className="stat-item">
-                <div className="flex items-center gap-2 mb-2">
-                  <Bath className="w-5 h-5 text-gray-600" />
-                  <p className="text-sm text-gray-500">Bathrooms</p>
-                </div>
-                <p className=" font-lg text-left">{property.bhk }</p>
-              </div>
-              
-              <div className="stat-item">
-                <div className="flex items-center gap-2 mb-2">
                   <Square className="w-5 h-5 text-gray-600" />
-                  <p className="text-sm text-gray-500">Area</p>
+                  <p className="text-sm text-gray-500">Total Area</p>
                 </div>
-                <p className="font-lg text-left">{property.area_sqft?.toLocaleString()} sq.ft</p>
+                <p className="font-lg text-left">{property.area || 'N/A'}</p>
               </div>
-              
+
+              <div className="stat-item">
+                <div className="flex items-center gap-2 mb-2">
+                  <Calendar className="w-5 h-5 text-gray-600" />
+                  <p className="text-sm text-gray-500">Launch Date</p>
+                </div>
+                <p className="font-lg text-left">{property.launch_date || 'N/A'}</p>
+              </div>
+
+              <div className="stat-item">
+                <div className="flex items-center gap-2 mb-2">
+                  <Building2 className="w-5 h-5 text-gray-600" />
+                  <p className="text-sm text-gray-500">Project Size</p>
+                </div>
+                <p className="font-lg text-left">{property.property_count || 'N/A'} Properties</p>
+              </div>
+
               <div className="stat-item">
                 <div className="flex items-center gap-2 mb-2">
                   <Calendar className="w-5 h-5 text-gray-600" />
                   <p className="text-sm text-gray-500">Possession</p>
                 </div>
-                <p className="font-lg text-left">{property.construction_status }</p>
+                <p className="font-lg text-left">{property.possession_starts || property.construction_status || 'N/A'}</p>
               </div>
             </div>
-            
-            <div className="space-y-4">
-              <p className="text-gray-600">{property.description}</p>
+
+            <div className="tab-description-wrapper">
+              <p className="tab-description-text">{property.description}</p>
             </div>
 
-            <div className="mt-6 border-t pt-6">
+            <div className="additional-details-section">
               <h2 className="section-title">
                 <span className="title-underline">
                   Additional Details
                 </span>
               </h2>
               <div className="additional-details-grid">
-                <div>
-                  <p className="text-sm text-gray-500">Parking</p>
-                  <p className="font-medium">
+                <div className="detail-info-item">
+                  <p className="detail-info-label">Parking</p>
+                  <p className="detail-info-value">
                     {property.amenities.some(a => a.amenity_name === 'Parking') ? 'Available' : 'Not Available'}
                   </p>
                 </div>
-                <div>
-                  <p className="text-sm text-gray-500">Balcony</p>
-                  <p className="font-medium">{property.specifications?.Balcony || 'Not Specified'}</p>
+                <div className="detail-info-item">
+                  <p className="detail-info-label">Balcony</p>
+                  <p className="detail-info-value">{property.specifications?.Balcony || 'Not Specified'}</p>
                 </div>
-                <div>
-                  <p className="text-sm text-gray-500">Property Type</p>
-                  <p className="font-medium">{property.propertyType}</p>
+                <div className="detail-info-item">
+                  <p className="detail-info-label">Property Type</p>
+                  <p className="detail-info-value">{property.propertyType}</p>
                 </div>
-                <div>
-                  <p className="text-sm text-gray-500">Verified</p>
-                  <p className="font-medium text-green-600">{property.verified ? 'Yes' : 'No'}</p>
+                <div className="detail-info-item">
+                  <p className="detail-info-label">Verified</p>
+                  <p className="detail-info-value verified-status">
+                    {property.verified ? 'Yes' : 'No'}
+                  </p>
                 </div>
               </div>
             </div>
@@ -160,7 +162,7 @@ const PropertyTabs: React.FC<PropertyTabsProps> = ({
         return (
           <div>
             <h2 className="section-title">Price Trends</h2>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
               <div className="bg-red-50 p-4 rounded-lg">
                 <div className="flex items-center mb-2">
@@ -261,7 +263,7 @@ const getAmenityIconComponent = (amenityName: string) => {
     'Power Backup': <Zap className="w-5 h-5 text-blue-600" />,
     'Lift': <ArrowUpDown className="w-5 h-5 text-blue-600" />,
   };
-  
+
   return iconMap[amenityName] || <Home className="w-5 h-5 text-blue-600" />;
 };
 

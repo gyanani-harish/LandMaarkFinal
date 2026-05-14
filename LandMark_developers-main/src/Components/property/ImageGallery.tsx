@@ -73,10 +73,10 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images, propertyId, propert
           {isMobile && (
             <div className="prop-gallery-actions-unique">
               <button className="prop-gallery-action-btn-unique" onClick={(e) => { e.stopPropagation(); }}>
-                <Share2 size={24} />
+                <Share2 size={32} strokeWidth={2.5} />
               </button>
               <button className="prop-gallery-action-btn-unique" onClick={(e) => { e.stopPropagation(); }}>
-                <Heart size={24} />
+                <Heart size={32} strokeWidth={2.5} />
               </button>
             </div>
           )}
@@ -104,9 +104,7 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images, propertyId, propert
               className="sidebar-img-wrapper"
             />
             <div className="play-overlay">
-              <div className="play-circle">
-                <Play size={28} fill="white" />
-              </div>
+              <Play size={32} fill="white" />
             </div>
           </div>
 

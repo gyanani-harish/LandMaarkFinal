@@ -117,6 +117,9 @@ const AmenitiesSpecs: React.FC<AmenitiesSpecsProps> = ({ property }) => {
                 </div>
               </div>
             )}
+          </div>
+
+          <div className="amenities-content-card">
             {/* Specifications Section */}
             <div className="specs-section-wrapper">
               <h2 className="section-header-large">

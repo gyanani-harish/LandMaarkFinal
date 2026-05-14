@@ -2,18 +2,21 @@
 .property-detail-container {
   max-width: 1280px;
   margin: 0 auto;
-  background-color: #f9fafb; /* gray-50 */
+  background-color: #f9fafb;
+  /* gray-50 */
   min-height: 100vh;
 }
 
 .desktop-padding {
-  padding: 2rem 1.5rem;
-  margin-top: 4.5rem; /* mt-18 */
+  padding: 0.5rem 1.5rem;
+  margin-top: 3.5rem;
+  /* mt-18 */
 }
 
 .mobile-padding {
   padding: 0;
-  margin-top: 3.5rem; /* mt-14 */
+  margin-top: 3.5rem;
+  /* mt-14 */
 }
 
 .mobile-header-wrapper {
@@ -40,14 +43,16 @@
 }
 
 /* Loading & Error States */
-.loading-wrapper, .error-wrapper {
+.loading-wrapper,
+.error-wrapper {
   display: flex;
   align-items: center;
   justify-content: center;
   min-height: 400px;
 }
 
-.loading-content, .error-content {
+.loading-content,
+.error-content {
   text-align: center;
 }
 
@@ -60,8 +65,13 @@
 }
 
 @keyframes spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .loading-text {
@@ -91,10 +101,8 @@
 .breadcrumbs-desktop {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
   font-size: 0.8125rem;
   color: #718096;
-  margin-bottom: 1.5rem;
 }
 
 .breadcrumb-separator {

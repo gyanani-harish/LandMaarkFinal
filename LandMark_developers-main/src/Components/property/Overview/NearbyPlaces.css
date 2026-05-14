@@ -1,12 +1,10 @@
 /* NearbyPlaces.css */
 .places-divider {
-  border-top: 1px solid #e5e7eb;
-  margin: 1.5rem 0;
+  /* border-top: 1px solid #e5e7eb; */
+  /* margin: 1.5rem 0; */
 }
 
-.places-container {
-  margin-top: 2rem;
-}
+.places-container {}
 
 .places-header {
   font-size: 1.25rem;
