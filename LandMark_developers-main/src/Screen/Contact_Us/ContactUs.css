@@ -1,6 +1,8 @@
 .cu-page {
   width: 100%;
-  padding-top: 6rem; /* Increased to clear fixed navbar */
+  height: 99vh;
+  padding-top: 6rem;
+  /* Restored top padding */
   padding-bottom: 0;
   margin-bottom: 0;
   background: #ffffff;
@@ -38,13 +40,15 @@
 .cu-map-section {
   width: 100%;
   padding: 0 1rem;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
+  /* Reduced bottom margin */
 }
 
 .cu-map-container {
   position: relative;
   width: 100%;
-  height: 200px;
+  height: 180px;
+  /* Reduced from 200px */
   border-radius: 1rem;
   overflow: hidden;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
@@ -62,7 +66,8 @@
   padding: 0 0.5rem 0;
   display: grid;
   grid-template-columns: 1fr;
-  gap: 1.5rem;
+  gap: 1rem;
+  /* Reduced gap between text and form */
   align-items: start;
 }
 
@@ -192,7 +197,8 @@
 /* ===== Tablet ===== */
 @media (min-width: 640px) {
   .cu-page {
-    padding-top: 7rem; /* Increased for tablet */
+    padding-top: 7rem;
+    /* Restored for tablet */
   }
 
   .cu-map-section {
@@ -200,7 +206,8 @@
   }
 
   .cu-map-container {
-    height: 280px;
+    height: 240px;
+    /* Reduced from 280px */
   }
 
   .cu-main {
@@ -229,7 +236,8 @@
 /* ===== Desktop ===== */
 @media (min-width: 1024px) {
   .cu-page {
-    padding-top: 8rem; /* Increased for desktop */
+    padding-top: 8rem;
+    /* Restored for desktop */
   }
 
   .cu-map-section {
@@ -237,7 +245,8 @@
   }
 
   .cu-map-container {
-    height: 450px;
+    height: 380px;
+    /* Reduced from 450px */
   }
 
   .cu-main {

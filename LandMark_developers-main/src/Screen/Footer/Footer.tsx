@@ -15,8 +15,8 @@ import "./Footer.css";
 const Footer = () => {
   const locations = [
     {
-      city: "Ajmer- LandMaark Properties",
-      address: "676H+2G2 -  Street New Salata, Doha, Qatar",
+      city: "Ajmer LandMaark Properties",
+      address: "Pushkar Bypass Rd, opp. AIT College, Panchsheel Nagar, Ajmer, Rajasthan 305004",
       phone: "CALL NOW",
     },
   ];
@@ -71,11 +71,9 @@ const Footer = () => {
                       <MapPin className="location-icon" />
                       <span>{location.city}</span>
                     </h3>
-
                     <p className="location-address">
                       {location.address}
                     </p>
-
                     <div className="location-contact">
                       <Phone className="location-icon" />
                       <span className="contact-phone-label">
@@ -116,13 +114,7 @@ const Footer = () => {
         <div className="footer-bottom-bar">
           <div className="footer-bottom-flex">
             <div className="contact-links">
-              <a
-                href="mailto:info@damacproperties.com"
-                className="contact-link-item"
-              >
-                <Mail className="location-icon" />
-                info@damacproperties.com
-              </a>
+
               <a
                 href="https://damacproperties.com"
                 target="_blank"
