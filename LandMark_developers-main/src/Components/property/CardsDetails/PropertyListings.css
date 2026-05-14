@@ -68,6 +68,20 @@
   margin-left: 4px;
 }
 
+.township-banner {
+  padding: 24px 24px 0 24px;
+  background: white;
+  text-align: center;
+}
+
+.township-banner h1 {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 800;
+  color: #4f46e5; /* Custom Indigo */
+  letter-spacing: -0.02em;
+}
+
 /* Table Container */
 .table-container {
   background: white;
@@ -686,31 +700,159 @@ tbody td {
   to { transform: translateY(0); }
 }
 
-/* Compact Mobile Cards (Matching the Image) */
-.card-header-compact {
-  padding: 10px 12px;
+/* Project Details Cards Grid - Collabs Style with Custom Colors */
+.project-details-cards-grid {
   display: flex;
-  align-items: center;
-  gap: 12px;
-  background: white;
+  flex-direction: column;
+  gap: 2px; /* Even tighter for zebra effect */
+  padding: 8px 0;
+}
+
+.project-detail-card {
+  border: none;
+  border-radius: 4px;
+  overflow: hidden;
+  transition: all 0.2s ease;
   cursor: pointer;
 }
 
-.card-plot-badge {
-  background: #f0f4ff;
-  color: #4c6ef5;
-  padding: 6px 12px;
-  border-radius: 6px;
+/* Zebra Striping */
+.project-detail-card:nth-child(odd) {
+  background: #ffffff;
+}
+
+.project-detail-card:nth-child(even) {
+  background: #f1f5f9;
+}
+
+.project-detail-card.active {
+  border-color: #4f46e5;
+  box-shadow: 0 4px 12px rgba(79, 70, 229, 0.1);
+  margin-bottom: 4px;
+  margin-top: 2px;
+  background: #ffffff !important; /* Ensure active is always clean */
+}
+
+.card-header-compact {
+  padding: 8px 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: transparent; /* Use parent background */
+}
+
+.header-left-side {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.plot-id {
   font-size: 13px;
-  font-weight: 600;
-  border: 1px solid rgba(76, 110, 245, 0.1);
+  font-weight: 700;
+  color: #4f46e5; /* Custom Indigo */
+  background: #f1f5ff; /* Custom Light Blue BG */
+  padding: 4px 8px;
+  border: 1px solid #e0e7ff; /* Custom Border */
+  border-radius: 4px;
   white-space: nowrap;
 }
 
-.card-size-text {
+.subtitle-divider {
+  color: #cbd5e0;
+  font-size: 12px;
+}
+
+.card-subtitle {
+  font-size: 13px;
+  color: #475569;
+  font-weight: 600;
+}
+
+.header-right-side {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.compact-price {
   font-size: 14px;
-  color: #495057;
-  font-weight: 500;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.arrow-icon {
+  color: #94a3b8;
+  transition: transform 0.3s ease;
+}
+
+.arrow-icon.rotate {
+  transform: rotate(90deg);
+  color: #4f46e5;
+}
+
+.card-expanded-panel {
+  padding: 14px;
+  background: #ffffff;
+  border-top: 1px solid #f1f5f9;
+  animation: slideDownFade 0.2s ease-out;
+}
+
+.expanded-info-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.info-item {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.info-item .label {
+  font-size: 10px;
+  color: #94a3b8;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.info-item .value {
+  font-size: 13px;
+  color: #1e293b;
+  font-weight: 600;
+}
+
+.status-highlight {
+  color: #4f46e5 !important;
+}
+
+@keyframes slideDownFade {
+  from { opacity: 0; transform: translateY(-3px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive Overrides for Collabs View */
+@media (max-width: 1024px) {
+  .table-view {
+    display: none;
+  }
+  
+  .project-details-cards-grid {
+    display: flex;
+  }
+}
+
+@media (min-width: 1025px) {
+  .project-details-cards-grid {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .expanded-info-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* Responsive Design */
@@ -815,6 +957,16 @@ tbody td {
 
   tbody td {
     border: 1px solid #ddd;
+  }
+}
+
+@media (max-width: 768px) {
+  .township-banner {
+    padding: 16px 16px 0 16px;
+  }
+
+  .township-banner h1 {
+    font-size: 20px;
   }
 }
 

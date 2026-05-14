@@ -35,7 +35,7 @@ const PropertyDetailPage = () => {
         const townshipId = id || '9';
         
         // Fetch all properties from the specific township API
-        const url = `${ApiConstants.API_BASE_URL}${ApiEndPoints.TOWNSHIP_PROPERTIES_FULL(townshipId)}`;
+        const url = `${ApiConstants.API_BASE_URL}${ApiEndPoints.TOWNSHIP_PROPERTIES_FULL(Number(townshipId))}`;
         
         const response = await fetch(url);
         
@@ -44,7 +44,7 @@ const PropertyDetailPage = () => {
         }
         
         const result = await response.json();
-        const properties: any[] = result.data || result;
+        const properties: any[] = result.data?.properties || [];
         setAllTownshipProperties(properties);
         
         // Find the specific property by ID

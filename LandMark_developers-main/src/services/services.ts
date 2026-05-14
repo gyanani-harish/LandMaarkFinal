@@ -75,7 +75,7 @@ export const fetchProperties = async (townshipId: number = 9): Promise<CityPrope
     }
     
     const result = await response.json();
-    const propertiesData = result.data || [];
+    const propertiesData = result.data?.properties || [];
     
     return propertiesData.map((item: any) => {
       // Safely parse price

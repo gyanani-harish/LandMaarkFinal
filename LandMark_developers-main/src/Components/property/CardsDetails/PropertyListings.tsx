@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import './PropertyListings.css'; // Import the CSS file for styling
 import PropertyFilters from './PropertyFilters';
-import { SlidersHorizontal } from 'lucide-react';
+import { SlidersHorizontal, ChevronRight } from 'lucide-react';
 
 interface Property {
   sno: number;
@@ -21,7 +21,10 @@ interface Property {
 
 interface ApiResponse {
   success: boolean;
-  data: ApiProperty[];
+  data: {
+    properties: ApiProperty[];
+    [key: string]: any;
+  };
   summary?: any;
 }
 
@@ -65,15 +68,17 @@ const PropertyListings: React.FC<PropertyListingsProps> = ({ initialData }) => {
   });
   const [activeDetails, setActiveDetails] = useState<number | null>(null);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const [townshipName, setTownshipName] = useState<string>('');
 
   const [filters, setFilters] = useState({
-    bhk: '',
-    status: '',
     subTownship: '',
+    projectArea: '',
+    configuration: '',
+    status: '',
     sortBy: '',
   });
 
-  const API_URL = `https://unimmunized-rosella-hedonistically.ngrok-free.dev/api/townships/${localStorage.getItem('selectedTownshipId') || 10}/properties`;
+  const API_URL = `https://unimmunized-rosella-hedonistically.ngrok-free.dev/api/townshipDetails?id=${localStorage.getItem('selectedTownshipId') || 17}`;
 
   const extractBhk = (type: string): string => {
     const match = type.match(/(\d+)\s*BHK/i);
@@ -119,20 +124,21 @@ const PropertyListings: React.FC<PropertyListingsProps> = ({ initialData }) => {
   };
 
   const fetchData = async () => {
-    if (initialData && initialData.length > 0) {
-      processApiData(initialData);
-      setLoading(false);
-      return;
-    }
-
     setLoading(true);
     setError(null);
     try {
       const response = await fetch(API_URL);
       const result: ApiResponse = await response.json();
 
-      if (result.success) {
-        processApiData(result.data);
+      if (result.success && result.data) {
+        setTownshipName(result.data.name || '');
+        
+        // Only process properties if we don't have initialData
+        if (!(initialData && initialData.length > 0)) {
+          processApiData(result.data.properties || []);
+        } else {
+          processApiData(initialData);
+        }
       } else {
         setError('Failed to load data');
       }
@@ -173,9 +179,37 @@ const PropertyListings: React.FC<PropertyListingsProps> = ({ initialData }) => {
   const filterData = () => {
     let filtered = [...plotData];
 
-    // BHK filter
-    if (filters.bhk) {
-      filtered = filtered.filter(p => p.bhk === filters.bhk);
+    // Sub Township filter
+    if (filters.subTownship) {
+      filtered = filtered.filter(p => {
+        const kv = p.rawKeyValues?.reduce((acc: any, item: any) => {
+          acc[item.key] = item.value;
+          return acc;
+        }, {}) || {};
+        return (kv['Sub Township'] || '').toLowerCase() === filters.subTownship.toLowerCase();
+      });
+    }
+
+    // Project Area filter
+    if (filters.projectArea) {
+      filtered = filtered.filter(p => {
+        const kv = p.rawKeyValues?.reduce((acc: any, item: any) => {
+          acc[item.key] = item.value;
+          return acc;
+        }, {}) || {};
+        return (kv['Project Area'] || '').toLowerCase() === filters.projectArea.toLowerCase();
+      });
+    }
+
+    // Configuration filter
+    if (filters.configuration) {
+      filtered = filtered.filter(p => {
+        const kv = p.rawKeyValues?.reduce((acc: any, item: any) => {
+          acc[item.key] = item.value;
+          return acc;
+        }, {}) || {};
+        return (kv['Configuration'] || '').toLowerCase() === filters.configuration.toLowerCase();
+      });
     }
 
     // Status filter
@@ -186,17 +220,6 @@ const PropertyListings: React.FC<PropertyListingsProps> = ({ initialData }) => {
           return acc;
         }, {}) || {};
         return (kv['Construction Status'] || '').toLowerCase() === filters.status.toLowerCase();
-      });
-    }
-
-    // Sub Township filter
-    if (filters.subTownship) {
-      filtered = filtered.filter(p => {
-        const kv = p.rawKeyValues?.reduce((acc: any, item: any) => {
-          acc[item.key] = item.value;
-          return acc;
-        }, {}) || {};
-        return (kv['Sub Township'] || '').toLowerCase() === filters.subTownship.toLowerCase();
       });
     }
 
@@ -261,9 +284,14 @@ const PropertyListings: React.FC<PropertyListingsProps> = ({ initialData }) => {
     <div className="container">
 
       <div className="table-container">
+        {townshipName && (
+          <div className="township-banner">
+            <h1>{townshipName}</h1>
+          </div>
+        )}
         <div className="table-header">
           <div className="header-title-section">
-            <h2>Property List</h2>
+            <h2>{townshipName || 'Property List'}</h2>
             <div className="count">({filteredData.length})</div>
           </div>
 
@@ -278,7 +306,7 @@ const PropertyListings: React.FC<PropertyListingsProps> = ({ initialData }) => {
           </div>
         </div>
 
-        <div className="mobile-cards">
+        <div className="project-details-cards-grid">
           {error ? (
             <div className="empty-state">
               <i className="fas fa-exclamation-circle"></i>
@@ -291,29 +319,48 @@ const PropertyListings: React.FC<PropertyListingsProps> = ({ initialData }) => {
             </div>
           ) : (
             filteredData.map((plot, index) => (
-              <div key={plot.sno} className="mobile-card">
-                <div
-                  className="card-header-compact"
-                  onClick={() => toggleDetails(index)}
-                >
-                  <div className="card-plot-badge">
-                    Plot: #{plot.plotNo}
+              <div 
+                key={plot.sno} 
+                className={`project-detail-card ${activeDetails === index ? 'active' : ''}`}
+                onClick={() => toggleDetails(index)}
+              >
+                <div className="card-header-compact">
+                  <div className="header-left-side">
+                    <span className="plot-id">Plot {plot.plotNo}</span>
+                    <span className="card-subtitle">{plot.size}</span>
                   </div>
-                  <div className="card-size-text">
-                    {plot.size}
+                  <div className="header-right-side">
+                    <span className="compact-price">{plot.price > 0 ? `₹${plot.price} L` : ''}</span>
+                    <ChevronRight size={18} className={`arrow-icon ${activeDetails === index ? 'rotate' : ''}`} />
                   </div>
                 </div>
 
                 {activeDetails === index && (
-                  <div className="card-content">
-                    {plot.rawKeyValues
-                      .filter((kv: any) => !['Is Deleted', 'ID', 'Plot', 'Price', 'Price (Lakhs)', 'Total Price'].includes(kv.key))
-                      .map((kv: any, i: number) => (
-                        <div key={i} className="card-detail">
-                          <p className="detail-label">{kv.key}</p>
-                          <p className="detail-value">{kv.value}</p>
+                  <div className="card-expanded-panel" onClick={(e) => e.stopPropagation()}>
+                    <div className="expanded-info-grid">
+                      <div className="info-item">
+                        <span className="label">Configuration:</span>
+                        <span className="value">{plot.rawKeyValues.find(kv => kv.key === 'Configuration')?.value || ''}</span>
+                      </div>
+                      <div className="info-item">
+                        <span className="label">Size:</span>
+                        <span className="value">{plot.size}</span>
+                      </div>
+                      <div className="info-item">
+                        <span className="label">Sub Township:</span>
+                        <span className="value">{plot.rawKeyValues.find(kv => kv.key === 'Sub Township')?.value || ''}</span>
+                      </div>
+                      <div className="info-item">
+                        <span className="label">Construction Status:</span>
+                        <span className="value status-highlight">{plot.rawKeyValues.find(kv => kv.key === 'Construction Status')?.value || ''}</span>
+                      </div>
+                      {plot.rawKeyValues.filter(kv => !['Plot', 'Configuration', 'Size', 'Sub Township', 'Construction Status', 'ID', 'Price', 'Is Deleted'].includes(kv.key)).map((kv, i) => (
+                        <div key={i} className="info-item">
+                          <span className="label">{kv.key}:</span>
+                          <span className="value">{kv.value}</span>
                         </div>
                       ))}
+                    </div>
                   </div>
                 )}
               </div>

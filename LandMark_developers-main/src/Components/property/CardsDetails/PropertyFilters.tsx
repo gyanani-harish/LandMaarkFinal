@@ -8,9 +8,10 @@ interface Property {
 
 interface PropertyFiltersProps {
   filters: {
-    bhk: string;
-    status: string;
     subTownship: string;
+    projectArea: string;
+    configuration: string;
+    status: string;
     sortBy: string;
   };
   plotData: Property[];
@@ -26,11 +27,19 @@ const PropertyFilters: React.FC<PropertyFiltersProps> = ({
   isMobileOpen,
   setIsMobileOpen,
 }) => {
-  const uniqueBhk = [...new Set(plotData.map(p => p.bhk).filter(Boolean))].sort();
-
   const uniqueSubTownships = [...new Set(plotData.map(p => {
     const kv = p.rawKeyValues?.reduce((acc: any, item: any) => { acc[item.key] = item.value; return acc; }, {}) || {};
     return kv['Sub Township'];
+  }).filter(Boolean))].sort();
+
+  const uniqueProjectAreas = [...new Set(plotData.map(p => {
+    const kv = p.rawKeyValues?.reduce((acc: any, item: any) => { acc[item.key] = item.value; return acc; }, {}) || {};
+    return kv['Project Area'];
+  }).filter(Boolean))].sort();
+
+  const uniqueConfigurations = [...new Set(plotData.map(p => {
+    const kv = p.rawKeyValues?.reduce((acc: any, item: any) => { acc[item.key] = item.value; return acc; }, {}) || {};
+    return kv['Configuration'];
   }).filter(Boolean))].sort();
 
   const uniqueStatus = [...new Set(plotData.map(p => {
@@ -41,21 +50,31 @@ const PropertyFilters: React.FC<PropertyFiltersProps> = ({
   const filterContent = (isMobile: boolean) => (
     <div className={isMobile ? "mobile-filters-grid" : "filters"}>
       <div className={isMobile ? "filter-group" : ""}>
-        {isMobile && <label>BHK</label>}
-        <select value={filters.bhk} onChange={(e) => onFilterChange('bhk', e.target.value)}>
-          <option value="">All BHK</option>
-          {uniqueBhk.map(b => (
-            <option key={b} value={b}>{b} BHK</option>
-          ))}
-        </select>
-      </div>
-
-      <div className={isMobile ? "filter-group" : ""}>
         {isMobile && <label>Sub Township</label>}
         <select value={filters.subTownship} onChange={(e) => onFilterChange('subTownship', e.target.value)}>
           <option value="">All Sub Townships</option>
           {uniqueSubTownships.map(st => (
             <option key={st} value={st}>{st}</option>
+          ))}
+        </select>
+      </div>
+
+      <div className={isMobile ? "filter-group" : ""}>
+        {isMobile && <label>Project Area</label>}
+        <select value={filters.projectArea} onChange={(e) => onFilterChange('projectArea', e.target.value)}>
+          <option value="">All Project Areas</option>
+          {uniqueProjectAreas.map(pa => (
+            <option key={pa} value={pa}>{pa}</option>
+          ))}
+        </select>
+      </div>
+
+      <div className={isMobile ? "filter-group" : ""}>
+        {isMobile && <label>Configuration</label>}
+        <select value={filters.configuration} onChange={(e) => onFilterChange('configuration', e.target.value)}>
+          <option value="">All Configurations</option>
+          {uniqueConfigurations.map(c => (
+            <option key={c} value={c}>{c}</option>
           ))}
         </select>
       </div>

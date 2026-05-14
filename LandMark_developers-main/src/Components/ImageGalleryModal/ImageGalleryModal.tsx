@@ -1,6 +1,7 @@
 // src/components/ImageGalleryModal/ImageGalleryModal.jsx
 import React, { useState, useEffect, useRef } from 'react';
-import { X, ChevronLeft, ChevronRight, Download, Heart, Share2, Maximize2, Minimize2 } from 'lucide-react';
+import { X, ChevronLeft, ChevronRight } from 'lucide-react';
+import './ImageGalleryModal.css';
 
 import { CityProperty } from '../../services/services';
 
@@ -29,39 +30,22 @@ const ImageGalleryModal: React.FC<ImageGalleryModalProps> = ({ isOpen, onClose, 
 
   const loadImages = () => {
     setLoading(true);
-    
     try {
-      console.log('Loading images for property:', property);
-      
-      // Get images from property object
       let propertyImages: string[] = [];
-      
-      // Check if property has allImages array (from our updated API)
       if (property.allImages && property.allImages.length > 0) {
         propertyImages = property.allImages;
-      } 
-      // Check if property has images array
-      else if (property.images && property.images.length > 0) {
+      } else if (property.images && property.images.length > 0) {
         propertyImages = property.images;
-      }
-      // Check if property has single image
-      else if (property.image) {
+      } else if (property.image) {
         propertyImages = [property.image];
       }
       
-      console.log('Loaded images:', propertyImages);
-      
       if (!propertyImages || propertyImages.length === 0) {
-        // If no images found, use placeholder
         propertyImages = ['https://via.placeholder.com/800x600?text=No+Images+Available'];
       }
-      
       setImages(propertyImages);
-      
-      // Ensure initial index is within bounds
       const validIndex = Math.min(initialImageIndex, propertyImages.length - 1);
       setCurrentIndex(validIndex >= 0 ? validIndex : 0);
-      
     } catch (err) {
       console.error('Error loading images:', err);
       setImages(['https://via.placeholder.com/800x600?text=Error+Loading+Images']);
@@ -116,56 +100,6 @@ const ImageGalleryModal: React.FC<ImageGalleryModalProps> = ({ isOpen, onClose, 
     };
   }, [isOpen, images.length]);
 
-  const handleDownload = async () => {
-    if (!images[currentIndex]) return;
-    
-    try {
-      const response = await fetch(images[currentIndex]);
-      const blob = await response.blob();
-      const url = window.URL.createObjectURL(blob);
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = `property-image-${property?.id || 'unknown'}-${currentIndex + 1}.jpg`;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      window.URL.revokeObjectURL(url);
-    } catch (err) {
-      console.error('Failed to download image:', err);
-      window.open(images[currentIndex], '_blank');
-    }
-  };
-
-  const handleShare = async () => {
-    if (!images[currentIndex]) return;
-    
-    try {
-      if (navigator.share) {
-        await navigator.share({
-          title: property?.title || 'Property Image',
-          text: `Check out this beautiful property image`,
-          url: images[currentIndex],
-        });
-      } else {
-        await navigator.clipboard.writeText(images[currentIndex]);
-        alert('Image URL copied to clipboard!');
-      }
-    } catch (err) {
-      console.error('Failed to share:', err);
-      try {
-        await navigator.clipboard.writeText(images[currentIndex]);
-        alert('Image URL copied to clipboard!');
-      } catch (clipboardErr) {
-        alert('Unable to share or copy URL');
-      }
-    }
-  };
-
-  const handleFavorite = () => {
-    console.log('Added to favorites:', property?.id, images[currentIndex]);
-    alert('Added to favorites!');
-  };
-
   const toggleZoom = () => {
     setIsZoomed(!isZoomed);
     setZoomPosition({ x: 0, y: 0 });
@@ -184,54 +118,52 @@ const ImageGalleryModal: React.FC<ImageGalleryModalProps> = ({ isOpen, onClose, 
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 backdrop-blur-sm">
-      <div className="relative w-full h-full max-w-7xl mx-auto p-4">
+    <div className="gallery-overlay">
+      <div className="gallery-container">
         {/* Close button */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 z-20 p-2 bg-white/10 hover:bg-white/20 rounded-full text-white transition-all duration-200 hover:scale-110"
+          className="gallery-close-btn"
           aria-label="Close gallery"
         >
-          <X className="w-6 h-6" />
+          <X size={24} />
         </button>
 
         {/* Image counter */}
         {!loading && images.length > 0 && (
-          <div className="absolute top-4 left-1/2 transform -translate-x-1/2 z-20 bg-black/50 backdrop-blur-md rounded-full px-4 py-2 text-white text-sm">
+          <div className="gallery-counter">
             <span>{currentIndex + 1} / {images.length}</span>
           </div>
         )}
 
         {/* Main content - Carousel */}
         <div 
-          className="relative w-full h-full flex items-center justify-center"
+          className="gallery-main-viewport"
           onTouchStart={handleTouchStart}
           onTouchEnd={handleTouchEnd}
           onMouseMove={handleMouseMove}
         >
           {loading ? (
-            <div className="text-white text-center">
-              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white mx-auto mb-4"></div>
+            <div className="gallery-loading">
+              <div className="gallery-spinner"></div>
               <p>Loading images...</p>
             </div>
           ) : images.length > 0 ? (
-            <div className="relative w-full h-full flex items-center justify-center">
+            <div className="gallery-image-wrapper">
               <div 
                 ref={imageRef}
-                className={`relative ${isZoomed ? 'cursor-zoom-out' : 'cursor-zoom-in'}`}
+                className={`gallery-image-container ${isZoomed ? 'cursor-zoom-out' : 'cursor-zoom-in'}`}
                 onClick={toggleZoom}
               >
                 <img
                   src={images[currentIndex]}
                   alt={property?.title || `Property image ${currentIndex + 1}`}
-                  className={`max-w-full max-h-full object-contain transition-all duration-300 ${
-                    isZoomed ? 'scale-150 cursor-zoom-out' : 'scale-100 cursor-zoom-in'
-                  }`}
+                  className="gallery-main-image"
                   style={{
+                    transform: isZoomed ? 'scale(1.5)' : 'scale(1)',
                     transformOrigin: isZoomed ? `${zoomPosition.x}% ${zoomPosition.y}%` : 'center'
                   }}
                   onError={(e) => {
-                    console.error('Image failed to load:', images[currentIndex]);
                     const target = e.target as HTMLImageElement;
                     target.onerror = null;
                     target.src = 'https://via.placeholder.com/800x600?text=Image+Load+Error';
@@ -244,23 +176,23 @@ const ImageGalleryModal: React.FC<ImageGalleryModalProps> = ({ isOpen, onClose, 
                 <>
                   <button
                     onClick={handlePrevious}
-                    className="absolute left-4 top-1/2 transform -translate-y-1/2 p-3 bg-white/10 hover:bg-white/20 rounded-full text-white transition-all duration-200 hover:scale-110 z-10"
+                    className="gallery-nav-btn prev"
                     aria-label="Previous image"
                   >
-                    <ChevronLeft className="w-8 h-8" />
+                    <ChevronLeft size={32} />
                   </button>
                   <button
                     onClick={handleNext}
-                    className="absolute right-4 top-1/2 transform -translate-y-1/2 p-3 bg-white/10 hover:bg-white/20 rounded-full text-white transition-all duration-200 hover:scale-110 z-10"
+                    className="gallery-nav-btn next"
                     aria-label="Next image"
                   >
-                    <ChevronRight className="w-8 h-8" />
+                    <ChevronRight size={32} />
                   </button>
                 </>
               )}
             </div>
           ) : (
-            <div className="text-white text-center">
+            <div className="gallery-loading">
               <p>No images available</p>
             </div>
           )}
@@ -268,8 +200,8 @@ const ImageGalleryModal: React.FC<ImageGalleryModalProps> = ({ isOpen, onClose, 
 
         {/* Thumbnail strip */}
         {!loading && images.length > 1 && (
-          <div className="absolute bottom-4 left-0 right-0 z-20">
-            <div className="flex justify-center gap-2 overflow-x-auto px-4 pb-2 scrollbar-thin scrollbar-thumb-white/20">
+          <div className="thumbnail-strip-container">
+            <div className="thumbnail-strip">
               {images.map((image, idx) => (
                 <button
                   key={idx}
@@ -277,17 +209,13 @@ const ImageGalleryModal: React.FC<ImageGalleryModalProps> = ({ isOpen, onClose, 
                     setCurrentIndex(idx);
                     setIsZoomed(false);
                   }}
-                  className={`flex-shrink-0 w-16 h-16 rounded-lg overflow-hidden transition-all duration-200 ${
-                    idx === currentIndex 
-                      ? 'ring-2 ring-blue-500 scale-105 shadow-lg' 
-                      : 'opacity-60 hover:opacity-100 hover:scale-105'
-                  }`}
+                  className={`thumbnail-btn ${idx === currentIndex ? 'active' : ''}`}
                   aria-label={`Go to image ${idx + 1}`}
                 >
                   <img
                     src={image}
                     alt={`Thumbnail ${idx + 1}`}
-                    className="w-full h-full object-cover"
+                    className="thumbnail-img"
                     onError={(e) => {
                       const target = e.target as HTMLImageElement;
                       target.onerror = null;

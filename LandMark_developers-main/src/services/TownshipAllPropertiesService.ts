@@ -19,7 +19,7 @@ export const fetchTownshipAllProperties = async (townshipId: number): Promise<To
       `${ApiConstants.API_BASE_URL}${ApiEndPoints.TOWNSHIP_PROPERTIES_FULL(townshipId)}`,
       { headers: ApiConstants.HEADERS }
     );
-    return response.data.data || [];
+    return response.data.data?.properties || [];
   } catch (error) {
     console.error('Error fetching township all properties:', error);
     return [];
