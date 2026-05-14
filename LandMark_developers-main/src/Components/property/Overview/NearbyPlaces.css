@@ -1,0 +1,55 @@
+/* NearbyPlaces.css */
+.places-divider {
+  border-top: 1px solid #e5e7eb;
+  margin: 1.5rem 0;
+}
+
+.places-container {
+  margin-top: 2rem;
+}
+
+.places-header {
+  font-size: 1.25rem;
+  text-align: left;
+  font-weight: 700;
+  border-bottom: 2px solid #e5e7eb;
+  width: fit-content;
+  margin-bottom: 2rem;
+  padding-bottom: 0.25rem;
+}
+
+.places-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+@media (min-width: 640px) {
+  .places-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.place-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem;
+  background-color: #f9fafb;
+  border-radius: 0.5rem;
+}
+
+.place-info-name {
+  font-weight: 500;
+  font-size: 0.875rem;
+}
+
+.place-info-category {
+  font-size: 0.75rem;
+  color: #6b7280;
+}
+
+.place-distance {
+  font-size: 0.75rem;
+  color: #2563eb;
+}

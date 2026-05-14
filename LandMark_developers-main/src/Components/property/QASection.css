@@ -1,0 +1,72 @@
+/* QASection.css */
+.qa-section-container {
+  background-color: white;
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  margin-top: 1.5rem;
+}
+
+.qa-section-hidden {
+  display: none;
+}
+
+.qa-title {
+  font-size: 1.25rem;
+  text-align: left;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+}
+
+.qa-title-underline {
+  border-bottom: 2px solid #d1d5db;
+  padding-bottom: 0.25rem;
+  display: inline-block;
+  width: 100%;
+}
+
+.qa-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  text-align: left;
+}
+
+.qa-item {
+  border-bottom: 1px solid #e5e7eb;
+  padding-bottom: 1rem;
+}
+
+.qa-question {
+  font-weight: 500;
+}
+
+.qa-answer {
+  color: #4b5563;
+  margin-top: 0.25rem;
+}
+
+.qa-date {
+  font-size: 0.75rem;
+  color: #9ca3af;
+  margin-top: 0.5rem;
+}
+
+.qa-button {
+  background-color: #03a1fc;
+  padding: 0.5rem 1.5rem;
+  border: none;
+  border-radius: 0.25rem;
+  margin-top: 1.25rem;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.qa-button:hover {
+  opacity: 0.9;
+}
+
+.qa-button-text {
+  color: white;
+  font-weight: 700;
+}

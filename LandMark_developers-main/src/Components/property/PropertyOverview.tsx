@@ -1,54 +1,62 @@
 
 import React from 'react';
+import { MapPin, Calendar, Building2, Grid, Hash, Ruler, TrendingUp, Layers, Home, BarChart3 } from 'lucide-react';
 import { CityProperty } from '../../services/services';
 import OverviewItem from './Overview/OverviewItem';
 import ActionButtons from './Overview/ActionButtons';
 import NearbyPlaces from './Overview/NearbyPlaces';
 import DescriptionSection from './Overview/DescriptionSection';
+import './PropertyOverview.css';
 
 interface PropertyOverviewProps {
   property: CityProperty;
   pricePerSqft: number;
+  townshipName?: string;
+  townshipData?: any;
 }
 
-const PropertyOverview: React.FC<PropertyOverviewProps> = ({ property, pricePerSqft }) => {
-  console.log('Rendering PropertyOverview with property:', property);
-  // Display key property fields as overview items
+const PropertyOverview: React.FC<PropertyOverviewProps> = ({ property, pricePerSqft, townshipName, townshipData }) => {
+  // Use township-level data for the overview items
+  const td = townshipData || {};
+
   const overviewItems = [
-    { label: 'Longitude', value: property.longitude || 'N/A' },
-    { label: 'Latitude', value: property.latitude || 'N/A' },
-    { label: 'BHK', value: property.bhk || 'N/A' },
-    { label: 'Property Type', value: property.propertyType || property.property_type || 'N/A' },
-    { label: 'Construction Status', value: property.construction_status || 'N/A' },
-    { label: 'Construction Type', value: property.construction_type || 'N/A' },
-    { label: 'Area (sq.ft)', value: property.area_sqft || 'N/A' },
-    { label: 'Size', value: property.size || 'N/A' },
-    { label: 'Project Size', value: property.project_size || 'N/A' },
-    { label: 'Launch Date', value: property.launch_date ? new Date(property.launch_date).toLocaleDateString('en-US', { month: 'short', year: 'numeric' }) : 'N/A' },
-    { label: 'RERA ID', value: property.rera_id || 'N/A' },
+    { label: 'Area Unit', value: td.area_unit || property.area || 'N/A', icon: Ruler },
+    { label: 'Avg. Price', value: td.avg_price || (pricePerSqft > 0 ? `₹${pricePerSqft.toLocaleString()}/sq.ft` : 'N/A'), icon: TrendingUp },
+    { label: 'Configurations', value: td.configurations || property.propertyType || 'N/A', icon: Home },
+    { label: 'Latitude', value: td.latitude || property.latitude || 'N/A', icon: MapPin },
+    { label: 'Launch Date', value: td.launch_date ? new Date(td.launch_date).toLocaleDateString('en-US', { month: 'short', year: 'numeric' }) : (property.launch_date ? new Date(property.launch_date).toLocaleDateString('en-US', { month: 'short', year: 'numeric' }) : 'N/A'), icon: Calendar },
+    { label: 'Longitude', value: td.longitude || property.longitude || 'N/A', icon: MapPin },
+    { label: 'Possession Starts', value: td.possession_starts || property.construction_status || 'N/A', icon: Building2 },
+    { label: 'Project Area', value: td.project_area || property.project_size || 'N/A', icon: Grid },
+    { label: 'Property Count', value: td.property_count || 'N/A', icon: BarChart3 },
+    { label: 'RERA ID', value: td.rera_id || property.rera_id || 'N/A', icon: Hash },
+    { label: 'Sizes', value: td.sizes || property.size || 'N/A', icon: Layers },
   ];
 
   const handleShare = () => console.log('Share clicked');
   const handleSave = () => console.log('Save clicked');
   const handleAskDetails = () => console.log('Ask for details clicked');
 
+  const displayName = townshipName || property.title || 'Township';
+
   return (
-    <div className="max-w-7xl mx-auto px-4 py-10">
-      <div className="grid grid-cols-1 lg:grid-cols-3 -mt-10">
-        <div className="lg:col-span-2 bg-white p-8 shadow-sm">
-          <h2 className="text-3xl text-left w-7/13 left-0 border-b w-full border-gray-400 font-bold mb-8">
-            {property.title} Overview
+    <div className="property-overview-container">
+      <div className="overview-grid">
+        <div className="overview-main">
+          <h2 className="overview-header">
+            {displayName} Overview
           </h2>
           
           {/* Overview Items Grid */}
-          <div className="mb-10">
+          <div className="mb-4">
             {overviewItems && overviewItems.length > 0 ? (
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 text-left">
+              <div className="items-grid">
                 {overviewItems.map((item, index) => (
                   <OverviewItem
                     key={index}
                     label={item.label}
                     value={String(item.value)}
+                    icon={item.icon}
                   />
                 ))}
               </div>

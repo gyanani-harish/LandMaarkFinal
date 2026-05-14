@@ -1,71 +1,72 @@
 import React from 'react';
 import { Building, Award, Check, User, Phone, Mail } from 'lucide-react';
+import './ContactCard.css';
 
 const ContactCard = () => {
   return (
-    <div className="bg-white rounded-xl p-6 shadow-sm sticky top-4">
-      <div className="text-center mb-6">
-        <div className="inline-flex items-center justify-center w-16 h-16 bg-blue-100 rounded-full mb-4">
-          <Building className="w-8 h-8 text-blue-600" />
+    <div className="contact-card-container">
+      <div className="contact-header">
+        <div className="contact-icon-wrapper">
+          <Building className="contact-main-icon" />
         </div>
-        <h3 className="font-semibold text-lg">Volt Group</h3>
-        <p className="text-sm text-gray-500 flex items-center justify-center">
-          <Award className="w-4 h-4 text-yellow-500 mr-1" />
+        <h3 className="contact-title">Volt Group</h3>
+        <p className="expert-badge">
+          <Award className="expert-icon" />
           Housing Expert Pro
         </p>
       </div>
 
-      <div className="space-y-4">
-        <div className="flex items-center justify-center space-x-2 text-sm bg-green-50 p-3 rounded-lg">
-          <Check className="w-4 h-4 text-green-600" />
-          <span className="text-green-700">Great choice! Nice neighborhood around</span>
+      <div className="contact-body">
+        <div className="choice-highlight">
+          <Check className="choice-icon" />
+          <span className="choice-text">Great choice! Nice neighborhood around</span>
         </div>
 
-        <div className="border-t pt-4">
-          <p className="text-sm font-medium mb-3">Please share your contact</p>
-          <div className="space-y-3">
-            <div className="relative">
-              <User className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
+        <div className="form-section">
+          <p className="form-instruction">Please share your contact</p>
+          <div className="input-group">
+            <div className="input-relative">
+              <User className="input-icon" />
               <input 
                 type="text" 
                 placeholder="Name"
-                className="w-full pl-10 pr-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="contact-input"
               />
             </div>
-            <div className="relative">
-              <Phone className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
+            <div className="input-relative">
+              <Phone className="input-icon" />
               <input 
                 type="tel" 
                 placeholder="Phone"
-                className="w-full pl-10 pr-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="contact-input"
               />
             </div>
-            <div className="relative">
-              <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
+            <div className="input-relative">
+              <Mail className="input-icon" />
               <input 
                 type="email" 
                 placeholder="Email"
-                className="w-full pl-10 pr-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="contact-input"
               />
             </div>
           </div>
 
-          <div className="mt-4 space-y-2">
-            <label className="flex items-center text-sm">
-              <input type="checkbox" className="rounded text-blue-600 mr-2" />
-              <span className="text-gray-600">I agree to be contacted by Housing and agents via WhatsApp, SMS, phone, email etc</span>
+          <div className="checkbox-group">
+            <label className="checkbox-label">
+              <input type="checkbox" className="contact-checkbox" />
+              <span className="checkbox-text">I agree to be contacted by Housing and agents via WhatsApp, SMS, phone, email etc</span>
             </label>
-            <label className="flex items-center text-sm">
-              <input type="checkbox" className="rounded text-blue-600 mr-2" />
-              <span className="text-gray-600">I am interested in Home Loans</span>
+            <label className="checkbox-label">
+              <input type="checkbox" className="contact-checkbox" />
+              <span className="checkbox-text">I am interested in Home Loans</span>
             </label>
           </div>
 
-          <button className="w-full mt-6 bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition" style={{background:'#03a1fc'}}>
+          <button className="submit-button">
             Get Contact Details
           </button>
 
-          <p className="text-xs text-gray-400 text-center mt-4">
+          <p className="form-disclaimer">
             By proceeding, you consent to receive calls and texts at the number you provided.
           </p>
         </div>

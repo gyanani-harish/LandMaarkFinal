@@ -15,6 +15,8 @@ interface PropertyTabsProps {
   pricePerSqft: number;
 }
  
+import './PropertyTabs.css';
+
 const PropertyTabs: React.FC<PropertyTabsProps> = ({ 
   activeTab, 
   setActiveTab, 
@@ -27,14 +29,14 @@ const PropertyTabs: React.FC<PropertyTabsProps> = ({
       case 'overview':
         return (
           <div>
-            <h2 className="text-xl text-left font-semibold mb-6">
-              <span className="border-b-2 border-gray-300 text-left pb-1 inline-block w-1/4">
+            <h2 className="section-title">
+              <span className="title-underline">
                 Property Overview
               </span>
             </h2>
             
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-16">
-              <div className="p-4  rounded-lg">
+            <div className="overview-stats-grid">
+              <div className="stat-item">
                 <div className="flex items-center gap-2 mb-2">
                   <Bed className="w-5 h-5 text-gray-600" />
                   <p className="text-sm text-gray-500">Bedrooms</p>
@@ -42,7 +44,7 @@ const PropertyTabs: React.FC<PropertyTabsProps> = ({
                 <p className="font-lg text-left">{property.bhk} BedRoom</p>
               </div>
               
-              <div className="p-4  rounded-lg">
+              <div className="stat-item">
                 <div className="flex items-center gap-2 mb-2">
                   <Bath className="w-5 h-5 text-gray-600" />
                   <p className="text-sm text-gray-500">Bathrooms</p>
@@ -50,7 +52,7 @@ const PropertyTabs: React.FC<PropertyTabsProps> = ({
                 <p className=" font-lg text-left">{property.bhk }</p>
               </div>
               
-              <div className="p-4  rounded-lg">
+              <div className="stat-item">
                 <div className="flex items-center gap-2 mb-2">
                   <Square className="w-5 h-5 text-gray-600" />
                   <p className="text-sm text-gray-500">Area</p>
@@ -58,7 +60,7 @@ const PropertyTabs: React.FC<PropertyTabsProps> = ({
                 <p className="font-lg text-left">{property.area_sqft?.toLocaleString()} sq.ft</p>
               </div>
               
-              <div className="p-4  rounded-lg">
+              <div className="stat-item">
                 <div className="flex items-center gap-2 mb-2">
                   <Calendar className="w-5 h-5 text-gray-600" />
                   <p className="text-sm text-gray-500">Possession</p>
@@ -68,16 +70,16 @@ const PropertyTabs: React.FC<PropertyTabsProps> = ({
             </div>
             
             <div className="space-y-4">
-              <p className="text-gray-00">{property.description}</p>
+              <p className="text-gray-600">{property.description}</p>
             </div>
 
             <div className="mt-6 border-t pt-6">
-              <h2 className="text-xl text-left font-semibold mb-6">
-                <span className="border-b-2 border-gray-300 text-left pb-1 inline-block w-1/4">
+              <h2 className="section-title">
+                <span className="title-underline">
                   Additional Details
                 </span>
               </h2>
-              <div className="grid grid-cols-2 gap-4">
+              <div className="additional-details-grid">
                 <div>
                   <p className="text-sm text-gray-500">Parking</p>
                   <p className="font-medium">
@@ -104,7 +106,7 @@ const PropertyTabs: React.FC<PropertyTabsProps> = ({
       case 'amenities':
         return (
           <div>
-            <h2 className="text-xl font-semibold mb-6">Amenities</h2>
+            <h2 className="section-title">Amenities</h2>
             <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
               {property.amenities.map((amenity, idx) => (
                 <div key={idx} className="flex items-center p-3 bg-gray-50 rounded-lg">
@@ -126,8 +128,7 @@ const PropertyTabs: React.FC<PropertyTabsProps> = ({
         return (
           <div>
             <div className="flex justify-between items-start mb-4">
-              <h2 className="text-xl font-semibold">{property.location} Locality</h2>
-           
+              <h2 className="section-title">{property.location} Locality</h2>
             </div>
 
             <div className="grid grid-cols-3 gap-4 mb-6">
@@ -135,7 +136,6 @@ const PropertyTabs: React.FC<PropertyTabsProps> = ({
                 <p className="text-2xl font-bold text-gray-800">{property.places?.length || 0}</p>
                 <p className="text-sm text-gray-600">Places</p>
               </div>
-              
             </div>
 
             {property.places && property.places.length > 0 && (
@@ -153,19 +153,13 @@ const PropertyTabs: React.FC<PropertyTabsProps> = ({
                 </div>
               </div>
             )}
-
-            <div className="space-y-6">
-          
-
-              
-            </div>
           </div>
         );
 
       case 'pricing':
         return (
           <div>
-            <h2 className="text-xl font-semibold mb-6">Price Trends</h2>
+            <h2 className="section-title">Price Trends</h2>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
               <div className="bg-red-50 p-4 rounded-lg">
@@ -216,72 +210,11 @@ const PropertyTabs: React.FC<PropertyTabsProps> = ({
       case 'floorplans':
         return (
           <div>
-            <h2 className="text-xl font-semibold mb-6">Floor Plans</h2>
+            <h2 className="section-title">Floor Plans</h2>
             <div className="text-center p-8 bg-gray-100 rounded-lg">
               <p className="text-gray-500">Floor plans coming soon for {property.bhk} BHK configuration</p>
               <p className="text-sm text-gray-400 mt-2">Contact us for detailed floor plans</p>
             </div>
-          </div>
-        );
-
-      case 'reviews':
-        return (
-          <div>
-            <div className="flex justify-between items-center mb-6">
-              <h2 className="text-xl font-semibold">Resident Reviews</h2>
-              <div className="flex items-center">
-                <div className="flex items-center mr-4">
-                  <Star className="w-5 h-5 text-yellow-400 fill-current" />
-                  <span className="ml-1 font-bold">4.2</span>
-                  <span className="text-gray-500 ml-1">/5</span>
-                </div>
-                <span className="text-gray-500">(12 reviews)</span>
-              </div>
-            </div>
-
-            <div className="grid grid-cols-2 gap-4 mb-6">
-              <div className="p-4 bg-gray-50 rounded-lg">
-                <p className="text-sm text-gray-600">Connectivity</p>
-                <div className="flex items-center">
-                  <span className="text-2xl font-bold mr-2">4.0</span>
-                  <Star className="w-4 h-4 text-yellow-400 fill-current" />
-                </div>
-              </div>
-              <div className="p-4 bg-gray-50 rounded-lg">
-                <p className="text-sm text-gray-600">Neighborhood</p>
-                <div className="flex items-center">
-                  <span className="text-2xl font-bold mr-2">4.3</span>
-                  <Star className="w-4 h-4 text-yellow-400 fill-current" />
-                </div>
-              </div>
-            </div>
-
-            <div className="border rounded-lg p-4">
-              <div className="flex justify-between items-start mb-3">
-                <div>
-                  <p className="font-semibold">Rahul Sharma</p>
-                  <p className="text-sm text-gray-500">Homeowner • 2 months ago</p>
-                </div>
-                <div className="flex items-center bg-green-50 px-2 py-1 rounded">
-                  <Star className="w-4 h-4 text-yellow-400 fill-current" />
-                  <span className="ml-1 text-sm font-semibold">4.5</span>
-                </div>
-              </div>
-              <div className="space-y-2">
-                <p className="text-sm">
-                  <span className="font-medium text-green-600">Good: </span>
-                  Great location, peaceful neighborhood, good construction quality
-                </p>
-                <p className="text-sm">
-                  <span className="font-medium text-red-600">Needs improvement: </span>
-                  Parking space could be better
-                </p>
-              </div>
-            </div>
-
-            <button className="w-full mt-4 text-blue-600 font-medium hover:text-blue-800">
-              View All Reviews →
-            </button>
           </div>
         );
 
@@ -293,17 +226,13 @@ const PropertyTabs: React.FC<PropertyTabsProps> = ({
   return (
     <div>
       {/* Tabs Navigation */}
-      <div className="border-b border-gray-200 mb-6 overflow-x-auto">
-        <nav className="flex space-x-8">
+      <div className="tabs-nav-container">
+        <nav className="tabs-nav">
           {tabs.map(tab => (
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`py-4 px-1 border-b-2 font-medium text-sm whitespace-nowrap ${
-                activeTab === tab.id
-                  ? 'border-blue-600 text-blue-600'
-                  : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-              }`}
+              className={`tab-button ${activeTab === tab.id ? 'tab-button-active' : ''}`}
             >
               {tab.label}
             </button>
@@ -312,7 +241,7 @@ const PropertyTabs: React.FC<PropertyTabsProps> = ({
       </div>
 
       {/* Tab Content */}
-      <div className="bg-white rounded-xl p-6 shadow-sm">
+      <div className="tab-content-card">
         {renderTabContent()}
       </div>
     </div>

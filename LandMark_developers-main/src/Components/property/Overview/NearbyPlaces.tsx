@@ -1,5 +1,6 @@
 import React from 'react';
 import { CityProperty } from '../../../services/services';
+import './NearbyPlaces.css';
 
 interface NearbyPlacesProps {
   places: CityProperty['places'];
@@ -10,19 +11,21 @@ const NearbyPlaces: React.FC<NearbyPlacesProps> = ({ places }) => {
 
   return (
     <>
-      <div className="border-t  border-gray-200 my-6"></div>
-      <div className="mt-8">
-        <h3 className="text-xl text-left font-bold border-b w-1/5 mb-8 "> Places</h3>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          {places.slice(0, 4).map((place, index) => (
-            <div key={index} className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
+      <div className="places-divider"></div>
+      <div className="places-container">
+        <h3 className="places-header">Around this project</h3>
+        <div className="places-grid">
+          {places.map((place, index) => (
+            <div key={index} className="place-item">
               <div>
-                <p className="font-medium text-sm">{place.place_name}</p>
-                <p className="text-xs text-gray-500">{place.place_category}</p>
+                <p className="place-info-name">{place.place_name}</p>
+                <p className="place-info-category">{place.place_category}</p>
               </div>
-              <p className="text-xs text-blue-600">
-                {(parseFloat(place.distance_meters) / 1000).toFixed(1)} km
-              </p>
+              <span className="place-distance">
+                {String(place.distance_meters).toLowerCase().includes('km') 
+                  ? place.distance_meters 
+                  : `${(parseFloat(place.distance_meters) / 1000).toFixed(1)} km`}
+              </span>
             </div>
           ))}
         </div>

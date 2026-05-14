@@ -1,96 +1,130 @@
 import React, { useState, useEffect } from 'react';
-import { Info, Loader } from "lucide-react";
-import { useParams } from "react-router-dom";
-import { CityProperty } from '../../services/services';
-import { ApiConstants } from '../../constants/ApiConstants';
-import { ApiEndPoints } from '../../constants/ApiEndpoints';
+import { useParams } from 'react-router-dom';
+import { Loader, Info } from 'lucide-react';
+import useIsMobile from '../../hooks/useIsMobile';
 import PropertyHeader from '../../Components/property/PropertyHeader';
-import ImageGallery from '../../Components/property/ImageGallery';
-import PropertyTabs from '../../Components/property/PropertyTabs';
-// import FloorPlansPricing from '../../Components/property/FloorPlansPricing';
 import PropertyOverview from '../../Components/property/PropertyOverview';
-import AmenitiesSpecs from '../../Components/property/AmenitiesSpecs';
-import PropertyListings from '../../Components/property/CardsDetails/PropertyListings';
+import PropertyTabs from '../../Components/property/PropertyTabs';
+import ImageGallery from '../../Components/property/ImageGallery';
 import ContactCard from '../../Components/property/ContactCard';
+import PropertyListings from '../../Components/property/CardsDetails/PropertyListings';
 import QASection from '../../Components/property/QASection';
-import useIsMobile from '../../Hooks/useIsMobile';
+import AmenitiesSpecs from '../../Components/property/AmenitiesSpecs';
+import { CityProperty } from '../../services/services';
+import { ApiConstants } from '../../Constants/ApiConstants';
+import { ApiEndPoints } from '../../constants/ApiEndpoints';
+import './PropertyDetailPage.css';
 
 const PropertyDetailPage = () => {
   const [activeTab, setActiveTab] = useState('overview');
   const [property, setProperty] = useState<CityProperty | null>(null);
   const [allTownshipProperties, setAllTownshipProperties] = useState<any[]>([]);
+  const [townshipName, setTownshipName] = useState<string>('');
+  const [townshipData, setTownshipData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  
+
   const { id } = useParams();
 
   useEffect(() => {
     const loadProperty = async () => {
       if (!id) return;
-      
+
       try {
         setLoading(true);
-        
+
         // Use the id from the URL as the townshipId
-        const townshipId = id || '9';
-        
+        const tId = id || '9';
+
         // Fetch all properties from the specific township API
-        const url = `${ApiConstants.API_BASE_URL}${ApiEndPoints.TOWNSHIP_PROPERTIES_FULL(Number(townshipId))}`;
-        
+        const url = `${ApiConstants.API_BASE_URL}${ApiEndPoints.TOWNSHIP_PROPERTIES_FULL(Number(tId))}`;
+
         const response = await fetch(url);
-        
+
         if (!response.ok) {
           throw new Error('Failed to fetch properties: ' + response.status);
         }
-        
+
         const result = await response.json();
         const properties: any[] = result.data?.properties || [];
+        setTownshipName(result.data?.name || '');
+        setTownshipData(result.data || null);
         setAllTownshipProperties(properties);
-        
+
         // Find the specific property by ID
         let propertyData = properties.find((p: any) => String(p.property_id) === id);
-        
+
         // Fallback: If not found by ID, just take the first property from the list
         if (!propertyData && properties.length > 0) {
           propertyData = properties[0];
         }
-        
+
         if (propertyData) {
           // Transform API data to match CityProperty interface
+          // Prioritize top-level township data (result.data) over property-specific data
+          const topLevelData = result.data || {};
+          
+          // Extract key_values into a flat dictionary for easy access
+          const kvMap = propertyData.key_values?.reduce((acc: any, kv: any) => {
+            acc[kv.key] = kv.value;
+            return acc;
+          }, {}) || {};
+
+          // Calculate a fallback area from Size/Sq Yds if needed
+          const fallbackArea = parseFloat(String(kvMap['Sq Yds'] || kvMap['Size'] || '0').replace(/[^0-9.]/g, '')) || 0;
+          
           const transformedProperty: CityProperty = {
             id: propertyData.property_id,
-            title: propertyData.title,
-            price: propertyData.price || '0',
-            image_url: propertyData.image || '',
-            description: propertyData.description || '',
-            location: propertyData.location,
-            propertyType: propertyData.property_type,
-            bhk: propertyData.bhk,
-            area_sqft: propertyData.area_sqft,
-            raw_price: parseFloat(propertyData.price) || 0,
-            area: String(propertyData.area_sqft),
-            size: propertyData.size,
-            project_size: propertyData.project_size,
-            launch_date: propertyData.launch_date,
-            rera_id: propertyData.rera_id,
-            construction_type: propertyData.construction_type,
-            construction_status: propertyData.construction_status,
-            latitude: propertyData.latitude,
-            longitude: propertyData.longitude,
-            image: propertyData.image || (propertyData.images && propertyData.images[0]) || '',
-            images: properties.flatMap((p: any) => p.images || (p.image ? [p.image] : [])),
-            allImages: properties.flatMap((p: any) => p.images || (p.image ? [p.image] : [])),
-            amenities: propertyData.amenities?.map((a: any) => ({ 
-              amenity_id: a.amenity_id || a.id || 0, 
-              amenity_name: a.amenity_name || a.name || '' 
-            })) || [],
-            places: propertyData.places?.map((p: any) => ({
-              place_id: p.place_id || p.id || 0,
-              place_name: p.place_name || p.name || '',
-              place_category: p.place_category || p.category || '',
-              distance_meters: String(p.distance_meters || p.distance || 0)
-            })) || [],
-            specifications: propertyData.specifications,
+            title: topLevelData.name || propertyData.title,
+            price: propertyData.price || kvMap['Price'] || '0',
+            image_url: (topLevelData.images && topLevelData.images[0]) || propertyData.image || '',
+            description: topLevelData.description || propertyData.description || kvMap['Description'] || '',
+            location: topLevelData.location || propertyData.location,
+            propertyType: propertyData.property_type || kvMap['Configuration'] || kvMap['Property Type'],
+            bhk: propertyData.bhk || kvMap['Bhk'],
+            area_sqft: propertyData.area_sqft || fallbackArea,
+            raw_price: parseFloat(propertyData.price || kvMap['Price']) || 0,
+            area: String(propertyData.area_sqft || fallbackArea),
+            size: propertyData.size || kvMap['Dimension'] || kvMap['Size'],
+            project_size: propertyData.project_size || topLevelData.project_size || kvMap['Project Size'],
+            launch_date: propertyData.launch_date || topLevelData.launch_date || kvMap['Launch Date'],
+            rera_id: propertyData.rera_id || topLevelData.rera_id || kvMap['RERA ID'],
+            construction_type: propertyData.construction_type || kvMap['Construction Type'],
+            construction_status: propertyData.construction_status || kvMap['Construction Status'],
+            latitude: topLevelData.latitude || propertyData.latitude,
+            longitude: topLevelData.longitude || propertyData.longitude,
+            image: (topLevelData.images && topLevelData.images[0]) || propertyData.image || '',
+            images: (topLevelData.images && topLevelData.images.length > 0) 
+              ? topLevelData.images 
+              : properties.flatMap((p: any) => p.images || (p.image ? [p.image] : [])),
+            allImages: (topLevelData.images && topLevelData.images.length > 0) 
+              ? topLevelData.images 
+              : properties.flatMap((p: any) => p.images || (p.image ? [p.image] : [])),
+            amenities: (topLevelData.mapped_amenities && topLevelData.mapped_amenities.length > 0)
+              ? topLevelData.mapped_amenities.map((a: any) => ({
+                  amenity_id: a.amenity_id || a.id || 0,
+                  amenity_name: a.name || a.amenity_name || ''
+                }))
+              : (propertyData.amenities?.map((a: any) => ({ 
+                  amenity_id: a.amenity_id || a.id || 0, 
+                  amenity_name: a.amenity_name || a.name || '' 
+                })) || []),
+            places: (topLevelData.nearby_places && topLevelData.nearby_places.length > 0)
+              ? topLevelData.nearby_places.map((p: any) => ({
+                  place_id: p.place_id || p.id || 0,
+                  place_name: p.name || p.place_name || '',
+                  place_category: p.category || p.place_category || '',
+                  distance_meters: String(p.distance || p.distance_meters || 0)
+                }))
+              : (propertyData.places?.map((p: any) => ({
+                  place_id: p.place_id || p.id || 0,
+                  place_name: p.name || p.place_name || '',
+                  place_category: p.place_category || p.category || '',
+                  distance_meters: String(p.distance_meters || p.distance || 0)
+                })) || []),
+            specifications: (topLevelData.mapped_specifications && topLevelData.mapped_specifications.length > 0)
+              ? topLevelData.mapped_specifications
+              : propertyData.specifications,
             overview: propertyData.overview || propertyData.key_values?.reduce((acc: any, kv: any) => {
               acc[kv.key] = kv.value;
               return acc;
@@ -98,7 +132,7 @@ const PropertyDetailPage = () => {
             verified: true,
             tag: '',
           };
-          
+
           setProperty(transformedProperty);
           setError(null);
         } else {
@@ -119,10 +153,10 @@ const PropertyDetailPage = () => {
 
   if (loading) {
     return (
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 bg-gray-50 mt-18 min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <Loader className="w-12 h-12 animate-spin text-primary mx-auto mb-4" />
-          <p className="text-gray-600">Loading property details...</p>
+      <div className="loading-wrapper">
+        <div className="loading-content">
+          <Loader className="loader-spinner" />
+          <p className="loading-text">Loading property details...</p>
         </div>
       </div>
     );
@@ -130,12 +164,12 @@ const PropertyDetailPage = () => {
 
   if (error || !property) {
     return (
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 bg-gray-50 mt-18 min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <p className="text-red-600 mb-4">{error || 'Property not found'}</p>
+      <div className="error-wrapper">
+        <div className="error-content">
+          <p className="error-message">{error || 'Property not found'}</p>
           <button
             onClick={() => window.history.back()}
-            className="bg-primary text-black px-4 py-2 rounded-lg hover:bg-primary-dark transition"
+            className="back-button"
           >
             Go Back
           </button>
@@ -152,21 +186,21 @@ const PropertyDetailPage = () => {
     { id: 'floorplans', label: 'Floor Plans' },
     { id: 'amenities', label: 'Amenities' },
     { id: 'locality', label: 'Locality' },
-    { id: 'reviews', label: 'Reviews' },
     { id: 'pricing', label: 'Pricing' },
   ];
 
   const headerData = {
     name: property.title,
-    builder: property.builder ?? 'no name',
+    builder: property.builder || '',
     location: property.location,
     type: property.propertyType,
     area: property.area,
     rating: property.bhk,
     possession: property.construction_status || 'Ready to Move',
+    rera_id: property.rera_id || '',
     price: {
-      min: property.area_sqft || 0,
-      max: property.area_sqft || 0,
+      min: property.raw_price || 0,
+      max: property.raw_price || 0,
       perSqft: pricePerSqft,
       emi: emiApprox
     }
@@ -174,108 +208,110 @@ const PropertyDetailPage = () => {
 
   if (isMobile) {
     return (
-      <div className="w-full bg-gray-50 mt-14 min-h-screen pb-10 overflow-x-hidden">
-        {/* Mobile Header */}
-        <div className="w-full px-4 pt-6 bg-white pb-4 shadow-sm">
-          <div className="w-full">
-            <PropertyHeader property={headerData} />
-          </div>
-        </div>
-
+      <div className="property-detail-container mobile-padding overflow-x-hidden pb-10">
         {/* Mobile Gallery */}
-        <div className="w-full px-2 mt-4">
+        <div className="mobile-gallery-wrapper">
           <ImageGallery images={property.images} propertyId={property.id} property={property} />
         </div>
 
+        {/* Mobile Header */}
+        <div className="mobile-header-wrapper">
+          <PropertyHeader property={headerData} />
+        </div>
+
         {/* Mobile Price Highlights */}
-        <div className="w-full bg-white p-4 mt-4 shadow-sm grid grid-cols-2 gap-4 text-center">
-          <div className="border-b pb-2 border-gray-100">
-            <p className="text-sm font-semibold text-gray-900">{property.bhk} BHK</p>
-            <p className="text-gray-500 text-xs">Configuration</p>
+        <div className="mobile-price-highlights">
+          <div className="highlight-item">
+            <p className="highlight-title">{property.propertyType || `${property.bhk} BHK`}</p>
+            <p className="highlight-label">Configuration</p>
           </div>
-          <div className="border-b pb-2 border-gray-100">
-            <p className="text-sm font-semibold text-gray-900">{property.construction_status || 'Ready to Move'}</p>
-            <p className="text-gray-500 text-xs">Status</p>
+
+          <div className="highlight-item-no-border">
+            <p className="highlight-title">₹{pricePerSqft.toLocaleString()}/sq.ft</p>
+            <p className="highlight-label">Avg. Price</p>
           </div>
-          <div>
-            <p className="text-sm font-semibold text-gray-900">₹{pricePerSqft.toLocaleString()}/sq.ft</p>
-            <p className="text-gray-500 text-xs">Avg. Price</p>
-          </div>
-          <div>
-            <p className="text-sm font-semibold text-gray-900">{property.area_sqft?.toLocaleString()} sq.ft</p>
-            <p className="text-gray-500 text-xs">Area</p>
+          <div className="highlight-item-no-border">
+            <p className="highlight-title">{property.area_sqft?.toLocaleString()} sq.ft</p>
+            <p className="highlight-label">Area</p>
           </div>
         </div>
 
         {/* Mobile Tabs & Content */}
-        <div className="px-4 mt-6">
-          <PropertyTabs 
-            activeTab={activeTab}
-            setActiveTab={setActiveTab}
-            tabs={tabs}
-            property={property}
-            pricePerSqft={pricePerSqft}
-          />
-          
-          <div className="mt-8">
+        <div className="mobile-content-wrapper">
+          <div className="component-spacing-mobile">
+            <PropertyTabs
+              activeTab={activeTab}
+              setActiveTab={setActiveTab}
+              tabs={tabs}
+              property={property}
+              pricePerSqft={pricePerSqft}
+            />
+          </div>
+
+          <div className="component-spacing-mobile">
             <ContactCard />
           </div>
 
-          <div className="mt-8">
-            <PropertyOverview property={property} pricePerSqft={pricePerSqft} />
+          <div className="component-spacing-mobile">
+            <PropertyOverview property={property} pricePerSqft={pricePerSqft} townshipName={townshipName} townshipData={townshipData} />
           </div>
 
-          <div className="mt-8">
+          <div className="component-spacing-mobile">
             <AmenitiesSpecs property={property} />
           </div>
 
-          <div className="mt-8">
+          <div className="component-spacing-mobile">
             <QASection />
           </div>
         </div>
 
-        <div className="mt-10">
-          <PropertyListings initialData={allTownshipProperties} />
+        <div className="mt-6">
+          <PropertyListings initialData={allTownshipProperties} townshipId={id} />
         </div>
       </div>
     );
   }
 
-  // Desktop View (Undisturbed)
+  // Desktop View (Redesigned to match reference)
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 bg-gray-50 mt-18">
+    <div className="property-detail-container desktop-padding">
+      {/* Breadcrumbs */}
+      <div className="breadcrumbs-desktop">
+        <span>Home</span>
+        <span className="breadcrumb-separator">/</span>
+        <span>{property.location.split(',').pop()?.trim() || 'Location'}</span>
+        <span className="breadcrumb-separator">/</span>
+        <span>{property.location.split(',')[0].trim()}</span>
+        <span className="breadcrumb-separator">/</span>
+        <span className="breadcrumb-current">{property.title}</span>
+      </div>
+
       <PropertyHeader property={headerData} />
 
-      <ImageGallery images={property.images} propertyId={property.id} property={property} />
+      <div className="gallery-section-desktop">
+        <ImageGallery images={property.images} propertyId={property.id} property={property} />
+      </div>
 
-      <div className="bg-white py-6 px-8 mt-0 shadow-sm mb-6">
-        <div className="grid grid-cols-4 text-center divide-x divide-gray-200">
-          <div>
-            <p className="text-lg font-semibold text-gray-900">{property.bhk} BHK {property.propertyType}</p>
-            <p className="text-gray-500 text-sm mt-1">Configuration</p>
-          </div>
-          <div>
-            <p className="text-lg font-semibold text-gray-900">{property.construction_status || 'Ready to Move'}</p>
-            <p className="text-gray-500 text-sm mt-1">Possession Starts</p>
-          </div>
-          <div>
-            <p className="text-lg font-semibold text-gray-900">₹{pricePerSqft.toLocaleString()}/sq.ft</p>
-            <p className="text-gray-500 text-sm mt-1">Avg. Price</p>
-          </div>
-          <div>
-            <p className="text-lg font-semibold text-gray-900">{property.area_sqft?.toLocaleString()} sq.ft</p>
-            <p className="text-gray-500 text-sm mt-1 flex items-center justify-center gap-1">
-              <span>(Super Built-up Area</span>
-              <Info size={14} className="text-blue-600" />
-              <span>)</span>
-            </p>
-          </div>
+      {/* Feature Highlights Grid */}
+      <div className="feature-highlights-desktop">
+        <div className="feature-item">
+          <p className="feature-value">{property.propertyType || `${property.bhk} BHK Apartments`}</p>
+          <p className="feature-label">Configurations</p>
+        </div>
+
+        <div className="feature-item">
+          <p className="feature-value">Price on request</p>
+          <p className="feature-label">Avg. Price</p>
+        </div>
+        <div className="feature-item">
+          <p className="feature-value">{property.area_sqft?.toLocaleString()} sq.ft</p>
+          <p className="feature-label">Super Builtup Area</p>
         </div>
       </div>
 
-      <div className="grid grid-cols-3 gap-8">
-        <div className="lg:col-span-2">
-          <PropertyTabs 
+      <div className="desktop-content-grid">
+        <div className="desktop-main-content">
+          <PropertyTabs
             activeTab={activeTab}
             setActiveTab={setActiveTab}
             tabs={tabs}
@@ -284,16 +320,21 @@ const PropertyDetailPage = () => {
           />
           <QASection />
         </div>
-        <div className="lg:col-span-1">
+        <div className="desktop-sidebar">
           <ContactCard />
+          <div className="sidebar-ad-placeholder">
+            {/* Additional sidebar content can go here */}
+          </div>
         </div>
       </div>
 
-      <PropertyOverview property={property} pricePerSqft={pricePerSqft} />
-      <AmenitiesSpecs property={property} />
-      <PropertyListings initialData={allTownshipProperties} />
+      <div className="full-width-sections">
+        <PropertyOverview property={property} pricePerSqft={pricePerSqft} townshipName={townshipName} townshipData={townshipData} />
+        <AmenitiesSpecs property={property} />
+        <PropertyListings initialData={allTownshipProperties} townshipId={id} townshipName={townshipName} />
+      </div>
     </div>
   );
-};
+}
 
 export default PropertyDetailPage;

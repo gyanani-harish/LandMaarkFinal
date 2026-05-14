@@ -1,0 +1,292 @@
+/* ImageGallery.css */
+
+/* ===== Gallery Container ===== */
+.gallery-container {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
+  margin: 1rem 0 0 0;
+  padding: 0;
+}
+
+@media (min-width: 768px) {
+  .gallery-container {
+    grid-template-columns: 2fr 1fr;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+  }
+}
+
+/* ===== Main Image ===== */
+.main-image-wrapper {
+  position: relative;
+  width: 100%;
+  height: 280px;
+  overflow: hidden;
+  cursor: pointer;
+  border-radius: 0;
+  background: #f7fafc;
+}
+
+@media (min-width: 768px) {
+  .main-image-wrapper {
+    height: 450px;
+    border-radius: 12px;
+  }
+}
+
+.main-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.main-image-wrapper:hover .main-image {
+  transform: scale(1.02);
+}
+
+/* ===== Desktop Overlays ===== */
+
+/* "Cover Image" label - top left on desktop */
+.cover-image-label {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 4px;
+  z-index: 5;
+}
+
+/* Desktop rectangular SHARE / SAVE buttons */
+.desktop-action-btns {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  display: flex;
+  gap: 8px;
+  z-index: 10;
+}
+
+.desktop-share-btn,
+.desktop-save-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  padding: 8px 14px;
+  color: #1a202c;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+}
+
+.desktop-share-btn:hover,
+.desktop-save-btn:hover {
+  background: #f7fafc;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+}
+
+/* ===== Mobile Overlays ===== */
+
+/* RERA capsule badge - mobile top-left */
+.rera-badge-capsule {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  background: white;
+  padding: 4px 10px 4px 4px;
+  border-radius: 50px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  z-index: 10;
+}
+
+.rera-check-circle {
+  width: 20px;
+  height: 20px;
+  background: #22c55e;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+
+.rera-label {
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: #1a202c;
+  letter-spacing: 0.5px;
+}
+
+/* Mobile circular action buttons */
+.prop-gallery-actions-unique {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  display: flex;
+  gap: 10px;
+  z-index: 10;
+}
+
+.prop-gallery-action-btn-unique {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: white;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #4a5568;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  transition: all 0.2s;
+}
+
+.prop-gallery-action-btn-unique:hover {
+  background: #f7fafc;
+  transform: scale(1.05);
+}
+
+/* Mobile "Tap to see all images" */
+.tap-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(4px);
+  padding: 12px 24px;
+  border-radius: 4px;
+  color: #1a202c;
+  font-weight: 600;
+  font-size: 1rem;
+  pointer-events: none;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+/* Image count badge - bottom right */
+.image-count-badge {
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
+  background: rgba(0, 0, 0, 0.7);
+  padding: 6px 12px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: white;
+  font-size: 0.875rem;
+  font-weight: 700;
+}
+
+/* ===== Desktop Sidebar ===== */
+.sidebar-images-desktop {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .sidebar-images-desktop {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+}
+
+.sidebar-img-container {
+  position: relative;
+  width: 100%;
+  height: 215px;
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.sidebar-img-wrapper {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.sidebar-img-container:hover .sidebar-img-wrapper {
+  transform: scale(1.05);
+}
+
+/* Play overlay for video thumbnail */
+.play-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.play-circle {
+  width: 56px;
+  height: 56px;
+  background: rgba(0, 0, 0, 0.5);
+  border: 3px solid white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  transition: transform 0.2s;
+}
+
+.sidebar-img-container:hover .play-circle {
+  transform: scale(1.1);
+}
+
+/* "+X more" overlay */
+.view-more-wrapper {
+  position: relative;
+  height: 215px;
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.view-more-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.view-more-wrapper:hover .view-more-img {
+  transform: scale(1.05);
+}
+
+.view-more-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.view-more-text {
+  color: white;
+  font-size: 1.5rem;
+  font-weight: 700;
+  text-align: center;
+  line-height: 1.4;
+}

@@ -50,9 +50,11 @@ interface Stats {
 
 interface PropertyListingsProps {
   initialData?: any[];
+  townshipId?: string | number;
+  townshipName?: string;
 }
 
-const PropertyListings: React.FC<PropertyListingsProps> = ({ initialData }) => {
+const PropertyListings: React.FC<PropertyListingsProps> = ({ initialData, townshipId, townshipName: initialTownshipName }) => {
   const [plotData, setPlotData] = useState<Property[]>([]);
   const [filteredData, setFilteredData] = useState<Property[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
@@ -68,7 +70,7 @@ const PropertyListings: React.FC<PropertyListingsProps> = ({ initialData }) => {
   });
   const [activeDetails, setActiveDetails] = useState<number | null>(null);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
-  const [townshipName, setTownshipName] = useState<string>('');
+  const [townshipName, setTownshipName] = useState<string>(initialTownshipName || '');
 
   const [filters, setFilters] = useState({
     subTownship: '',
@@ -78,7 +80,9 @@ const PropertyListings: React.FC<PropertyListingsProps> = ({ initialData }) => {
     sortBy: '',
   });
 
-  const API_URL = `https://unimmunized-rosella-hedonistically.ngrok-free.dev/api/townshipDetails?id=${localStorage.getItem('selectedTownshipId') || 17}`;
+  // Calculate API_URL dynamically based on props or localStorage
+  const currentTownshipId = townshipId || localStorage.getItem('selectedTownshipId') || 17;
+  const API_URL = `https://unimmunized-rosella-hedonistically.ngrok-free.dev/api/townshipDetails?id=${currentTownshipId}`;
 
   const extractBhk = (type: string): string => {
     const match = type.match(/(\d+)\s*BHK/i);
@@ -109,14 +113,19 @@ const PropertyListings: React.FC<PropertyListingsProps> = ({ initialData }) => {
           plotNo: kv.Plot || p.plot_number || '-',
           size: kv.Size || kv['Sq Yds'] || '-',
           sizeRaw: sizeVal,
-          type: p.property_type || '-',
-          price: Math.round(parseFloat(p.price) / 100000),
+          type: kv.Configuration || p.property_type || '-',
+          price: parseFloat(p.price) || 0,
           priceRaw: parseFloat(p.price) || 0,
-          description: p.description || '-',
-          location: p.location || '-',
-          bhk: extractBhk(p.property_type || ''),
+          description: p.description || '',
+          location: p.location || '',
+          bhk: extractBhk(kv.Configuration || p.property_type || ''),
           rawKeyValues: p.key_values || [],
         };
+      })
+      .sort((a, b) => {
+        const aNum = parseInt(a.plotNo.replace(/\D/g, '')) || 0;
+        const bNum = parseInt(b.plotNo.replace(/\D/g, '')) || 0;
+        return aNum - bNum;
       });
 
     setPlotData(properties);
@@ -124,6 +133,16 @@ const PropertyListings: React.FC<PropertyListingsProps> = ({ initialData }) => {
   };
 
   const fetchData = async () => {
+    // If we have a townshipName prop, it means the parent already fetched the project info.
+    // In this case, we should NOT fetch again, even if initialData is empty.
+    if (initialTownshipName) {
+      if (initialData) {
+        processApiData(initialData);
+      }
+      setLoading(false);
+      return;
+    }
+
     setLoading(true);
     setError(null);
     try {
@@ -357,7 +376,7 @@ const PropertyListings: React.FC<PropertyListingsProps> = ({ initialData }) => {
                       {plot.rawKeyValues.filter(kv => !['Plot', 'Configuration', 'Size', 'Sub Township', 'Construction Status', 'ID', 'Price', 'Is Deleted'].includes(kv.key)).map((kv, i) => (
                         <div key={i} className="info-item">
                           <span className="label">{kv.key}:</span>
-                          <span className="value">{kv.value}</span>
+                          <span className="value">{typeof kv.value === 'object' && kv.value !== null ? (kv.value.name || JSON.stringify(kv.value)) : kv.value}</span>
                         </div>
                       ))}
                     </div>

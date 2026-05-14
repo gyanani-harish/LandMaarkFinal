@@ -6,77 +6,125 @@ interface ImageGalleryProps {
 }
 
 import React, { useState } from 'react';
-import { Heart, Share2Icon } from 'lucide-react';
+import { Heart, Share2, Check, Image as ImageIcon, Play } from 'lucide-react';
 import ImageGalleryModal from '../../Components/ImageGalleryModal/ImageGalleryModal';
 import { CityProperty } from '../../services/services';
+import useIsMobile from '../../hooks/useIsMobile';
+
+import './ImageGallery.css';
 
 const ImageGallery: React.FC<ImageGalleryProps> = ({ images, propertyId, property: propData }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState<number>(0);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [modalStartIndex, setModalStartIndex] = useState<number>(0);
   const [property, setProperty] = useState<CityProperty | null>(propData || null);
+  const isMobile = useIsMobile();
 
   const handleImageClick = (index: number) => {
     setModalStartIndex(index);
     setIsModalOpen(true);
   };
 
-  const handleMoreClick = () => {
-    setModalStartIndex(2); // Start from the third image
-    setIsModalOpen(true);
-  };
-
-  // Get images for display - use property.allImages if available, otherwise use the passed images prop
   const displayImages = property?.allImages?.length && property.allImages.length > 0 ? property.allImages : images;
 
   return (
     <>
-      <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-2 sm:gap-4 mt-4 sm:mt-6">
+      <div className="gallery-container">
         {/* Main large image */}
-        <div className="relative md:col-span-2 w-full h-[220px] sm:h-[320px] md:h-[450px] overflow-hidden cursor-pointer rounded-lg">
+        <div className="main-image-wrapper" onClick={() => handleImageClick(currentImageIndex)}>
           <img
             src={displayImages[currentImageIndex]}
             alt="property"
-            className="w-full h-full object-cover"
-            onClick={() => handleImageClick(currentImageIndex)}
-          />
-          <div className="absolute top-0 left-0 h-full w-1/4 backdrop-blur-md bg-white/30"></div>
-          <div className="absolute top-0 right-0 h-full w-1/4 backdrop-blur-md bg-white/30">
-            <div className="absolute top-4 right-4 flex gap-2">
-              <button className="p-2 bg-white rounded-lg text-blue hover:bg-gray-100 shadow-md">
-                <Share2Icon className="w-5 h-5" />
-              </button>
-              <button className="p-2 bg-white rounded-lg hover:bg-gray-100 shadow-md">
-                <Heart className="w-5 h-5" />
-              </button>
-            </div>
-          </div>
-        </div>
-        {/* Sidebar images */}
-        <div className="flex flex-row md:flex-col gap-2 sm:gap-4">
-          <img
-            src={displayImages[1] || displayImages[0]}
-            alt="Side"
-            className="w-1/2 md:w-full h-[120px] sm:h-[160px] md:h-[210px] object-cover cursor-pointer rounded-lg"
-            onClick={() => handleImageClick(1)}
+            className="main-image"
           />
 
-          <div className="relative cursor-pointer" onClick={() => handleImageClick(2)}>
+          {/* Desktop: "Cover Image" label top-left */}
+          {!isMobile && (
+            <div className="cover-image-label">
+              Cover Image
+            </div>
+          )}
+
+          {/* Mobile: RERA Badge top-left */}
+          {isMobile && property?.rera_id && (
+            <div className="rera-badge-capsule">
+              <div className="rera-check-circle">
+                <Check size={12} strokeWidth={4} />
+              </div>
+              <span className="rera-label">RERA</span>
+            </div>
+          )}
+
+          {/* Desktop: Rectangular SHARE and SAVE buttons */}
+          {!isMobile && (
+            <div className="desktop-action-btns">
+              <button className="desktop-share-btn" onClick={(e) => { e.stopPropagation(); }}>
+                <Share2 size={16} />
+                SHARE
+              </button>
+              <button className="desktop-save-btn" onClick={(e) => { e.stopPropagation(); }}>
+                <Heart size={16} />
+                SAVE
+              </button>
+            </div>
+          )}
+
+          {/* Mobile: Circular action buttons */}
+          {isMobile && (
+            <div className="prop-gallery-actions-unique">
+              <button className="prop-gallery-action-btn-unique" onClick={(e) => { e.stopPropagation(); }}>
+                <Share2 size={24} />
+              </button>
+              <button className="prop-gallery-action-btn-unique" onClick={(e) => { e.stopPropagation(); }}>
+                <Heart size={24} />
+              </button>
+            </div>
+          )}
+
+          {/* Mobile: Tap to See All Images Overlay */}
+          {isMobile && (
+            <div className="tap-overlay">
+              <span>Tap to see all images</span>
+            </div>
+          )}
+
+          {/* Image Count Badge */}
+          <div className="image-count-badge">
+            <ImageIcon size={14} />
+            <span>{displayImages.length}</span>
+          </div>
+        </div>
+
+        {/* Sidebar images - Desktop Only */}
+        <div className="sidebar-images-desktop">
+          <div className="sidebar-img-container" onClick={() => handleImageClick(1)}>
+            <img
+              src={displayImages[1] || displayImages[0]}
+              alt="Side"
+              className="sidebar-img-wrapper"
+            />
+            <div className="play-overlay">
+              <div className="play-circle">
+                <Play size={28} fill="white" />
+              </div>
+            </div>
+          </div>
+
+          <div className="view-more-wrapper" onClick={() => handleImageClick(2)}>
             <img
               src={displayImages[2] || displayImages[0]}
               alt="Side"
-              className="w-full h-[120px] sm:h-[160px] md:h-[210px] object-cover rounded-lg"
+              className="view-more-img"
             />
-            <div className="absolute inset-0 bg-black/40 flex items-center justify-center rounded-lg">
-              <span className="text-white text-lg font-semibold">
-                {displayImages.length > 3 ? `+${displayImages.length - 2} more` : 'View More'}
+            <div className="view-more-overlay">
+              <span className="view-more-text">
+                +{displayImages.length > 3 ? `${displayImages.length - 2} more` : 'View More'}
               </span>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Modal for viewing all images - Pass property object */}
       {property && (
         <ImageGalleryModal
           isOpen={isModalOpen}

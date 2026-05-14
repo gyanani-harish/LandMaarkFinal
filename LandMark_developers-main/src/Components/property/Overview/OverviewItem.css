@@ -1,0 +1,43 @@
+/* OverviewItem.css */
+.overview-item-container {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  margin-top: 0.25rem;
+}
+
+.overview-icon-wrapper {
+  margin-top: 0.125rem;
+  flex-shrink: 0;
+}
+
+.overview-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+  color: #1f2937;
+}
+
+.overview-text-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.overview-label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #9ca3af;
+  word-break: break-word;
+}
+
+.overview-value {
+  font-size: 1rem;
+  color: #111827;
+  font-weight: 600;
+  word-break: break-word;
+  margin-top: 0.125rem;
+}
+
+.overview-subtext {
+  font-size: 0.75rem;
+  color: #9ca3af;
+}

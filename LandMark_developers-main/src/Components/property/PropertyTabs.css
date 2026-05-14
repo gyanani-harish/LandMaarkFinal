@@ -1,0 +1,82 @@
+/* PropertyTabs.css */
+.tabs-nav-container {
+  border-bottom: 1px solid #e5e7eb;
+  margin-bottom: 1.5rem;
+  overflow-x: auto;
+}
+
+.tabs-nav {
+  display: flex;
+  gap: 2rem;
+}
+
+.tab-button {
+  padding: 1rem 0.25rem;
+  border-bottom: 2px solid transparent;
+  font-weight: 500;
+  font-size: 0.875rem;
+  white-space: nowrap;
+  color: #6b7280;
+  transition: all 0.2s;
+  background: none;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  cursor: pointer;
+}
+
+.tab-button:hover {
+  color: #374151;
+  border-bottom-color: #d1d5db;
+}
+
+.tab-button-active {
+  border-bottom-color: #2563eb;
+  color: #2563eb;
+}
+
+.tab-content-card {
+  background-color: white;
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+.section-title {
+  font-size: 1.25rem;
+  text-align: left;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  display: block;
+  width: 100%; /* Force full width to prevent two lines */
+}
+
+.title-underline {
+  border-bottom: 2px solid #d1d5db;
+  padding-bottom: 0.25rem;
+  display: inline-block;
+  min-width: fit-content;
+}
+
+.overview-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  margin-bottom: 4rem;
+}
+
+@media (min-width: 768px) {
+  .overview-stats-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.stat-item {
+  padding: 1rem;
+}
+
+.additional-details-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}

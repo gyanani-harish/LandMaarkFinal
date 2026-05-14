@@ -1,0 +1,196 @@
+/* PropertyDetailPage.css */
+.property-detail-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  background-color: #f9fafb; /* gray-50 */
+  min-height: 100vh;
+}
+
+.desktop-padding {
+  padding: 2rem 1.5rem;
+  margin-top: 4.5rem; /* mt-18 */
+}
+
+.mobile-padding {
+  padding: 0;
+  margin-top: 3.5rem; /* mt-14 */
+}
+
+.mobile-header-wrapper {
+  width: 100%;
+  padding: 1rem 0.75rem;
+  background-color: white;
+}
+
+.mobile-gallery-wrapper {
+  width: 100%;
+  padding: 0;
+  margin-top: 0;
+}
+
+.mobile-price-highlights {
+  width: 100%;
+  background-color: white;
+  padding: 1rem;
+  margin-top: 1rem;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.5rem;
+}
+
+/* Loading & Error States */
+.loading-wrapper, .error-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+}
+
+.loading-content, .error-content {
+  text-align: center;
+}
+
+.loader-spinner {
+  width: 3rem;
+  height: 3rem;
+  animation: spin 1s linear infinite;
+  color: #5e40e0;
+  margin: 0 auto 1rem;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.loading-text {
+  color: #4b5563;
+}
+
+.error-message {
+  color: #dc2626;
+  margin-bottom: 1rem;
+}
+
+.back-button {
+  background-color: #5e40e0;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.back-button:hover {
+  background-color: #4c1d95;
+}
+
+/* Desktop Specific Styles */
+.breadcrumbs-desktop {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.8125rem;
+  color: #718096;
+  margin-bottom: 1.5rem;
+}
+
+.breadcrumb-separator {
+  color: #cbd5e0;
+}
+
+.breadcrumb-current {
+  color: #1a202c;
+  font-weight: 500;
+}
+
+.gallery-section-desktop {
+  margin: 1.5rem 0 2rem 0;
+}
+
+.feature-highlights-desktop {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  background: white;
+  padding: 1.5rem 0;
+  border-top: 1px solid #e2e8f0;
+  border-bottom: 1px solid #e2e8f0;
+  margin-bottom: 2rem;
+}
+
+.feature-item {
+  text-align: center;
+  border-right: 1px solid #e2e8f0;
+}
+
+.feature-item:last-child {
+  border-right: none;
+}
+
+.feature-value {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: #1a202c;
+  margin: 0;
+}
+
+.feature-label {
+  font-size: 0.8125rem;
+  color: #718096;
+  margin-top: 0.25rem;
+}
+
+.desktop-content-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 2.5rem;
+  margin-bottom: 3rem;
+}
+
+.desktop-main-content {
+  grid-column: span 2;
+}
+
+.desktop-sidebar {
+  grid-column: span 1;
+}
+
+.full-width-sections {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+/* ===== Mobile Specific ===== */
+.highlight-item {
+  border-bottom: 1px solid #f3f4f6;
+  padding-bottom: 0.5rem;
+}
+
+.highlight-item-no-border {
+  border-bottom: none;
+}
+
+.highlight-title {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #111827;
+  margin: 0;
+}
+
+.highlight-label {
+  color: #6b7280;
+  font-size: 0.75rem;
+  margin: 0.125rem 0 0 0;
+}
+
+.mobile-content-wrapper {
+  padding: 0 1rem;
+  margin-top: 1.5rem;
+}
+
+.component-spacing-mobile {
+  margin-top: 1rem;
+}
