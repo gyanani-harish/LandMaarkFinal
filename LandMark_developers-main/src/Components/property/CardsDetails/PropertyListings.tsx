@@ -172,12 +172,27 @@ const PropertyListings: React.FC<PropertyListingsProps> = ({ initialData, townsh
       const result: ApiResponse = await response.json();
 
       if (result.success && result.data) {
-        setTownshipName(result.data.name || '');
-        setPdfData(result.data.pdf || []);
+        // Normalize API data: extract value from {key, value} objects
+        const normalizeData = (data: any): any => {
+          if (!data || typeof data !== 'object') return data;
+          const out: any = {};
+          for (const [k, v] of Object.entries(data)) {
+            if (v && typeof v === 'object' && 'value' in v && !Array.isArray(v)) {
+              out[k] = v.value;
+            } else {
+              out[k] = v;
+            }
+          }
+          return out;
+        };
+
+        const normalizedData = normalizeData(result.data);
+        setTownshipName(normalizedData.name || '');
+        setPdfData(normalizedData.pdf || []);
 
         // Only process properties if we don't have initialData
         if (!(initialData && initialData.length > 0)) {
-          processApiData(result.data.properties || []);
+          processApiData(normalizedData.properties || []);
         } else {
           processApiData(initialData);
         }

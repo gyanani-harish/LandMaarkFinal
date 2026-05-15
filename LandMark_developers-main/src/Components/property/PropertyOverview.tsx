@@ -20,15 +20,18 @@ const PropertyOverview: React.FC<PropertyOverviewProps> = ({ property, pricePerS
   const td = townshipData || {};
 
   const overviewItems = [
-    { label: 'Area Unit', value: td.area_unit || property.area || 'N/A', icon: Ruler },
-    { label: 'Avg. Price', value: td.avg_price || (pricePerSqft > 0 ? `₹${pricePerSqft.toLocaleString()}/sq.ft` : 'N/A'), icon: TrendingUp },
-    { label: 'Configurations', value: td.configurations || property.propertyType || 'N/A', icon: Home },
+    { label: 'Area Unit', value: td.area_unit || property.area_unit || 'N/A', icon: Ruler },
+    { label: 'Avg. Price', value: td.avg_price || property.avg_price || (pricePerSqft > 0 ? `₹${pricePerSqft.toLocaleString()}/sq.ft` : 'N/A'), icon: TrendingUp },
+    { label: 'Configurations', value: td.configurations || property.configurations || property.propertyType || 'N/A', icon: Home },
     { label: 'Launch Date', value: td.launch_date ? new Date(td.launch_date).toLocaleDateString('en-US', { month: 'short', year: 'numeric' }) : (property.launch_date ? new Date(property.launch_date).toLocaleDateString('en-US', { month: 'short', year: 'numeric' }) : 'N/A'), icon: Calendar },
-    { label: 'Possession Starts', value: td.possession_starts || property.construction_status || 'N/A', icon: Building2 },
-    { label: 'Project Area', value: td.project_area || property.project_size || 'N/A', icon: Grid },
-    { label: 'Property Count', value: td.property_count || 'N/A', icon: BarChart3 },
+    { label: 'Possession Starts', value: td.possession_starts || property.possession_starts || property.construction_status || 'N/A', icon: Building2 },
+    { label: 'Project Area', value: td.project_area || property.project_area || property.project_size || 'N/A', icon: Grid },
+    { label: 'Land Area', value: td.land_area || property.land_area || 'N/A', icon: Ruler },
+    { label: 'Property Count', value: td.property_count || property.property_count || 'N/A', icon: BarChart3 },
+    { label: 'Total Units', value: td.total_units || property.total_units || 'N/A', icon: Grid },
     { label: 'RERA ID', value: td.rera_id || property.rera_id || 'N/A', icon: Hash },
-    { label: 'Sizes', value: td.sizes || property.size || 'N/A', icon: Layers },
+    { label: 'Sizes', value: td.sizes || property.sizes || property.size || 'N/A', icon: Layers },
+    { label: 'City', value: td.city || property.location?.split(',').pop()?.trim() || 'N/A', icon: MapPin },
   ];
 
   const handleShare = () => console.log('Share clicked');

@@ -53,6 +53,8 @@ construction_type?:string;  property_type?: string;
   configurations?: string;
   property_count?: number;
   sizes?: string;
+  land_area?: string;
+  total_units?: string | number;
   created_at?: string;
 }
 

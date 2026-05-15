@@ -11,6 +11,7 @@ import PropertyListings from '../../Components/property/CardsDetails/PropertyLis
 import AmenitiesSpecs from '../../Components/property/AmenitiesSpecs';
 import OverviewItem from '../../Components/property/Overview/OverviewItem';
 import NearbyPlaces from '../../Components/property/Overview/NearbyPlaces';
+import QASection from '../../Components/property/QASection';
 import { Car, Home, Building2, ShieldCheck, CheckCircle2 } from 'lucide-react';
 import { CityProperty } from '../../services/services';
 import { ApiConstants } from '../../constants/ApiConstants';
@@ -50,9 +51,50 @@ const PropertyDetailPage = () => {
         }
 
         const result = await response.json();
-        const properties: any[] = result.data?.properties || [];
-        setTownshipName(result.data?.name || '');
-        setTownshipData(result.data || null);
+
+        // Normalize API data: extract value from {key, value} objects and add camelCase aliases
+        const normalizeData = (data: any): any => {
+          if (!data || typeof data !== 'object') return data;
+          const out: any = {};
+          for (const [k, v] of Object.entries(data)) {
+            if (v && typeof v === 'object' && 'value' in v && !Array.isArray(v)) {
+              out[k] = v.value;
+            } else {
+              out[k] = v;
+            }
+          }
+          // Add camelCase aliases for display-name keys
+          const keyMap: Record<string, string> = {
+            'Avg. Price': 'avg_price',
+            'Area Unit': 'area_unit',
+            'Configurations': 'configurations',
+            'Land Area': 'land_area',
+            'Launch Date': 'launch_date',
+            'Possession Starts': 'possession_starts',
+            'Project Area': 'project_area',
+            'Property Count': 'property_count',
+            'RERA ID': 'rera_id',
+            'Total Units': 'total_units',
+            'Sizes': 'sizes',
+            'name': 'name',
+            'description': 'description',
+            'location': 'location',
+            'city': 'city',
+            'latitude': 'latitude',
+            'longitude': 'longitude',
+          };
+          for (const [displayKey, camelKey] of Object.entries(keyMap)) {
+            if (displayKey in out) {
+              out[camelKey] = out[displayKey];
+            }
+          }
+          return out;
+        };
+
+        const normalizedData = normalizeData(result.data);
+        const properties: any[] = normalizedData.properties || [];
+        setTownshipName(normalizedData.name || '');
+        setTownshipData(normalizedData || null);
         setAllTownshipProperties(properties);
 
         // Find the specific property by ID
@@ -65,8 +107,8 @@ const PropertyDetailPage = () => {
 
         if (propertyData) {
           // Transform API data to match CityProperty interface
-          // Prioritize top-level township data (result.data) over property-specific data
-          const topLevelData = result.data || {};
+          // Prioritize top-level township data (normalizedData) over property-specific data
+          const topLevelData = normalizedData || {};
 
           // Extract key_values into a flat dictionary for easy access
           const kvMap = propertyData.key_values?.reduce((acc: any, kv: any) => {
@@ -103,6 +145,8 @@ const PropertyDetailPage = () => {
             property_count: topLevelData.property_count,
             sizes: topLevelData.sizes,
             avg_price: topLevelData.avg_price,
+            land_area: topLevelData.land_area,
+            total_units: topLevelData.total_units,
             image: (topLevelData.images && topLevelData.images[0]) || propertyData.image || '',
             images: (topLevelData.images && topLevelData.images.length > 0)
               ? topLevelData.images
@@ -307,7 +351,7 @@ const PropertyDetailPage = () => {
         </div>
 
         <div className="mt-[0.75rem]">
-          <PropertyListings initialData={allTownshipProperties} townshipId={id} />
+          <PropertyListings initialData={allTownshipProperties} townshipId={id} townshipName={townshipName} />
         </div>
       </div>
     );
@@ -352,7 +396,7 @@ const PropertyDetailPage = () => {
 
       <div className="desktop-content-grid">
         <div className="desktop-main-content">
-          <NearbyPlaces places={property.places} keyValues={propertyKeyValues} />
+          <NearbyPlaces places={property.places} />
           <PropertyTabs
             activeTab={activeTab}
             setActiveTab={setActiveTab}
