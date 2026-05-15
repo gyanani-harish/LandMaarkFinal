@@ -1,7 +1,7 @@
- 
+
 import React, { useState } from 'react';
-import { 
-  ChevronDown, 
+import {
+  ChevronDown,
   ChevronUp,
   Grid,
   MoreHorizontal,
@@ -38,7 +38,7 @@ const AmenitiesSpecs: React.FC<AmenitiesSpecsProps> = ({ property }) => {
   const [openSection, setOpenSection] = useState<string>("amenities");
   const renderIcon = (IconComponent: any, className: string = "w-6 h-6") => {
     return <IconComponent className={className} />;
-  }; 
+  };
   const getAmenityIcon = (amenityName: string): string => {
     const name = amenityName.toLowerCase();
     const amenityIconMap: Record<string, string> = {
@@ -92,7 +92,7 @@ const AmenitiesSpecs: React.FC<AmenitiesSpecsProps> = ({ property }) => {
               <span className="title-underline">
                 Top Amenities
               </span>
-            </h2>  
+            </h2>
             {/* Amenities Section */}
             {hasAmenities && (
               <div className="amenities-list-wrapper">
@@ -101,11 +101,11 @@ const AmenitiesSpecs: React.FC<AmenitiesSpecsProps> = ({ property }) => {
                     const iconName = getAmenityIcon(item.amenity_name);
                     const IconComponent = iconMap[iconName] || Building2;
                     return (
-                      <OverviewItem 
-                        key={i} 
-                        label={item.amenity_name} 
-                        value="Included" 
-                        icon={IconComponent} 
+                      <OverviewItem
+                        key={i}
+                        label={item.amenity_name}
+                        value=""
+                        icon={IconComponent}
                       />
                     );
                   })}
@@ -123,11 +123,11 @@ const AmenitiesSpecs: React.FC<AmenitiesSpecsProps> = ({ property }) => {
             {hasSpecifications && (
               <div className="items-grid py-4">
                 {specificationsArray.map((item, i) => (
-                  <OverviewItem 
-                    key={i} 
-                    label={item.label.replace(/_/g, ' ')} 
-                    value={item.value} 
-                    icon={Grid} 
+                  <OverviewItem
+                    key={i}
+                    label={item.label.replace(/_/g, ' ')}
+                    value={item.value}
+                    icon={Grid}
                   />
                 ))}
               </div>

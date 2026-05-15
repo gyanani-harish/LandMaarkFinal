@@ -76,11 +76,11 @@ const PropertyTabs: React.FC<PropertyTabsProps> = ({
                 const iconName = getAmenityIcon(item.amenity_name);
                 const IconComponent = iconMap[iconName] || Building2;
                 return (
-                  <OverviewItem 
-                    key={idx} 
-                    label={item.amenity_name} 
-                    value="Included" 
-                    icon={IconComponent} 
+                  <OverviewItem
+                    key={idx}
+                    label={item.amenity_name}
+                    value=""
+                    icon={IconComponent}
                   />
                 );
               })}
@@ -118,8 +118,8 @@ const PropertyTabs: React.FC<PropertyTabsProps> = ({
                     <div key={idx} className="flex justify-between items-center p-2 bg-gray-50 rounded">
                       <span className="text-gray-700">{place.place_name}</span>
                       <span className="text-sm text-blue-600">
-                        {String(place.distance_meters).toLowerCase().includes('km') 
-                          ? place.distance_meters 
+                        {String(place.distance_meters).toLowerCase().includes('km')
+                          ? place.distance_meters
                           : `${(parseFloat(place.distance_meters) / 1000).toFixed(1)} km`}
                       </span>
                     </div>

@@ -10,6 +10,7 @@ import ContactCard from '../../Components/property/ContactCard';
 import PropertyListings from '../../Components/property/CardsDetails/PropertyListings';
 import AmenitiesSpecs from '../../Components/property/AmenitiesSpecs';
 import OverviewItem from '../../Components/property/Overview/OverviewItem';
+import NearbyPlaces from '../../Components/property/Overview/NearbyPlaces';
 import { Car, Home, Building2, ShieldCheck, CheckCircle2 } from 'lucide-react';
 import { CityProperty } from '../../services/services';
 import { ApiConstants } from '../../constants/ApiConstants';
@@ -193,7 +194,6 @@ const PropertyDetailPage = () => {
   const tabs = [
     { id: 'overview', label: 'Overview' },
     { id: 'amenities', label: 'Amenities' },
-    { id: 'locality', label: 'Locality' },
   ];
 
   const headerData = {
@@ -246,6 +246,10 @@ const PropertyDetailPage = () => {
 
         {/* Mobile Tabs & Content */}
         <div className="mobile-content-wrapper">
+
+          <div className="component-spacing-mobile">
+            <NearbyPlaces places={property.places} />
+          </div>
 
           <div className="component-spacing-mobile">
             <PropertyTabs
@@ -348,6 +352,7 @@ const PropertyDetailPage = () => {
 
       <div className="desktop-content-grid">
         <div className="desktop-main-content">
+          <NearbyPlaces places={property.places} keyValues={propertyKeyValues} />
           <PropertyTabs
             activeTab={activeTab}
             setActiveTab={setActiveTab}
