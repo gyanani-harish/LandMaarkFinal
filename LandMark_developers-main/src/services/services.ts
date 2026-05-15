@@ -69,10 +69,7 @@ export interface PropertyImage {
 export const fetchProperties = async (townshipId: number = 9): Promise<CityProperty[]> => {
   try {
     const response = await fetch(`${ApiConstants.API_BASE_URL}${ApiEndPoints.TOWNSHIP_PROPERTIES_FULL(townshipId)}`, {
-      headers: {
-        'ngrok-skip-browser-warning': 'true',
-        'Content-Type': 'application/json',
-      },
+      headers: ApiConstants.HEADERS,
     });
     
     if (!response.ok) {
@@ -198,10 +195,7 @@ export const fetchProperties = async (townshipId: number = 9): Promise<CityPrope
 export const fetchPropertyImages = async (propertyId: number): Promise<PropertyImage[]> => {
   try {
     const response = await fetch(`${ApiConstants.API_BASE_URL}${ApiEndPoints}?property_id=${propertyId}`, {
-      headers: {
-        'ngrok-skip-browser-warning': 'true',
-        'Content-Type': 'application/json',
-      },
+      headers: ApiConstants.HEADERS,
     });
     
     if (!response.ok) {

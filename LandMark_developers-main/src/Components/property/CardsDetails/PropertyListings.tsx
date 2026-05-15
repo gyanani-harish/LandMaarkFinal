@@ -3,7 +3,8 @@ import React, { useState, useEffect } from 'react';
 import './PropertyListings.css'; // Import the CSS file for styling
 import PropertyFilters from './PropertyFilters';
 import { SlidersHorizontal, ChevronRight } from 'lucide-react';
-
+import { ApiConstants } from '../../../constants/ApiConstants';
+import { ApiEndPoints } from '../../../constants/ApiEndpoints';
 interface Property {
   sno: number;
   id: string;
@@ -82,7 +83,7 @@ const PropertyListings: React.FC<PropertyListingsProps> = ({ initialData, townsh
 
   // Calculate API_URL dynamically based on props or localStorage
   const currentTownshipId = townshipId || localStorage.getItem('selectedTownshipId') || 17;
-  const API_URL = `https://unimmunized-rosella-hedonistically.ngrok-free.dev/api/townshipDetails?id=${currentTownshipId}`;
+  const API_URL = ApiConstants.API_BASE_URL + ApiEndPoints.TOWNSHIP_PROPERTIES_FULL(Number(currentTownshipId));
 
   const extractBhk = (type: string): string => {
     const match = type.match(/(\d+)\s*BHK/i);
@@ -151,7 +152,7 @@ const PropertyListings: React.FC<PropertyListingsProps> = ({ initialData, townsh
 
       if (result.success && result.data) {
         setTownshipName(result.data.name || '');
-        
+
         // Only process properties if we don't have initialData
         if (!(initialData && initialData.length > 0)) {
           processApiData(result.data.properties || []);
@@ -338,8 +339,8 @@ const PropertyListings: React.FC<PropertyListingsProps> = ({ initialData, townsh
             </div>
           ) : (
             filteredData.map((plot, index) => (
-              <div 
-                key={plot.sno} 
+              <div
+                key={plot.sno}
                 className={`project-detail-card ${activeDetails === index ? 'active' : ''}`}
                 onClick={() => toggleDetails(index)}
               >

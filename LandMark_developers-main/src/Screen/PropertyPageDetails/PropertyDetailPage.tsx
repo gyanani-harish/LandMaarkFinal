@@ -2,17 +2,17 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Loader, Info } from 'lucide-react';
 import useIsMobile from '../../hooks/useIsMobile';
-import PropertyHeader from '../../Components/Property/PropertyHeader';
-import PropertyOverview from '../../Components/Property/PropertyOverview';
-import PropertyTabs from '../../Components/Property/PropertyTabs';
-import ImageGallery from '../../Components/Property/ImageGallery';
-import ContactCard from '../../Components/Property/ContactCard';
-import PropertyListings from '../../Components/Property/CardsDetails/PropertyListings';
-import QASection from '../../Components/Property/QASection';
-import AmenitiesSpecs from '../../Components/Property/AmenitiesSpecs';
+import PropertyHeader from '../../Components/property/PropertyHeader';
+import PropertyOverview from '../../Components/property/PropertyOverview';
+import PropertyTabs from '../../Components/property/PropertyTabs';
+import ImageGallery from '../../Components/property/ImageGallery';
+import ContactCard from '../../Components/property/ContactCard';
+import PropertyListings from '../../Components/property/CardsDetails/PropertyListings';
+import QASection from '../../Components/property/QASection';
+import AmenitiesSpecs from '../../Components/property/AmenitiesSpecs';
 import { CityProperty } from '../../services/services';
-import { ApiConstants } from '../../Constants/ApiConstants';
-import { ApiEndPoints } from '../../Constants/ApiEndpoints';
+import { ApiConstants } from '../../constants/ApiConstants';
+import { ApiEndPoints } from '../../constants/ApiEndpoints';
 import './PropertyDetailPage.css';
 
 const PropertyDetailPage = () => {
@@ -39,7 +39,9 @@ const PropertyDetailPage = () => {
         // Fetch all properties from the specific township API
         const url = `${ApiConstants.API_BASE_URL}${ApiEndPoints.TOWNSHIP_PROPERTIES_FULL(Number(tId))}`;
 
-        const response = await fetch(url);
+        const response = await fetch(url, {
+          headers: ApiConstants.HEADERS
+        });
 
         if (!response.ok) {
           throw new Error('Failed to fetch properties: ' + response.status);
