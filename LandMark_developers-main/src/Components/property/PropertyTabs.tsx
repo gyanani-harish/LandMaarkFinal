@@ -3,7 +3,7 @@ import React from 'react';
 import {
   Bed, Bath, Square, Calendar, Star, Check, X, TrendingDown,
   MapPin, Building2, Home, Ruler, Car, Trees, Wifi, Dumbbell,
-  Waves, Shield, Zap, ArrowUpDown, ParkingCircle
+  Waves, Shield, Zap, ArrowUpDown, ParkingCircle, Maximize
 } from 'lucide-react';
 import { CityProperty } from '../../services/services';
 
@@ -28,52 +28,54 @@ const PropertyTabs: React.FC<PropertyTabsProps> = ({
     switch (activeTab) {
       case 'overview':
         return (
-          <div>
-            <h2 className="section-title">
-              <span className="title-underline">
-                Property Overview
-              </span>
-            </h2>
+          <div className="space-y-6">
+            <div className="tab-content-card">
+              <h2 className="section-title">
+                <span className="title-underline">
+                  Property Overview
+                </span>
+              </h2>
 
-            <div className="overview-stats-grid">
-              <div className="stat-item">
-                <div className="flex items-center gap-2 mb-2">
-                  <Square className="w-5 h-5 text-gray-600" />
-                  <p className="text-sm text-gray-500">Total Area</p>
+              <div className="overview-stats-grid">
+                <div className="stat-item">
+                  <div className="flex items-center gap-2 mb-2">
+                    <Maximize className="w-5 h-5 text-gray-600" />
+                    <p className="text-base text-gray-500">Total Area</p>
+                  </div>
+                  <p className="tab-stat-value">{property.area || property.project_area || 'N/A'}</p>
                 </div>
-                <p className="font-lg text-left">{property.area || 'N/A'}</p>
+
+                <div className="stat-item">
+                  <div className="flex items-center gap-2 mb-2">
+                    <Calendar className="w-5 h-5 text-gray-600" />
+                    <p className="text-base text-gray-500">Launch Date</p>
+                  </div>
+                  <p className="tab-stat-value">{property.launch_date || 'N/A'}</p>
+                </div>
+
+                <div className="stat-item">
+                  <div className="flex items-center gap-2 mb-2">
+                    <Building2 className="w-5 h-5 text-gray-600" />
+                    <p className="text-base text-gray-500">Project Size</p>
+                  </div>
+                  <p className="tab-stat-value">{property.property_count || property.project_size || 'N/A'} Properties</p>
+                </div>
+
+                <div className="stat-item">
+                  <div className="flex items-center gap-2 mb-2">
+                    <Calendar className="w-5 h-5 text-gray-600" />
+                    <p className="text-sm text-gray-500">Possession</p>
+                  </div>
+                  <p className="tab-stat-value">{property.possession_starts || property.construction_status || 'N/A'}</p>
+                </div>
               </div>
 
-              <div className="stat-item">
-                <div className="flex items-center gap-2 mb-2">
-                  <Calendar className="w-5 h-5 text-gray-600" />
-                  <p className="text-sm text-gray-500">Launch Date</p>
-                </div>
-                <p className="font-lg text-left">{property.launch_date || 'N/A'}</p>
-              </div>
-
-              <div className="stat-item">
-                <div className="flex items-center gap-2 mb-2">
-                  <Building2 className="w-5 h-5 text-gray-600" />
-                  <p className="text-sm text-gray-500">Project Size</p>
-                </div>
-                <p className="font-lg text-left">{property.property_count || 'N/A'} Properties</p>
-              </div>
-
-              <div className="stat-item">
-                <div className="flex items-center gap-2 mb-2">
-                  <Calendar className="w-5 h-5 text-gray-600" />
-                  <p className="text-sm text-gray-500">Possession</p>
-                </div>
-                <p className="font-lg text-left">{property.possession_starts || property.construction_status || 'N/A'}</p>
+              <div className="tab-description-wrapper mt-6">
+                <p className="tab-description-text">{property.description}</p>
               </div>
             </div>
 
-            <div className="tab-description-wrapper">
-              <p className="tab-description-text">{property.description}</p>
-            </div>
-
-            <div className="additional-details-section">
+            <div className="tab-content-card additional-details-section">
               <h2 className="section-title">
                 <span className="title-underline">
                   Additional Details
@@ -107,7 +109,7 @@ const PropertyTabs: React.FC<PropertyTabsProps> = ({
 
       case 'amenities':
         return (
-          <div>
+          <div className="tab-content-card">
             <h2 className="section-title">Amenities</h2>
             <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
               {property.amenities.map((amenity, idx) => (
@@ -128,7 +130,7 @@ const PropertyTabs: React.FC<PropertyTabsProps> = ({
 
       case 'locality':
         return (
-          <div>
+          <div className="tab-content-card">
             <div className="flex justify-between items-start mb-4">
               <h2 className="section-title">{property.location} Locality</h2>
             </div>
@@ -160,7 +162,7 @@ const PropertyTabs: React.FC<PropertyTabsProps> = ({
 
       case 'pricing':
         return (
-          <div>
+          <div className="tab-content-card">
             <h2 className="section-title">Price Trends</h2>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
@@ -211,7 +213,7 @@ const PropertyTabs: React.FC<PropertyTabsProps> = ({
 
       case 'floorplans':
         return (
-          <div>
+          <div className="tab-content-card">
             <h2 className="section-title">Floor Plans</h2>
             <div className="text-center p-8 bg-gray-100 rounded-lg">
               <p className="text-gray-500">Floor plans coming soon for {property.bhk} BHK configuration</p>
@@ -243,7 +245,7 @@ const PropertyTabs: React.FC<PropertyTabsProps> = ({
       </div>
 
       {/* Tab Content */}
-      <div className="tab-content-card">
+      <div className="tabs-content-wrapper">
         {renderTabContent()}
       </div>
     </div>

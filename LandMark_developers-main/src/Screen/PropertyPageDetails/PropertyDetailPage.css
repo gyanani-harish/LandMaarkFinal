@@ -34,12 +34,12 @@
 .mobile-price-highlights {
   width: 100%;
   background-color: white;
-  padding: 1rem;
+  padding: 1.25rem 0.75rem;
   margin-top: 1rem;
-  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
 }
 
 /* Loading & Error States */
@@ -173,12 +173,15 @@
 
 /* ===== Mobile Specific ===== */
 .highlight-item {
-  border-bottom: 1px solid #f3f4f6;
-  padding-bottom: 0.5rem;
+  border-right: 1px solid #adb1b9;
+  padding: 0 0.25rem;
+  text-align: center;
 }
 
 .highlight-item-no-border {
   border-bottom: none;
+  padding: 0 0.25rem;
+  text-align: center;
 }
 
 .highlight-title {

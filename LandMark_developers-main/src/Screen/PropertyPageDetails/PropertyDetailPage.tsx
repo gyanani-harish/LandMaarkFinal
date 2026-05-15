@@ -191,10 +191,8 @@ const PropertyDetailPage = () => {
 
   const tabs = [
     { id: 'overview', label: 'Overview' },
-    { id: 'floorplans', label: 'Floor Plans' },
     { id: 'amenities', label: 'Amenities' },
     { id: 'locality', label: 'Locality' },
-    { id: 'pricing', label: 'Pricing' },
   ];
 
   const headerData = {
@@ -247,6 +245,7 @@ const PropertyDetailPage = () => {
 
         {/* Mobile Tabs & Content */}
         <div className="mobile-content-wrapper">
+
           <div className="component-spacing-mobile">
             <PropertyTabs
               activeTab={activeTab}

@@ -14,7 +14,7 @@
   padding: 1rem 0.25rem;
   border-bottom: 2px solid transparent;
   font-weight: 500;
-  font-size: 0.875rem;
+  font-size: 1rem;
   white-space: nowrap;
   color: #6b7280;
   transition: all 0.2s;
@@ -38,18 +38,25 @@
 .tab-content-card {
   background-color: white;
   border-radius: 0.75rem;
-  padding: 0.5rem;
-  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  padding: 1rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.tab-stat-value {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #1a202c !important;
+  text-align: left;
+  margin: 0;
 }
 
 .section-title {
-  font-size: 1.25rem;
+  font-size: 1.5rem;
   text-align: left;
   font-weight: 600;
-  margin-bottom: 1.5rem;
   display: block;
   width: 100%;
-  /* Force full width to prevent two lines */
+  color: #1a202c !important;
 }
 
 .title-underline {
@@ -80,19 +87,18 @@
   gap: 1rem;
 }
 
-.tab-description-wrapper {
-  margin-top: 1rem;
-}
+
 
 .tab-description-text {
   color: #4b5563;
   line-height: 1.625;
-  padding: 0.5rem 0.25rem;
+  font-size: 1.125rem;
+  border-top: 2px solid #c6cbd3;
 }
 
 .additional-details-section {
   margin-top: 0.5rem;
-  padding-top: 0.5rem;
+
   border-top: 1px solid #e2e8f0;
 }
 
@@ -103,13 +109,14 @@
 }
 
 .detail-info-label {
-  font-size: 0.875rem;
+  font-size: 1rem;
   color: #6b7280;
   margin: 0;
 }
 
 .detail-info-value {
-  font-weight: 500;
+  font-size: 1.125rem;
+  font-weight: 600;
   color: #1a202c;
   margin: 0;
 }
