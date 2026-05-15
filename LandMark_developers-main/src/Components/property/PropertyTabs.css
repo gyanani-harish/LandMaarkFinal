@@ -1,46 +1,81 @@
 /* PropertyTabs.css */
 .tabs-nav-container {
-  border-bottom: 1px solid #e5e7eb;
-  margin-bottom: 1.5rem;
+  border-bottom: 1px solid #f1f5f9;
+  margin-bottom: 0.75rem;
   overflow-x: auto;
+  scrollbar-width: none; /* Hide scrollbar for Firefox */
+  -ms-overflow-style: none; /* Hide scrollbar for IE/Edge */
+}
+
+.tabs-nav-container::-webkit-scrollbar {
+  display: none; /* Hide scrollbar for Chrome/Safari */
 }
 
 .tabs-nav {
   display: flex;
-  gap: 2rem;
+  gap: 1rem;
+}
+
+@media (min-width: 768px) {
+  .tabs-nav {
+    gap: 2rem;
+  }
 }
 
 .tab-button {
-  padding: 1rem 0.25rem;
-  border-bottom: 2px solid transparent;
+  padding: 1rem 0.5rem;
+  border: none;
   font-weight: 500;
   font-size: 1rem;
   white-space: nowrap;
-  color: #6b7280;
-  transition: all 0.2s;
+  color: #94a3b8;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   background: none;
   border-top: none;
   border-left: none;
   border-right: none;
   cursor: pointer;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+
+.tab-button:focus,
+.tab-button:active,
+.tab-button:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
 }
 
 .tab-button:hover {
-  color: #374151;
-  border-bottom-color: #d1d5db;
+  color: #6366f1;
 }
 
 .tab-button-active {
-  border-bottom-color: #2563eb;
-  color: #2563eb;
+  color: #6366f1;
+  font-weight: 600;
+  position: relative;
+}
+
+.tab-button-active::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  height: 3px;
+  background-color: #6366f1;
+  border-radius: 2px;
 }
 
 .tab-content-card {
   background-color: white;
   border-radius: 0.75rem;
-  padding: 1.5rem 1.25rem;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  margin-bottom: 1.5rem;
+  padding: 1rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
+  margin-bottom: 0.75rem;
+  width: 100%;
 }
 
 .tab-stat-value {
@@ -48,20 +83,22 @@
   font-weight: 700;
   color: #1a202c !important;
   text-align: left;
-  margin: 0;
+  margin: 0.25rem 0 0 0;
+  line-height: 1.2;
 }
 
 .section-title {
   font-size: 1.5rem;
   text-align: left;
-  font-weight: 600;
+  font-weight: 700;
   display: block;
   width: 100%;
   color: #1a202c !important;
+  margin: 0 0 1rem 0;
 }
 
 .title-underline {
-  border-bottom: 2px solid #d1d5db;
+  border-bottom: 3px solid #6366f1;
   padding-bottom: 0.25rem;
   display: inline-block;
   min-width: fit-content;
@@ -80,6 +117,9 @@
 
 .stat-item {
   padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
 }
 
 .additional-details-grid {

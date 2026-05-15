@@ -5,18 +5,18 @@
   background-color: #f9fafb;
   /* gray-50 */
   min-height: 100vh;
+  padding-top: 3.9rem !important;
+  position: relative;
+  z-index: 1;
 }
 
 .desktop-padding {
   padding: 0.5rem 1.5rem;
-  margin-top: 3.5rem;
-  /* mt-18 */
+  margin-top: 1rem;
 }
 
 .mobile-padding {
   padding: 0;
-  margin-top: 3.5rem;
-  /* mt-14 */
 }
 
 .mobile-header-wrapper {
@@ -28,7 +28,18 @@
 .mobile-gallery-wrapper {
   width: 100%;
   padding: 0;
-  margin-top: 0;
+  margin-top: 1rem;
+}
+
+.tab-content-card,
+.property-overview-container,
+.contact-card-container {
+  background-color: white;
+  border-radius: 0.75rem;
+  padding: 1rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
+  margin-bottom: 0.75rem;
+  width: 100%;
 }
 
 .mobile-price-highlights {
@@ -199,9 +210,9 @@
 
 .mobile-content-wrapper {
   padding: 0 1rem;
-  margin-top: 1.5rem;
+  margin-top: 0;
 }
 
 .component-spacing-mobile {
-  margin-top: 1rem;
+  margin-bottom: 0;
 }

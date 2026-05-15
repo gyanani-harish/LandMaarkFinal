@@ -16,7 +16,8 @@ import {
   Home
 } from 'lucide-react';
 import { CityProperty } from '../../services/services';
-// import ConstructionSpecs from '../../Components/Amenities/ConstructionSpecs';
+import OverviewItem from './Overview/OverviewItem';
+
 interface AmenitiesSpecsProps {
   property: CityProperty;
 }
@@ -86,78 +87,51 @@ const AmenitiesSpecs: React.FC<AmenitiesSpecsProps> = ({ property }) => {
     <div className="amenities-specs-wrapper">
       <div className="amenities-specs-container">
         <div className="amenities-main-grid">
-          <div className="amenities-content-card">
-            <h2 className="section-header-large">
-              Top Amenities
+          <div className="tab-content-card">
+            <h2 className="section-title">
+              <span className="title-underline">
+                Top Amenities
+              </span>
             </h2>  
             {/* Amenities Section */}
             {hasAmenities && (
               <div className="amenities-list-wrapper">
-                <div className="amenities-grid">
-                  {property.amenities.slice(0, 7).map((item, i) => {
+                <div className="items-grid">
+                  {property.amenities.slice(0, 8).map((item, i) => {
                     const iconName = getAmenityIcon(item.amenity_name);
                     const IconComponent = iconMap[iconName] || Building2;
                     return (
-                      <div key={i} className="amenity-item">
-                        <div className="amenity-icon-wrapper">
-                          {renderIcon(IconComponent)}
-                        </div>
-                        <p className="amenity-name">
-                          {item.amenity_name}
-                        </p>
-                      </div>
+                      <OverviewItem 
+                        key={i} 
+                        label={item.amenity_name} 
+                        value="Included" 
+                        icon={IconComponent} 
+                      />
                     );
                   })}
-                  {property.amenities.length > 7 && (
-                    <div className="more-amenities-badge">
-                      <MoreHorizontal className="more-amenities-icon" />
-                      <p className="more-amenities-text">+{property.amenities.length - 7} more</p>
-                    </div>
-                  )}
                 </div>
               </div>
             )}
           </div>
 
-          <div className="amenities-content-card">
-            {/* Specifications Section */}
-            <div className="specs-section-wrapper">
-              <h2 className="section-header-large">
+          <div className="tab-content-card">
+            <h2 className="section-title">
+              <span className="title-underline">
                 Specifications
-              </h2>
-              {/* Property Specifications from API */}
-              {hasSpecifications && (
-                <div className="border-b border-gray-200 py-4">
-                  <div
-                    className="specs-dropdown-header"
-                    onClick={() => toggleSection("specs")}
-                  >
-                    <div className="specs-title-row">
-                      <Grid className="specs-icon" />
-                      <p className="specs-title-text">Property Specifications</p>
-                    </div>
-                    {openSection === "specs" ? (
-                      <ChevronUp className="specs-icon" />
-                    ) : (
-                      <ChevronDown className="specs-icon" />
-                    )}
-                  </div>
-
-                  {openSection === "specs" && (
-                    <div className="specs-grid">
-                      {specificationsArray.map((item, i) => (
-                        <div key={i} className="spec-item">
-                          <p className="spec-label">
-                            {item.label.replace(/_/g, ' ')}
-                          </p>
-                          <p className="spec-value">{item.value}</p>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              )}
-            </div>
+              </span>
+            </h2>
+            {hasSpecifications && (
+              <div className="items-grid py-4">
+                {specificationsArray.map((item, i) => (
+                  <OverviewItem 
+                    key={i} 
+                    label={item.label.replace(/_/g, ' ')} 
+                    value={item.value} 
+                    icon={Grid} 
+                  />
+                ))}
+              </div>
+            )}
           </div>
         </div>
       </div>

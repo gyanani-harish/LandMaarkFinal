@@ -1,25 +1,29 @@
 /* OverviewItem.css */
 .overview-item-container {
   display: flex;
-  align-items: flex-start;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  text-align: center;
+  padding: 0.75rem;
   gap: 0.625rem;
-  padding: 0;
 }
 
 .overview-icon-wrapper {
-  width: 36px;
-  height: 36px;
+  width: 40px;
+  height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 8px;
   flex-shrink: 0;
+  background-color: #f8fafc;
 }
 
 .overview-icon {
-  width: 18px;
-  height: 18px;
-  color: #000;
+  width: 24px;
+  height: 24px;
+  color: #4b5563;
 }
 
 .overview-text-content {
@@ -30,7 +34,7 @@
 .overview-label {
   font-size: 1rem;
   font-weight: 500;
-  color: #94a3b8;
+  color: #6b7280;
   margin: 0;
   line-height: 1.3;
 }
@@ -46,18 +50,20 @@
 
 @media (max-width: 767px) {
   .overview-item-container {
-    padding: 0;
+    padding: 0.75rem;
     gap: 0.5rem;
+    align-items: center;
+    text-align: center;
   }
 
   .overview-icon-wrapper {
-    width: 32px;
-    height: 32px;
+    width: 40px;
+    height: 40px;
   }
 
   .overview-icon {
-    width: 16px;
-    height: 16px;
+    width: 24px;
+    height: 24px;
   }
 
   .overview-label {

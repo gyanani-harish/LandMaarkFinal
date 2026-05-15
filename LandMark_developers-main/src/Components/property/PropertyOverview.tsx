@@ -38,46 +38,39 @@ const PropertyOverview: React.FC<PropertyOverviewProps> = ({ property, pricePerS
   const displayName = townshipName || property.title || 'Township';
 
   return (
-    <div className="property-overview-container">
-      <div className="overview-grid">
-        <div className="overview-main">
-          <h2 className="overview-header">
-            {displayName} Overview
-          </h2>
+    <div className="tab-content-card">
+      <h2 className="section-title">
+        <span className="title-underline">
+          {displayName} Overview
+        </span>
+      </h2>
 
-          {/* Overview Items Grid */}
-          <div className="mb-4">
-            {overviewItems && overviewItems.length > 0 ? (
-              <div className="items-grid">
-                {overviewItems.map((item, index) => (
-                  <OverviewItem
-                    key={index}
-                    label={item.label}
-                    value={String(item.value)}
-                    icon={item.icon}
-                  />
-                ))}
-              </div>
-            ) : (
-              <p className="text-gray-500">No overview information available</p>
-            )}
+      {/* Overview Items Grid */}
+      <div className="mb-4">
+        {overviewItems && overviewItems.filter(item => item.value && item.value !== 'N/A' && item.value !== 'undefined').length > 0 ? (
+          <div className="items-grid">
+            {overviewItems
+              .filter(item => item.value && item.value !== 'N/A' && item.value !== 'undefined')
+              .map((item, index) => (
+                <OverviewItem
+                  key={index}
+                  label={item.label}
+                  value={String(item.value)}
+                  icon={item.icon}
+                />
+              ))}
           </div>
-
-          {/* Action Buttons */}
-
-          <ActionButtons
-            onShare={handleShare}
-            onSave={handleSave}
-            onAskDetails={handleAskDetails}
-          />
-
-          {/* Description Section */}
-          <DescriptionSection description={property.description} />
-
-          {/* Nearby Places */}
-          <NearbyPlaces places={property.places} />
-        </div>
+        ) : (
+          <p className="text-gray-500">No overview information available</p>
+        )}
       </div>
+
+      {/* Action Buttons */}
+      <ActionButtons
+        onShare={handleShare}
+        onSave={handleSave}
+        onAskDetails={handleAskDetails}
+      />
     </div>
   );
 };

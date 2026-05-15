@@ -3,7 +3,7 @@ import './QASection.css';
 
 const QASection = () => {
   return (
-    <div className="qa-section-container qa-section-hidden">
+    <div className="tab-content-card">
       <h2 className="qa-title">
         <span className="qa-title-underline">
           Questions & Answer

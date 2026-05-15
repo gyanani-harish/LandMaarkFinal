@@ -8,8 +8,9 @@ import PropertyTabs from '../../Components/property/PropertyTabs';
 import ImageGallery from '../../Components/property/ImageGallery';
 import ContactCard from '../../Components/property/ContactCard';
 import PropertyListings from '../../Components/property/CardsDetails/PropertyListings';
-import QASection from '../../Components/property/QASection';
 import AmenitiesSpecs from '../../Components/property/AmenitiesSpecs';
+import OverviewItem from '../../Components/property/Overview/OverviewItem';
+import { Car, Home, Building2, ShieldCheck, CheckCircle2 } from 'lucide-react';
 import { CityProperty } from '../../services/services';
 import { ApiConstants } from '../../constants/ApiConstants';
 import { ApiEndPoints } from '../../constants/ApiEndpoints';
@@ -269,11 +270,39 @@ const PropertyDetailPage = () => {
           </div>
 
           <div className="component-spacing-mobile">
-            <QASection />
+            <div className="tab-content-card additional-details-section">
+              <h2 className="section-title">
+                <span className="title-underline">
+                  Additional Details
+                </span>
+              </h2>
+              <div className="items-grid">
+                <OverviewItem 
+                  label="Parking" 
+                  value={property.amenities?.some(a => a.amenity_name === 'Parking') ? 'Available' : 'Not Available'} 
+                  icon={Car} 
+                />
+                <OverviewItem 
+                  label="Balcony" 
+                  value={property.specifications?.Balcony || 'Not Specified'} 
+                  icon={Home} 
+                />
+                <OverviewItem 
+                  label="Property Type" 
+                  value={property.propertyType} 
+                  icon={Building2} 
+                />
+                <OverviewItem 
+                  label="Verified" 
+                  value={property.verified ? 'Yes' : 'No'} 
+                  icon={ShieldCheck} 
+                />
+              </div>
+            </div>
           </div>
         </div>
 
-        <div className="mt-6">
+        <div className="mt-[0.75rem]">
           <PropertyListings initialData={allTownshipProperties} townshipId={id} />
         </div>
       </div>
