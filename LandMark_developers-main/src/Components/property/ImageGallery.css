@@ -188,16 +188,17 @@
 /* Mobile "Tap to see all images" */
 .tap-overlay {
   position: absolute;
-  top: 50%;
+  bottom: 16px;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translateX(-50%);
   background: rgba(255, 255, 255, 0.85);
   backdrop-filter: blur(4px);
-  padding: 12px 24px;
+  padding: 10px 20px;
   border-radius: 4px;
   color: #1a202c;
   font-weight: 600;
-  font-size: 1rem;
+  font-size: 0.85rem;
+  white-space: nowrap;
   pointer-events: none;
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
