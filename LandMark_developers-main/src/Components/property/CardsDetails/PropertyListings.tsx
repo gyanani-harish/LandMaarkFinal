@@ -1,7 +1,7 @@
 // PropertyListings.tsx
 import React, { useState, useEffect } from 'react';
 import './PropertyListings.css'; // Import the CSS file for styling
-import { ChevronRight } from 'lucide-react';
+import { ChevronRight, FileText, Download } from 'lucide-react';
 import { ApiConstants } from '../../../constants/ApiConstants';
 import { ApiEndPoints } from '../../../constants/ApiEndpoints';
 interface Property {
@@ -70,6 +70,7 @@ const PropertyListings: React.FC<PropertyListingsProps> = ({ initialData, townsh
   });
   const [activeDetails, setActiveDetails] = useState<number | null>(null);
   const [townshipName, setTownshipName] = useState<string>(initialTownshipName || '');
+  const [pdfData, setPdfData] = useState<any[]>([]);
 
   const [filters, setFilters] = useState({
     subTownship: '',
@@ -172,6 +173,7 @@ const PropertyListings: React.FC<PropertyListingsProps> = ({ initialData, townsh
 
       if (result.success && result.data) {
         setTownshipName(result.data.name || '');
+        setPdfData(result.data.pdf || []);
 
         // Only process properties if we don't have initialData
         if (!(initialData && initialData.length > 0)) {
@@ -335,7 +337,7 @@ const PropertyListings: React.FC<PropertyListingsProps> = ({ initialData, townsh
             <div className="count">({filteredData.length})</div>
           </div>
 
-              
+
         </div>
 
         <div className="project-details-cards-grid">
@@ -364,8 +366,8 @@ const PropertyListings: React.FC<PropertyListingsProps> = ({ initialData, townsh
                   <div className="header-right-side">
                     <span className="compact-price">{plot.price > 0 ? `₹${plot.price} L` : ''}</span>
                     <ChevronRight size={18} className={`arrow-icon ${activeDetails === index ? 'rotate' : ''}`} />
-          </div>
-        </div>
+                  </div>
+                </div>
                 {activeDetails === index && (
                   <div className="card-expanded-panel" onClick={(e) => e.stopPropagation()}>
                     <div className="expanded-info-grid">
@@ -437,6 +439,39 @@ const PropertyListings: React.FC<PropertyListingsProps> = ({ initialData, townsh
           )}
         </div>
       </div>
+
+      {/* PDF Section */}
+      {(pdfData && pdfData.length > 0) && (
+        <div className="pdf-section-wrapper mt-8  ">
+          <div className="tab-content-card">
+            <h2 className="section-title">
+              <span className="title-underline">Brochures & Documents</span>
+            </h2>
+            <div className="pdf-grid">
+              {pdfData.map((pdf, index) => (
+                <div key={index} className="pdf-item">
+                  <div className="pdf-icon-wrapper">
+                    <FileText className="pdf-icon" />
+                  </div>
+                  <div className="pdf-info">
+                    <p className="pdf-name">{pdf.name || `Document ${index + 1}`}</p>
+                    <p className="pdf-size">PDF • Click to download</p>
+                  </div>
+                  <a
+                    href={pdf.url || pdf.file_path || '#'}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="pdf-download-btn"
+                  >
+                    <Download className="download-icon" />
+                    <span>Download</span>
+                  </a>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
