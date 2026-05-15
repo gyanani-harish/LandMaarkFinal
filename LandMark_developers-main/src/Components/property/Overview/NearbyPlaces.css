@@ -6,15 +6,7 @@
 
 .places-container {}
 
-.places-header {
-  font-size: 1.25rem;
-  text-align: left;
-  font-weight: 700;
-  border-bottom: 2px solid #e5e7eb;
-  width: fit-content;
-  margin-bottom: 2rem;
-  padding-bottom: 0.25rem;
-}
+.places-container {}
 
 .places-grid {
   display: grid;

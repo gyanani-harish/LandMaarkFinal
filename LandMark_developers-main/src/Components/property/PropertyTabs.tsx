@@ -1,5 +1,4 @@
-
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import {
   Waves, Shield, Zap, ArrowUpDown, ParkingCircle, Maximize,
   ChevronDown, ChevronUp, Grid, MoreHorizontal, Dumbbell, Trees, Building2, Home,
@@ -25,6 +24,19 @@ const PropertyTabs: React.FC<PropertyTabsProps> = ({
   property,
   pricePerSqft,
 }) => {
+  const navRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (activeTab !== 'overview' && navRef.current) {
+      const offset = 80; // Standard navbar height
+      const elementPosition = navRef.current.getBoundingClientRect().top + window.pageYOffset;
+      window.scrollTo({
+        top: elementPosition - offset,
+        behavior: 'smooth'
+      });
+    }
+  }, [activeTab]);
+
   const getAmenityIcon = (amenityName: string): string => {
     const name = amenityName.toLowerCase();
     const amenityIconMap: Record<string, string> = {
@@ -220,7 +232,7 @@ const PropertyTabs: React.FC<PropertyTabsProps> = ({
 
       {/* Tab Content */}
       {activeTab !== 'overview' && (
-        <div className="tab-content-card">
+        <div ref={contentRef} className="tab-content-card scroll-mt-20">
           {renderTabContent()}
         </div>
       )}

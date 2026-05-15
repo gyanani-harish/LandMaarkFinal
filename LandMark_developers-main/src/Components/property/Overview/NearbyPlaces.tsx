@@ -10,10 +10,13 @@ const NearbyPlaces: React.FC<NearbyPlacesProps> = ({ places }) => {
   if (!places || places.length === 0) return null;
 
   return (
-    <>
-      <div className="places-divider"></div>
+    <div className="tab-content-card">
       <div className="places-container">
-        <h3 className="places-header">Around this project</h3>
+        <h3 className="section-title">
+          <span className="title-underline">
+            Around this project
+          </span>
+        </h3>
         <div className="places-grid">
           {places.map((place, index) => (
             <div key={index} className="place-item">
@@ -30,7 +33,7 @@ const NearbyPlaces: React.FC<NearbyPlacesProps> = ({ places }) => {
           ))}
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

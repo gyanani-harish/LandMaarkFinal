@@ -78,7 +78,8 @@
   margin: 0;
   font-size: 28px;
   font-weight: 800;
-  color: #4f46e5; /* Custom Indigo */
+  color: #4f46e5;
+  /* Custom Indigo */
   letter-spacing: -0.02em;
 }
 
@@ -358,8 +359,13 @@ tbody td {
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 /* Empty State */
@@ -560,7 +566,8 @@ tbody td {
 
 .bottom-sheet {
   width: 100%;
-  max-width: 500px; /* Limits width on desktop */
+  max-width: 500px;
+  /* Limits width on desktop */
   background: white;
   border-top-left-radius: 24px;
   border-top-right-radius: 24px;
@@ -574,18 +581,27 @@ tbody td {
 /* Responsive adjustments for the sheet */
 @media (min-width: 768px) {
   .bottom-sheet-overlay {
-    align-items: center; /* Center it like a modal on desktop */
+    align-items: center;
+    /* Center it like a modal on desktop */
   }
-  
+
   .bottom-sheet {
-    border-radius: 24px; /* Full corners on desktop */
+    border-radius: 24px;
+    /* Full corners on desktop */
     animation: zoomIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 }
 
 @keyframes zoomIn {
-  from { opacity: 0; transform: scale(0.95); }
-  to { opacity: 1; transform: scale(1); }
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 .bottom-sheet-header {
@@ -691,21 +707,31 @@ tbody td {
 
 /* Animations */
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes slideUp {
-  from { transform: translateY(100%); }
-  to { transform: translateY(0); }
+  from {
+    transform: translateY(100%);
+  }
+
+  to {
+    transform: translateY(0);
+  }
 }
 
 /* Project Details Cards Grid - Collabs Style with Custom Colors */
 .project-details-cards-grid {
   display: flex;
   flex-direction: column;
-  gap: 2px; /* Even tighter for zebra effect */
-  padding: 8px 0;
+  gap: 2px;
+  /* Even tighter for zebra effect */
 }
 
 .project-detail-card {
@@ -726,11 +752,12 @@ tbody td {
 }
 
 .project-detail-card.active {
-  border-color: #4f46e5;
+  border: 1.5px solid #4f46e5;
+  border-radius: 12px;
   box-shadow: 0 4px 12px rgba(79, 70, 229, 0.1);
-  margin-bottom: 4px;
-  margin-top: 2px;
-  background: #ffffff !important; /* Ensure active is always clean */
+  margin-bottom: 8px;
+  margin-top: 4px;
+  background: #ffffff !important;
 }
 
 .card-header-compact {
@@ -738,23 +765,24 @@ tbody td {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: transparent; /* Use parent background */
+  background: transparent;
+  /* Use parent background */
 }
 
 .header-left-side {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 8px;
 }
 
 .plot-id {
   font-size: 13px;
   font-weight: 700;
-  color: #4f46e5; /* Custom Indigo */
-  background: #f1f5ff; /* Custom Light Blue BG */
+  color: #4f46e5;
+  background: #f1f5ff;
   padding: 4px 8px;
-  border: 1px solid #e0e7ff; /* Custom Border */
-  border-radius: 4px;
+  border: 1px solid #e0e7ff;
+  border-radius: 8px;
   white-space: nowrap;
 }
 
@@ -765,8 +793,7 @@ tbody td {
 
 .card-subtitle {
   font-size: 13px;
-  color: #475569;
-  font-weight: 600;
+  color: #64748b;
 }
 
 .header-right-side {
@@ -792,7 +819,7 @@ tbody td {
 }
 
 .card-expanded-panel {
-  padding: 14px;
+  padding: 10px;
   background: #ffffff;
   border-top: 1px solid #f1f5f9;
   animation: slideDownFade 0.2s ease-out;
@@ -801,31 +828,29 @@ tbody td {
 .expanded-info-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 10px;
+  gap: 8px;
 }
 
 .info-item {
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 8px;
-  padding: 2px 0;
+  flex-direction: column;
+
 }
 
 .info-item .label {
-  font-size: 11px;
+  font-size: 10px;
   color: #94a3b8;
   text-transform: uppercase;
-  font-weight: 700;
-  flex-shrink: 0;
+  font-weight: 600;
+  letter-spacing: 0.025em;
+  margin-bottom: 2px;
 }
 
 .info-item .value {
-  font-size: 13px;
+  font-size: 14px;
   color: #1e293b;
   font-weight: 600;
-  text-align: right;
+  text-align: left;
   word-break: break-word;
 }
 
@@ -834,8 +859,15 @@ tbody td {
 }
 
 @keyframes slideDownFade {
-  from { opacity: 0; transform: translateY(-3px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(-3px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* Responsive Overrides for Collabs View */
@@ -843,7 +875,7 @@ tbody td {
   .table-view {
     display: none;
   }
-  
+
   .project-details-cards-grid {
     display: flex;
   }
@@ -939,6 +971,7 @@ tbody td {
     padding: 0;
     max-width: 100%;
   }
+
   .filters,
   .expand-btn,
   .stats-container {
@@ -1000,6 +1033,7 @@ tbody tr {
     opacity: 0;
     transform: translateY(-10px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);

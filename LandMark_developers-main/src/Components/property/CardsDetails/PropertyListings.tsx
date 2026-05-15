@@ -1,8 +1,7 @@
 // PropertyListings.tsx
 import React, { useState, useEffect } from 'react';
 import './PropertyListings.css'; // Import the CSS file for styling
-import PropertyFilters from './PropertyFilters';
-import { SlidersHorizontal, ChevronRight } from 'lucide-react';
+import { ChevronRight } from 'lucide-react';
 import { ApiConstants } from '../../../constants/ApiConstants';
 import { ApiEndPoints } from '../../../constants/ApiEndpoints';
 interface Property {
@@ -70,7 +69,6 @@ const PropertyListings: React.FC<PropertyListingsProps> = ({ initialData, townsh
     bhkMax: 0,
   });
   const [activeDetails, setActiveDetails] = useState<number | null>(null);
-  const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [townshipName, setTownshipName] = useState<string>(initialTownshipName || '');
 
   const [filters, setFilters] = useState({
@@ -84,6 +82,28 @@ const PropertyListings: React.FC<PropertyListingsProps> = ({ initialData, townsh
   // Calculate API_URL dynamically based on props or localStorage
   const currentTownshipId = townshipId || localStorage.getItem('selectedTownshipId') || 17;
   const API_URL = ApiConstants.API_BASE_URL + ApiEndPoints.TOWNSHIP_PROPERTIES_FULL(Number(currentTownshipId));
+
+  const formatValue = (value: any): string => {
+    if (value === null || value === undefined) return '';
+    if (typeof value === 'string') return value;
+    if (typeof value === 'number') return String(value);
+    if (Array.isArray(value)) {
+      if (value.length === 0) return '';
+      if (typeof value[0] === 'object' && value[0] !== null) {
+        return value.map(item => {
+          const parts: string[] = [];
+          if (item.name) parts.push(item.name);
+          if (item.distance) parts.push(item.distance);
+          return parts.join(', ');
+        }).join(' | ');
+      }
+      return value.join(', ');
+    }
+    if (typeof value === 'object') {
+      return JSON.stringify(value);
+    }
+    return String(value);
+  };
 
   const extractBhk = (type: string): string => {
     const match = type.match(/(\d+)\s*BHK/i);
@@ -315,15 +335,7 @@ const PropertyListings: React.FC<PropertyListingsProps> = ({ initialData, townsh
             <div className="count">({filteredData.length})</div>
           </div>
 
-          <div className="header-right">
-            <PropertyFilters
-              filters={filters}
-              plotData={plotData}
-              onFilterChange={handleFilterChange}
-              isMobileOpen={isFilterOpen}
-              setIsMobileOpen={setIsFilterOpen}
-            />
-          </div>
+              
         </div>
 
         <div className="project-details-cards-grid">
@@ -352,32 +364,22 @@ const PropertyListings: React.FC<PropertyListingsProps> = ({ initialData, townsh
                   <div className="header-right-side">
                     <span className="compact-price">{plot.price > 0 ? `₹${plot.price} L` : ''}</span>
                     <ChevronRight size={18} className={`arrow-icon ${activeDetails === index ? 'rotate' : ''}`} />
-                  </div>
-                </div>
-
+          </div>
+        </div>
                 {activeDetails === index && (
                   <div className="card-expanded-panel" onClick={(e) => e.stopPropagation()}>
                     <div className="expanded-info-grid">
-                      <div className="info-item">
-                        <span className="label">Configuration:</span>
-                        <span className="value">{plot.rawKeyValues.find(kv => kv.key === 'Configuration')?.value || ''}</span>
-                      </div>
-                      <div className="info-item">
-                        <span className="label">Size:</span>
-                        <span className="value">{plot.size}</span>
-                      </div>
-                      <div className="info-item">
-                        <span className="label">Sub Township:</span>
-                        <span className="value">{plot.rawKeyValues.find(kv => kv.key === 'Sub Township')?.value || ''}</span>
-                      </div>
-                      <div className="info-item">
-                        <span className="label">Construction Status:</span>
-                        <span className="value status-highlight">{plot.rawKeyValues.find(kv => kv.key === 'Construction Status')?.value || ''}</span>
-                      </div>
-                      {plot.rawKeyValues.filter(kv => !['Plot', 'Configuration', 'Size', 'Sub Township', 'Construction Status', 'ID', 'Price', 'Is Deleted'].includes(kv.key)).map((kv, i) => (
+                      {plot.rawKeyValues.filter(kv => {
+                        if (kv.key === 'Is Deleted') return false;
+                        if (kv.value === null || kv.value === undefined || kv.value === '') return false;
+                        if (Array.isArray(kv.value) && kv.value.length === 0) return false;
+                        if (typeof kv.value === 'object' && kv.value !== null && Object.keys(kv.value).length === 0) return false;
+                        if (kv.value === '[]' || kv.value === '{}') return false;
+                        return true;
+                      }).map((kv, i) => (
                         <div key={i} className="info-item">
                           <span className="label">{kv.key}:</span>
-                          <span className="value">{typeof kv.value === 'object' && kv.value !== null ? (kv.value.name || JSON.stringify(kv.value)) : kv.value}</span>
+                          <span className="value">{formatValue(kv.value)}</span>
                         </div>
                       ))}
                     </div>
