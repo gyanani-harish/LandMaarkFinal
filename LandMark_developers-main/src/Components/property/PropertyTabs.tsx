@@ -16,7 +16,6 @@ interface PropertyTabsProps {
 }
 
 import './PropertyTabs.css';
-
 const PropertyTabs: React.FC<PropertyTabsProps> = ({
   activeTab,
   setActiveTab,
@@ -26,14 +25,34 @@ const PropertyTabs: React.FC<PropertyTabsProps> = ({
 }) => {
   const navRef = useRef<HTMLDivElement>(null);
 
+  const handleTabClick = (tabId: string) => {
+    if (tabId === 'amenities') {
+      const element = document.getElementById('amenities-section');
+      if (element) {
+        const offset = 100;
+        const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
+        window.scrollTo({
+          top: elementPosition - offset,
+          behavior: 'smooth'
+        });
+      }
+      setActiveTab(tabId);
+    } else {
+      setActiveTab(tabId);
+    }
+  };
+
   useEffect(() => {
-    if (activeTab !== 'overview' && navRef.current) {
-      const offset = 80; // Standard navbar height
-      const elementPosition = navRef.current.getBoundingClientRect().top + window.pageYOffset;
-      window.scrollTo({
-        top: elementPosition - offset,
-        behavior: 'smooth'
-      });
+    // Only internal scroll for tabs other than overview and amenities (since amenities has custom scroll)
+    if (activeTab !== 'overview' && activeTab !== 'amenities' && navRef.current) {
+      setTimeout(() => {
+        const offset = 100;
+        const elementPosition = navRef.current!.getBoundingClientRect().top + window.pageYOffset;
+        window.scrollTo({
+          top: elementPosition - offset,
+          behavior: 'smooth'
+        });
+      }, 100);
     }
   }, [activeTab]);
 
@@ -78,33 +97,7 @@ const PropertyTabs: React.FC<PropertyTabsProps> = ({
         );
 
       case 'amenities':
-        return (
-          <>
-            <h2 className="section-title">
-              <span className="title-underline">Amenities</span>
-            </h2>
-            <div className="items-grid">
-              {property.amenities.map((item, idx) => {
-                const iconName = getAmenityIcon(item.amenity_name);
-                const IconComponent = iconMap[iconName] || Building2;
-                return (
-                  <OverviewItem
-                    key={idx}
-                    label={item.amenity_name}
-                    value=""
-                    icon={IconComponent}
-                  />
-                );
-              })}
-            </div>
-            <div className="mt-6 p-4 bg-green-50 rounded-lg">
-              <p className="text-green-700 flex items-center">
-                <Check className="w-5 h-5 mr-2" />
-                Water harvesting facility available
-              </p>
-            </div>
-          </>
-        );
+        return null; // Amenities section exists separately, we just scroll to it
 
       case 'locality':
         return (
@@ -216,12 +209,12 @@ const PropertyTabs: React.FC<PropertyTabsProps> = ({
   return (
     <div>
       {/* Tabs Navigation */}
-      <div className="tabs-nav-container">
+      <div ref={navRef} className="tabs-nav-container">
         <nav className="tabs-nav">
           {tabs.map(tab => (
             <button
               key={tab.id}
-              onClick={() => setActiveTab(tab.id)}
+              onClick={() => handleTabClick(tab.id)}
               className={`tab-button ${activeTab === tab.id ? 'tab-button-active' : ''}`}
             >
               {tab.label}
@@ -231,8 +224,8 @@ const PropertyTabs: React.FC<PropertyTabsProps> = ({
       </div>
 
       {/* Tab Content */}
-      {activeTab !== 'overview' && (
-        <div ref={contentRef} className="tab-content-card scroll-mt-20">
+      {activeTab !== 'overview' && activeTab !== 'amenities' && (
+        <div className="tab-content-card">
           {renderTabContent()}
         </div>
       )}

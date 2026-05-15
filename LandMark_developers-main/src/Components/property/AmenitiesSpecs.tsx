@@ -86,7 +86,7 @@ const AmenitiesSpecs: React.FC<AmenitiesSpecsProps> = ({ property }) => {
   return (
     <div className="amenities-specs-wrapper">
       <div className="amenities-specs-container">
-        <div className="amenities-main-grid">
+        <div id="amenities-section" className="amenities-main-grid">
           <div className="tab-content-card">
             <h2 className="section-title">
               <span className="title-underline">
