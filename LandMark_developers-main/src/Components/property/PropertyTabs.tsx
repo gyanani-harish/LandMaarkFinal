@@ -39,7 +39,7 @@ const PropertyTabs: React.FC<PropertyTabsProps> = ({
               <div className="overview-stats-grid">
                 <div className="stat-item">
                   <div className="flex items-center gap-2 mb-2">
-                    <Maximize className="w-5 h-5 text-gray-600" />
+                    <Maximize className="w-6 h-6 text-gray-600" />
                     <p className="text-base text-gray-500">Total Area</p>
                   </div>
                   <p className="tab-stat-value">{property.area || property.project_area || 'N/A'}</p>
@@ -47,7 +47,7 @@ const PropertyTabs: React.FC<PropertyTabsProps> = ({
 
                 <div className="stat-item">
                   <div className="flex items-center gap-2 mb-2">
-                    <Calendar className="w-5 h-5 text-gray-600" />
+                    <Calendar className="w-6 h-6 text-gray-600" />
                     <p className="text-base text-gray-500">Launch Date</p>
                   </div>
                   <p className="tab-stat-value">{property.launch_date || 'N/A'}</p>
@@ -55,7 +55,7 @@ const PropertyTabs: React.FC<PropertyTabsProps> = ({
 
                 <div className="stat-item">
                   <div className="flex items-center gap-2 mb-2">
-                    <Building2 className="w-5 h-5 text-gray-600" />
+                    <Building2 className="w-6 h-6 text-gray-600" />
                     <p className="text-base text-gray-500">Project Size</p>
                   </div>
                   <p className="tab-stat-value">{property.property_count || property.project_size || 'N/A'} Properties</p>
@@ -63,7 +63,7 @@ const PropertyTabs: React.FC<PropertyTabsProps> = ({
 
                 <div className="stat-item">
                   <div className="flex items-center gap-2 mb-2">
-                    <Calendar className="w-5 h-5 text-gray-600" />
+                    <Calendar className="w-6 h-6 text-gray-600" />
                     <p className="text-sm text-gray-500">Possession</p>
                   </div>
                   <p className="tab-stat-value">{property.possession_starts || property.construction_status || 'N/A'}</p>

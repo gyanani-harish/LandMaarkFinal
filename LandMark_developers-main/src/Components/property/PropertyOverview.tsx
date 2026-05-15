@@ -23,9 +23,7 @@ const PropertyOverview: React.FC<PropertyOverviewProps> = ({ property, pricePerS
     { label: 'Area Unit', value: td.area_unit || property.area || 'N/A', icon: Ruler },
     { label: 'Avg. Price', value: td.avg_price || (pricePerSqft > 0 ? `₹${pricePerSqft.toLocaleString()}/sq.ft` : 'N/A'), icon: TrendingUp },
     { label: 'Configurations', value: td.configurations || property.propertyType || 'N/A', icon: Home },
-    { label: 'Latitude', value: td.latitude || property.latitude || 'N/A', icon: MapPin },
     { label: 'Launch Date', value: td.launch_date ? new Date(td.launch_date).toLocaleDateString('en-US', { month: 'short', year: 'numeric' }) : (property.launch_date ? new Date(property.launch_date).toLocaleDateString('en-US', { month: 'short', year: 'numeric' }) : 'N/A'), icon: Calendar },
-    { label: 'Longitude', value: td.longitude || property.longitude || 'N/A', icon: MapPin },
     { label: 'Possession Starts', value: td.possession_starts || property.construction_status || 'N/A', icon: Building2 },
     { label: 'Project Area', value: td.project_area || property.project_size || 'N/A', icon: Grid },
     { label: 'Property Count', value: td.property_count || 'N/A', icon: BarChart3 },
@@ -46,7 +44,7 @@ const PropertyOverview: React.FC<PropertyOverviewProps> = ({ property, pricePerS
           <h2 className="overview-header">
             {displayName} Overview
           </h2>
-          
+
           {/* Overview Items Grid */}
           <div className="mb-4">
             {overviewItems && overviewItems.length > 0 ? (
@@ -66,8 +64,8 @@ const PropertyOverview: React.FC<PropertyOverviewProps> = ({ property, pricePerS
           </div>
 
           {/* Action Buttons */}
-          
-          <ActionButtons    
+
+          <ActionButtons
             onShare={handleShare}
             onSave={handleSave}
             onAskDetails={handleAskDetails}
