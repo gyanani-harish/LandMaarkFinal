@@ -2,17 +2,17 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Loader, Info } from 'lucide-react';
 import useIsMobile from '../../hooks/useIsMobile';
-import PropertyHeader from '../../Components/property/PropertyHeader';
-import PropertyOverview from '../../Components/property/PropertyOverview';
-import PropertyTabs from '../../Components/property/PropertyTabs';
-import ImageGallery from '../../Components/property/ImageGallery';
-import ContactCard from '../../Components/property/ContactCard';
-import PropertyListings from '../../Components/property/CardsDetails/PropertyListings';
-import QASection from '../../Components/property/QASection';
-import AmenitiesSpecs from '../../Components/property/AmenitiesSpecs';
+import PropertyHeader from '../../Components/Property/PropertyHeader';
+import PropertyOverview from '../../Components/Property/PropertyOverview';
+import PropertyTabs from '../../Components/Property/PropertyTabs';
+import ImageGallery from '../../Components/Property/ImageGallery';
+import ContactCard from '../../Components/Property/ContactCard';
+import PropertyListings from '../../Components/Property/CardsDetails/PropertyListings';
+import QASection from '../../Components/Property/QASection';
+import AmenitiesSpecs from '../../Components/Property/AmenitiesSpecs';
 import { CityProperty } from '../../services/services';
 import { ApiConstants } from '../../Constants/ApiConstants';
-import { ApiEndPoints } from '../../constants/ApiEndpoints';
+import { ApiEndPoints } from '../../Constants/ApiEndpoints';
 import './PropertyDetailPage.css';
 
 const PropertyDetailPage = () => {
@@ -63,7 +63,7 @@ const PropertyDetailPage = () => {
           // Transform API data to match CityProperty interface
           // Prioritize top-level township data (result.data) over property-specific data
           const topLevelData = result.data || {};
-          
+
           // Extract key_values into a flat dictionary for easy access
           const kvMap = propertyData.key_values?.reduce((acc: any, kv: any) => {
             acc[kv.key] = kv.value;
@@ -72,7 +72,7 @@ const PropertyDetailPage = () => {
 
           // Calculate a fallback area from Size/Sq Yds if needed
           const fallbackArea = parseFloat(String(kvMap['Sq Yds'] || kvMap['Size'] || '0').replace(/[^0-9.]/g, '')) || 0;
-          
+
           const transformedProperty: CityProperty = {
             id: propertyData.property_id,
             title: topLevelData.name || propertyData.title,
@@ -100,34 +100,34 @@ const PropertyDetailPage = () => {
             sizes: topLevelData.sizes,
             avg_price: topLevelData.avg_price,
             image: (topLevelData.images && topLevelData.images[0]) || propertyData.image || '',
-            images: (topLevelData.images && topLevelData.images.length > 0) 
-              ? topLevelData.images 
+            images: (topLevelData.images && topLevelData.images.length > 0)
+              ? topLevelData.images
               : properties.flatMap((p: any) => p.images || (p.image ? [p.image] : [])),
-            allImages: (topLevelData.images && topLevelData.images.length > 0) 
-              ? topLevelData.images 
+            allImages: (topLevelData.images && topLevelData.images.length > 0)
+              ? topLevelData.images
               : properties.flatMap((p: any) => p.images || (p.image ? [p.image] : [])),
             amenities: (topLevelData.mapped_amenities && topLevelData.mapped_amenities.length > 0)
               ? topLevelData.mapped_amenities.map((a: any) => ({
-                  amenity_id: a.amenity_id || a.id || 0,
-                  amenity_name: a.name || a.amenity_name || ''
-                }))
-              : (propertyData.amenities?.map((a: any) => ({ 
-                  amenity_id: a.amenity_id || a.id || 0, 
-                  amenity_name: a.amenity_name || a.name || '' 
-                })) || []),
+                amenity_id: a.amenity_id || a.id || 0,
+                amenity_name: a.name || a.amenity_name || ''
+              }))
+              : (propertyData.amenities?.map((a: any) => ({
+                amenity_id: a.amenity_id || a.id || 0,
+                amenity_name: a.amenity_name || a.name || ''
+              })) || []),
             places: (topLevelData.nearby_places && topLevelData.nearby_places.length > 0)
               ? topLevelData.nearby_places.map((p: any) => ({
-                  place_id: p.place_id || p.id || 0,
-                  place_name: p.name || p.place_name || '',
-                  place_category: p.category || p.place_category || '',
-                  distance_meters: String(p.distance || p.distance_meters || 0)
-                }))
+                place_id: p.place_id || p.id || 0,
+                place_name: p.name || p.place_name || '',
+                place_category: p.category || p.place_category || '',
+                distance_meters: String(p.distance || p.distance_meters || 0)
+              }))
               : (propertyData.places?.map((p: any) => ({
-                  place_id: p.place_id || p.id || 0,
-                  place_name: p.name || p.place_name || '',
-                  place_category: p.place_category || p.category || '',
-                  distance_meters: String(p.distance_meters || p.distance || 0)
-                })) || []),
+                place_id: p.place_id || p.id || 0,
+                place_name: p.name || p.place_name || '',
+                place_category: p.place_category || p.category || '',
+                distance_meters: String(p.distance_meters || p.distance || 0)
+              })) || []),
             specifications: (topLevelData.mapped_specifications && topLevelData.mapped_specifications.length > 0)
               ? topLevelData.mapped_specifications
               : propertyData.specifications,
