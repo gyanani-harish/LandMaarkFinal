@@ -32,12 +32,12 @@
   display: block;
   width: 100%;
   color: #1a202c !important;
-  margin: 0 0 1.25rem 0;
 }
 
 .title-underline {
   border-bottom: 3px solid #4f46e5;
   padding-bottom: 0.25rem;
+  margin-top: .25rem;
   display: inline-block;
   min-width: fit-content;
 }

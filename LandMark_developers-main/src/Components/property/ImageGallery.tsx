@@ -6,7 +6,8 @@ interface ImageGalleryProps {
 }
 
 import React, { useState } from 'react';
-import { Heart, Share2, Check, Image as ImageIcon, Play } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { Heart, Share2, Check, Image as ImageIcon, Play, ArrowLeft } from 'lucide-react';
 import ImageGalleryModal from '../../Components/ImageGalleryModal/ImageGalleryModal';
 import { CityProperty } from '../../services/services';
 import useIsMobile from '../../hooks/useIsMobile';
@@ -14,6 +15,7 @@ import useIsMobile from '../../hooks/useIsMobile';
 import './ImageGallery.css';
 
 const ImageGallery: React.FC<ImageGalleryProps> = ({ images, propertyId, property: propData }) => {
+  const navigate = useNavigate();
   const [currentImageIndex, setCurrentImageIndex] = useState<number>(0);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [modalStartIndex, setModalStartIndex] = useState<number>(0);
@@ -48,13 +50,15 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images, propertyId, propert
 
   const handleShare = async (e: React.MouseEvent) => {
     e.stopPropagation();
-    
-    const shareData = {
+    const activeMedia = mediaItems[currentImageIndex] || mediaItems[0] || { type: 'image', url: '' };
+    const shareData: ShareData = {
       title: property?.title || document.title,
       text: `Check out this amazing property: ${property?.title || 'LandMaark Property'}`,
       url: window.location.href,
     };
-
+    if (activeMedia.url) {
+      shareData.files = [new File([await (await fetch(activeMedia.url)).blob()], 'property.jpg', { type: 'image/jpeg' })];
+    }
     try {
       if (navigator.share) {
         await navigator.share(shareData);
@@ -78,8 +82,8 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images, propertyId, propert
     <>
       <div className="gallery-container">
         {/* Main large image or video */}
-        <div 
-          className="main-image-wrapper" 
+        <div
+          className="main-image-wrapper"
           onClick={() => {
             if (activeMedia.type !== 'video') {
               handleImageClick(currentImageIndex);
@@ -128,8 +132,8 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images, propertyId, propert
                 <Share2 size={16} />
                 SHARE
               </button>
-              <button 
-                className="desktop-save-btn" 
+              <button
+                className="desktop-save-btn"
                 onClick={handleSave}
                 style={{ color: isSaved ? '#ef4444' : '#1a202c' }}
               >
@@ -139,6 +143,11 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images, propertyId, propert
             </div>
           )}
 
+          {/* Back button */}
+          {/* <button className="back-button" onClick={() => navigate('/Township')}>
+            <ArrowLeft size={24} />
+          </button> */}
+
           {/* Mobile: Circular action buttons */}
           {isMobile && (
             <div className="prop-gallery-actions-unique">
@@ -146,11 +155,11 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images, propertyId, propert
                 <Share2 size={32} strokeWidth={2.5} />
               </button>
               <button className="prop-gallery-action-btn-unique" onClick={handleSave}>
-                <Heart 
-                  size={32} 
-                  strokeWidth={2.5} 
-                  fill={isSaved ? '#ef4444' : 'none'} 
-                  stroke={isSaved ? '#ef4444' : '#4a5568'} 
+                <Heart
+                  size={32}
+                  strokeWidth={2.5}
+                  fill={isSaved ? '#ef4444' : 'none'}
+                  stroke={isSaved ? '#ef4444' : '#4a5568'}
                 />
               </button>
             </div>
@@ -172,8 +181,8 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images, propertyId, propert
 
         {/* Sidebar images - Desktop Only */}
         <div className="sidebar-images-desktop">
-          <div 
-            className="sidebar-img-container" 
+          <div
+            className="sidebar-img-container"
             onClick={() => {
               if (videos.length > 0) {
                 // If video is present, clicking the first sidebar container (Play icon overlay) plays the video!

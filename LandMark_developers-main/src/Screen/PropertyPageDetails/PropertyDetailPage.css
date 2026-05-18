@@ -46,7 +46,6 @@
   width: 100%;
   background-color: white;
   padding: 1.25rem 0.75rem;
-  margin-top: 1rem;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -211,6 +210,10 @@
 .mobile-content-wrapper {
   padding: 0 1rem;
   margin-top: 0;
+}
+
+.component-spacing-mobile {
+  margin-top: 0.5rem;
 }
 
 
