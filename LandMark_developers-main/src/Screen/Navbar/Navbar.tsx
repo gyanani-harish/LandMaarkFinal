@@ -56,7 +56,7 @@ const Navbar: React.FC = () => {
                   className="nav-back-btn" 
                   aria-label="Go Back"
                 >
-                  <ArrowLeft size={20} className="back-icon-svg" />
+                  <ArrowLeft size={30} className="back-icon-svg" />
                 </button>
               )}
               {location.pathname === "/" ? (
