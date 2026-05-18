@@ -1,6 +1,6 @@
- 
 import React from "react";
 import { Section6Type } from "../../store/HomePage/Section6Card";
+import "./Section6Card.css";
 
 interface Props {
   item: Section6Type;
@@ -9,36 +9,31 @@ interface Props {
 
 const Section6Card: React.FC<Props> = ({ item, isActive }) => {
   return (
-    <div
-      className={`absolute inset-0 transition-opacity duration-1000 ${
-        isActive ? "opacity-100" : "opacity-0"
-      }`}
-    >
+    <div className={`sec6-card-slide ${isActive ? "active" : ""}`}>
       {/* Wrapper must be relative */}
-      <div className="relative w-full h-[500px] overflow-hidden">
+      <div className="sec6-image-wrapper">
         {/* Image */}
         <img
           src={item.image}
           alt={item.title}
-          className="w-full h-full object-cover transition-transform duration-700 hover:scale-110"
+          className="sec6-card-img"
         />
 
         {/* Dark Overlay */}
-        <div className="absolute inset-0 bg-black/50 z-10"></div>
+        <div className="sec6-card-overlay"></div>
 
         {/* Text Content */}
-        <div className="absolute inset-0 z-20 flex flex-col items-center justify-center text-center px-6">
-          <h3 className="text-white text-3xl md:text-5xl font-semibold mb-4 tracking-wide">
+        <div className="sec6-text-container">
+          <h3 className="sec6-card-title">
             {item.title}
           </h3>
 
-          <p className="text-white text-sm md:text-lg max-w-2xl  leading-relaxed">
+          <p className="sec6-card-subtitle">
             {item.subtitle}
           </p>
-         
         </div>
       </div>
-        <button className="rounded-btn mt-10">{item.button}</button>
+      <button className="sec6-card-btn rounded-btn">{item.button}</button>
     </div>
   );
 };
