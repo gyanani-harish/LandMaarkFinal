@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { AlignRight, X } from "lucide-react";
+import { AlignRight, X, ArrowLeft } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import "./Navbar.css";
 
@@ -50,6 +50,15 @@ const Navbar: React.FC = () => {
           <div className="navbar-flex">
             {/* Logo / Page Title */}
             <div className="navbar-brand">
+              {location.pathname !== "/" && (
+                <button 
+                  onClick={() => window.history.back()} 
+                  className="nav-back-btn" 
+                  aria-label="Go Back"
+                >
+                  <ArrowLeft size={20} className="back-icon-svg" />
+                </button>
+              )}
               {location.pathname === "/" ? (
                 <Link to="/" className="logo-link">
                   <img
