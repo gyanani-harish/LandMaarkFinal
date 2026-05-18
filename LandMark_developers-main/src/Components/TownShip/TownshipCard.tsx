@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Township } from "../../store/TownShip/townshipsData";
-import { Share2, ChevronLeft, ChevronRight } from "lucide-react";
+import { Share2 } from "lucide-react";
 import "./TownShip.css";
 
 interface TownshipCardProps {
@@ -30,18 +30,6 @@ const TownshipCard: React.FC<TownshipCardProps> = ({ item, onSelect }) => {
     }, 3000);
     return () => clearInterval(interval);
   }, [imagesList.length]);
-
-  const handlePrevImage = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    if (imagesList.length <= 1) return;
-    setCurrentImageIndex((prev) => (prev - 1 + imagesList.length) % imagesList.length);
-  };
-
-  const handleNextImage = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    if (imagesList.length <= 1) return;
-    setCurrentImageIndex((prev) => (prev + 1) % imagesList.length);
-  };
 
   const handleShare = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -83,35 +71,23 @@ const TownshipCard: React.FC<TownshipCardProps> = ({ item, onSelect }) => {
           ))}
         </div>
 
-        {/* Carousel Navigation Arrows - Fades in on Card Hover */}
-        {imagesList.length > 1 && (
-          <>
-            <button
-              onClick={handlePrevImage}
-              className="township-card-arrow left"
-              title="Previous Image"
-            >
-              <ChevronLeft size={18} />
-            </button>
-            <button
-              onClick={handleNextImage}
-              className="township-card-arrow right"
-              title="Next Image"
-            >
-              <ChevronRight size={18} />
-            </button>
-          </>
-        )}
-
-        {/* Story-style Segmented Progress Line indicators in top-left */}
+        {/* Story-style Segmented Progress Line Indicators in Top-Left */}
         {imagesList.length > 1 && (
           <div className="township-card-lines">
-            {imagesList.map((_, idx) => (
-              <span
-                key={idx}
-                className={`township-card-line ${idx === currentImageIndex ? "active" : ""}`}
-              />
-            ))}
+            {imagesList.map((_, idx) => {
+              let statusClass = "";
+              if (idx < currentImageIndex) {
+                statusClass = "completed";
+              } else if (idx === currentImageIndex) {
+                statusClass = "active";
+              }
+
+              return (
+                <div key={idx} className={`township-card-line ${statusClass}`}>
+                  <div className="township-card-line-fill" />
+                </div>
+              );
+            })}
           </div>
         )}
       </div>

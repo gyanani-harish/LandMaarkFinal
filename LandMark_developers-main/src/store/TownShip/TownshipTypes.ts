@@ -11,6 +11,7 @@ export interface Township {
   city?: string;
   name?: string;
   image?: string | null;
+  images?: string[];
   properties?: Property[];
   description?: string;
   location?: string;
