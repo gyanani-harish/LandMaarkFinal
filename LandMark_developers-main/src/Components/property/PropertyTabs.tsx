@@ -26,8 +26,9 @@ const PropertyTabs: React.FC<PropertyTabsProps> = ({
   const navRef = useRef<HTMLDivElement>(null);
 
   const handleTabClick = (tabId: string) => {
-    if (tabId === 'amenities') {
-      const element = document.getElementById('amenities-section');
+    if (tabId === 'amenities' || tabId === 'specs') {
+      const targetId = tabId === 'amenities' ? 'amenities-section' : 'specifications-section';
+      const element = document.getElementById(targetId);
       if (element) {
         const offset = 100;
         const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
@@ -43,8 +44,8 @@ const PropertyTabs: React.FC<PropertyTabsProps> = ({
   };
 
   useEffect(() => {
-    // Only internal scroll for tabs other than overview and amenities (since amenities has custom scroll)
-    if (activeTab !== 'overview' && activeTab !== 'amenities' && navRef.current) {
+    // Only internal scroll for tabs other than overview, amenities, and specs
+    if (activeTab !== 'overview' && activeTab !== 'amenities' && activeTab !== 'specs' && navRef.current) {
       setTimeout(() => {
         const offset = 100;
         const elementPosition = navRef.current!.getBoundingClientRect().top + window.pageYOffset;
@@ -224,7 +225,7 @@ const PropertyTabs: React.FC<PropertyTabsProps> = ({
       </div>
 
       {/* Tab Content */}
-      {activeTab !== 'overview' && activeTab !== 'amenities' && (
+      {activeTab !== 'overview' && activeTab !== 'amenities' && activeTab !== 'specs' && (
         <div className="tab-content-card">
           {renderTabContent()}
         </div>

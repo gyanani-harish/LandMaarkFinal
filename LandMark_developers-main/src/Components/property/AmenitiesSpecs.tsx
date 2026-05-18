@@ -114,7 +114,7 @@ const AmenitiesSpecs: React.FC<AmenitiesSpecsProps> = ({ property }) => {
             )}
           </div>
 
-          <div className="tab-content-card">
+          <div className="tab-content-card" id="specifications-section">
             <h2 className="section-title">
               <span className="title-underline">
                 Specifications

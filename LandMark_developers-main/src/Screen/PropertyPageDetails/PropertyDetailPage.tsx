@@ -241,6 +241,7 @@ const PropertyDetailPage = () => {
   const tabs = [
     { id: 'overview', label: 'Overview' },
     { id: 'amenities', label: 'Amenities' },
+    { id: 'specs', label: 'Specs' },
   ];
 
   const headerData = {

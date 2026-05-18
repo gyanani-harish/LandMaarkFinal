@@ -72,6 +72,7 @@ const PropertyListings: React.FC<PropertyListingsProps> = ({ initialData, townsh
   const [activeDetails, setActiveDetails] = useState<number | null>(null);
   const [townshipName, setTownshipName] = useState<string>(initialTownshipName || '');
   const [pdfData, setPdfData] = useState<any[]>([]);
+  const [pdfThumbnails, setPdfThumbnails] = useState<{ [key: string]: string }>({});
 
   useEffect(() => {
     if (pdf && pdf.length > 0) {
@@ -87,6 +88,78 @@ const PropertyListings: React.FC<PropertyListingsProps> = ({ initialData, townsh
       setPdfData(mappedPdfs);
     }
   }, [pdf]);
+
+  useEffect(() => {
+    if (pdfData && pdfData.length > 0) {
+      const loadPdfThumbnails = async () => {
+        try {
+          if (!(window as any).pdfjsLib) {
+            const script = document.createElement('script');
+            script.src = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js';
+            script.async = true;
+            script.onload = () => {
+              (window as any).pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.worker.min.js';
+              renderAllPdfs();
+            };
+            document.head.appendChild(script);
+          } else {
+            renderAllPdfs();
+          }
+        } catch (err) {
+          console.warn('PDF.js dynamic loader error:', err);
+        }
+      };
+
+      const renderAllPdfs = async () => {
+        const pdfjs = (window as any).pdfjsLib;
+        if (!pdfjs) return;
+
+        pdfData.forEach(async (pdfItem) => {
+          const pdfUrl = pdfItem.url || pdfItem.file_path;
+          if (!pdfUrl) return;
+
+          // Align path to proxy to skip CORS and ngrok warnings
+          let fetchUrl = pdfUrl;
+          if (pdfUrl.includes('/uploads/')) {
+            fetchUrl = pdfUrl.substring(pdfUrl.indexOf('/uploads/'));
+          }
+
+          try {
+            const loadingTask = pdfjs.getDocument({
+              url: fetchUrl,
+              headers: { 'ngrok-skip-browser-warning': 'true' }
+            });
+            const pdfDoc = await loadingTask.promise;
+            const page = await pdfDoc.getPage(1);
+            
+            const scale = 0.5; // Load smaller preview for high performance
+            const viewport = page.getViewport({ scale });
+            const canvas = document.createElement('canvas');
+            const context = canvas.getContext('2d');
+            canvas.height = viewport.height;
+            canvas.width = viewport.width;
+
+            if (context) {
+              await page.render({
+                canvasContext: context,
+                viewport: viewport
+              }).promise;
+              
+              const dataUrl = canvas.toDataURL('image/jpeg', 0.8);
+              setPdfThumbnails(prev => ({
+                ...prev,
+                [pdfUrl]: dataUrl
+              }));
+            }
+          } catch (error) {
+            console.warn(`Render thumbnail failed for ${pdfUrl}:`, error);
+          }
+        });
+      };
+
+      loadPdfThumbnails();
+    }
+  }, [pdfData]);
 
   const [filters, setFilters] = useState({
     subTownship: '',
@@ -469,27 +542,55 @@ const PropertyListings: React.FC<PropertyListingsProps> = ({ initialData, townsh
             <h2 className="section-title">
               <span className="title-underline">Brochures & Documents</span>
             </h2>
-            <div className="pdf-grid">
-              {pdfData.map((pdf, index) => (
-                <div key={index} className="pdf-item">
-                  <div className="pdf-icon-wrapper">
-                    <FileText className="pdf-icon" />
+            <div className="pdf-grid-premium">
+              {pdfData.map((pdf, index) => {
+                const pdfUrl = pdf.url || pdf.file_path || '#';
+                const thumbnailUrl = pdfThumbnails[pdfUrl];
+
+                return (
+                  <div key={index} className="pdf-card-premium">
+                    <div className="pdf-thumbnail-container">
+                      {thumbnailUrl ? (
+                        <img src={thumbnailUrl} alt={pdf.name} className="pdf-thumbnail-img" />
+                      ) : (
+                        <div className="pdf-thumbnail-fallback">
+                          <div className="fallback-glow"></div>
+                          <FileText className="fallback-pdf-icon" size={48} />
+                          <span className="fallback-pdf-badge">PDF Document</span>
+                        </div>
+                      )}
+                      
+                      {/* Glassmorphic Overlay Buttons */}
+                      <div className="pdf-glass-overlay">
+                        <a
+                          href={pdfUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="pdf-glass-btn view"
+                        >
+                          <Eye size={18} />
+                          <span>View</span>
+                        </a>
+                        <a
+                          href={pdfUrl}
+                          download
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="pdf-glass-btn download"
+                        >
+                          <Download size={18} />
+                          <span>Download</span>
+                        </a>
+                      </div>
+                    </div>
+                    
+                    <div className="pdf-card-footer">
+                      <h4 className="pdf-card-name">{pdf.name || `Document ${index + 1}`}</h4>
+                      <p className="pdf-card-size">PDF BROCHURE</p>
+                    </div>
                   </div>
-                  <div className="pdf-info">
-                    <p className="pdf-name">{pdf.name || `Document ${index + 1}`}</p>
-                    <p className="pdf-size">PDF • Click to view details</p>
-                  </div>
-                  <a
-                    href={pdf.url || pdf.file_path || '#'}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="pdf-download-btn"
-                  >
-                    <Eye className="download-icon" />
-                    <span>View Details</span>
-                  </a>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
         </div>

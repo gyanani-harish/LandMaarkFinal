@@ -1,7 +1,7 @@
 /* PropertyTabs.css */
 .tabs-nav-container {
   border-bottom: 1px solid #f1f5f9;
-  margin-bottom: 0.75rem;
+  margin-bottom: 0.25rem;
   overflow-x: auto;
   scrollbar-width: none; /* Hide scrollbar for Firefox */
   -ms-overflow-style: none; /* Hide scrollbar for IE/Edge */
