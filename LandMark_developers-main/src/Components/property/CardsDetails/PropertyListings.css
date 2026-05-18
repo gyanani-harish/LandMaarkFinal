@@ -1084,7 +1084,6 @@ tbody tr {
 /* PDF Section Styles */
 .pdf-section-wrapper {
   width: 100%;
-  margin-top: 20px;
   /* Standard section top margin */
   margin-bottom: 36px;
   /* Retains beautiful footer separation at the end of the page! */
@@ -1207,22 +1206,20 @@ tbody tr {
 .pdf-glass-overlay {
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.25);
+  background: transparent;
+  /* No mask, keeps image completely crisp */
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 0.75rem;
   opacity: 0;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  backdrop-filter: blur(0px);
-  -webkit-backdrop-filter: blur(0px);
   z-index: 10;
 }
 
 .pdf-card-premium:hover .pdf-glass-overlay {
   opacity: 1;
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  /* Fade-in buttons only, no image blur */
 }
 
 .pdf-glass-btn {
@@ -1231,17 +1228,18 @@ tbody tr {
   justify-content: center;
   gap: 0.5rem;
   padding: 0.65rem 1.25rem;
-  background-color: rgba(255, 255, 255, 0.08);
+  background-color: rgba(17, 24, 39, 0.75);
+  /* Frosty high-contrast dark Apple glass for readability */
   border: 1px solid rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(12px) saturate(180%);
+  -webkit-backdrop-filter: blur(12px) saturate(180%);
   border-radius: 2rem;
   color: white;
   font-size: 0.85rem;
   font-weight: 600;
   text-decoration: none;
   cursor: pointer;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   transform: translateY(10px);
 }
@@ -1251,15 +1249,15 @@ tbody tr {
 }
 
 .pdf-glass-btn:hover {
-  background-color: rgba(255, 255, 255, 0.2);
+  background-color: rgba(17, 24, 39, 0.9);
   border-color: rgba(255, 255, 255, 0.3);
   transform: scale(1.05) translateY(-2px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
   color: white !important;
 }
 
 .pdf-card-footer {
-  padding: 1rem 1.25rem;
+  padding: 1rem;
   background-color: #ffffff;
   display: flex;
   flex-direction: column;
@@ -1269,28 +1267,25 @@ tbody tr {
 .pdf-card-name {
   font-weight: 700;
   color: #1e293b;
-  font-size: 0.95rem;
+  font-size: 1.7rem;
   margin: 0;
-  white-space: nowrap;
   overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 .pdf-card-size {
-  font-size: 0.7rem;
+  font-size: 1rem;
   color: #64748b;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
   margin: 0;
 }
 
 /* Mobile Glass Overlay Adjustments */
 @media (max-width: 768px) {
   .pdf-glass-overlay {
-    background: rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
+    opacity: 1 !important;
+    background: transparent;
+    /* Crisp image underneath mobile buttons */
     align-items: flex-end;
     padding-bottom: 1rem;
     gap: 0.5rem;
@@ -1298,11 +1293,12 @@ tbody tr {
 
   .pdf-glass-btn {
     transform: translateY(0) !important;
-    padding: 0.5rem 0.85rem;
+    padding: 0.55rem 0.95rem;
     font-size: 0.75rem;
-    border-radius: 0.5rem;
-    background-color: rgba(255, 255, 255, 0.08);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 2rem;
+    /* Keep elegant rounded design on mobile */
+    background-color: rgba(17, 24, 39, 0.75);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
   }
 }

@@ -3,8 +3,8 @@ import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { Township } from "../../store/TownShip/TownshipTypes";
 import TownshipCard from "../../Components/TownShip/TownshipCard";
-import { useTownships } from "../../Hooks/useTownships";
-import { useTownshipProperties } from "../../Hooks/useTownshipProperties";
+import { useTownships } from "../../hooks/useTownships";
+import { useTownshipProperties } from "../../hooks/useTownshipProperties";
 import "./township.css";
 
 const TownShip: React.FC = () => {

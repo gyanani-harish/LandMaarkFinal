@@ -1,4 +1,4 @@
- 
+
 import { useState } from "react";
 import "./AIPrompt.css";
 import { useNavigate } from "react-router-dom";
@@ -70,7 +70,7 @@ const AIPrompt = () => {
   };
 
   return (
-    <div className="ai-floating-bar">
+    <div className="ai-floating-bar" style={{ display: "none" }}>
       <input
         className="ai-input"
         type="text"
