@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { Township } from "../../store/TownShip/TownshipTypes";
@@ -38,18 +37,15 @@ const TownShip: React.FC = () => {
   }, []);
 
   return (
-    <div className="w-full min-h-screen bg-gray-100 flex overflow-x-hidden pb-10 pt-16 lg:pt-28">
+    <div className="townships-page-container">
       {/* LEFT CITY GRID */}
-      <div
-        className="transition-all duration-300 px-4 sm:px-6 md:px-10 pt-8 lg:pt-14 pb-10 w-full"
-      >
-
+      <div className="townships-grid-wrapper">
         {loading ? (
-          <div className="flex justify-center items-center py-20">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+          <div className="townships-loading-container">
+            <div className="townships-loading-spinner"></div>
           </div>
         ) : (
-          <div className="grid gap-4 md:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          <div className="townships-grid">
             {townships.map((item) => (
               <TownshipCard key={item.township_id || item.id} item={item} onSelect={openCity} />
             ))}
@@ -59,4 +55,5 @@ const TownShip: React.FC = () => {
     </div>
   );
 };
+
 export default TownShip;
