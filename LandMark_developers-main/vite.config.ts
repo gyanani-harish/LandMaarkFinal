@@ -9,7 +9,7 @@ export default defineConfig({
     allowedHosts: ["smokiness-armful-wackiness.ngrok-free.dev"],
     proxy: {
       '/api': {
-        target: 'https://biotic-shasta-undeliberative.ngrok-free.dev', // Use the working URL
+        target: 'https://unimmunized-rosella-hedonistically.ngrok-free.dev', // Use the working URL
         changeOrigin: true,
         secure: false,
         configure: (proxy) => {
@@ -19,7 +19,7 @@ export default defineConfig({
         }
       },
       '/uploads': {
-        target: 'https://biotic-shasta-undeliberative.ngrok-free.dev', // Use the working URL
+        target: 'https://unimmunized-rosella-hedonistically.ngrok-free.dev', // Use the working URL
         changeOrigin: true,
         secure: false,
         configure: (proxy) => {
