@@ -5,7 +5,7 @@
   background-color: #f9fafb;
   /* gray-50 */
   min-height: 100vh;
-  padding-top: 3.9rem !important;
+  padding-top: 2.6rem !important;
   position: relative;
   z-index: 1;
 }
@@ -28,7 +28,7 @@
 .mobile-gallery-wrapper {
   width: 100%;
   padding: 0;
-  margin-top: 1rem;
+  margin-top: 0;
 }
 
 .tab-content-card,

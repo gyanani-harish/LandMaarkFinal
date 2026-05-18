@@ -83,6 +83,18 @@
   letter-spacing: -0.02em;
 }
 
+.banner-count {
+  font-size: 1.15rem;
+  color: #64748b;
+  font-weight: 600;
+  margin-left: 12px;
+  background: #f1f5f9;
+  padding: 4px 12px;
+  border-radius: 9999px; /* Pill-shaped badge */
+  display: inline-block;
+  vertical-align: middle;
+}
+
 /* Table Container */
 .table-container {
   background: white;
@@ -90,6 +102,7 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   overflow: hidden;
   margin-top: 20px;
+  margin-bottom: 36px; /* Added beautiful spacing between property cards grid and footer */
 }
 
 .table-header {
@@ -751,6 +764,10 @@ tbody td {
   background: #f1f5f9;
 }
 
+.project-detail-card:last-child {
+  margin-bottom: 16px;
+}
+
 .project-detail-card.active {
   border: 1.5px solid #4f46e5;
   border-radius: 12px;
@@ -761,7 +778,7 @@ tbody td {
 }
 
 .card-header-compact {
-  padding: 8px 14px;
+  padding: 12px 16px; /* Increased padding for spacious premium feel */
   display: flex;
   justify-content: space-between;
   align-items: center;

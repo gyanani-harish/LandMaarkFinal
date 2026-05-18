@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Menu, X } from "lucide-react";
+import { AlignRight, X } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import "./Navbar.css";
 
@@ -89,7 +89,11 @@ const Navbar: React.FC = () => {
               aria-label={isOpen ? "Close menu" : "Open menu"}
               aria-expanded={isOpen}
             >
-              {isOpen ? <X size={28} color="black" /> : <Menu size={28} color="black" />}
+              {isOpen ? (
+                <X size={28} className="menu-icon-svg" />
+              ) : (
+                <AlignRight size={28} className="menu-icon-svg" />
+              )}
             </button>
           </div>
         </div>

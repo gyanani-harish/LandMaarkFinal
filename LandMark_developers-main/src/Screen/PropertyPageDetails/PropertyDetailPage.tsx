@@ -260,7 +260,7 @@ const PropertyDetailPage = () => {
 
   if (isMobile) {
     return (
-      <div className="property-detail-container mobile-padding overflow-x-hidden pb-10">
+      <div className="property-detail-container">
         {/* Mobile Gallery */}
         <div className="mobile-gallery-wrapper">
           <ImageGallery images={property.images} propertyId={property.id} property={property} />
@@ -325,25 +325,25 @@ const PropertyDetailPage = () => {
                 </span>
               </h2>
               <div className="items-grid">
-                <OverviewItem 
-                  label="Parking" 
-                  value={property.amenities?.some(a => a.amenity_name === 'Parking') ? 'Available' : 'Not Available'} 
-                  icon={Car} 
+                <OverviewItem
+                  label="Parking"
+                  value={property.amenities?.some(a => a.amenity_name === 'Parking') ? 'Available' : 'Not Available'}
+                  icon={Car}
                 />
-                <OverviewItem 
-                  label="Balcony" 
-                  value={property.specifications?.Balcony || 'Not Specified'} 
-                  icon={Home} 
+                <OverviewItem
+                  label="Balcony"
+                  value={property.specifications?.Balcony || 'Not Specified'}
+                  icon={Home}
                 />
-                <OverviewItem 
-                  label="Property Type" 
-                  value={property.propertyType} 
-                  icon={Building2} 
+                <OverviewItem
+                  label="Property Type"
+                  value={property.propertyType}
+                  icon={Building2}
                 />
-                <OverviewItem 
-                  label="Verified" 
-                  value={property.verified ? 'Yes' : 'No'} 
-                  icon={ShieldCheck} 
+                <OverviewItem
+                  label="Verified"
+                  value={property.verified ? 'Yes' : 'No'}
+                  icon={ShieldCheck}
                 />
               </div>
             </div>

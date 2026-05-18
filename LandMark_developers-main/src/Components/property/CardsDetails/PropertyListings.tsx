@@ -339,20 +339,12 @@ const PropertyListings: React.FC<PropertyListingsProps> = ({ initialData, townsh
 
   return (
     <div className="container">
-
       <div className="table-container">
-        {townshipName && (
-          <div className="township-banner">
-            <h1>{townshipName}</h1>
-          </div>
-        )}
-        <div className="table-header">
-          <div className="header-title-section">
-            <h2>{townshipName || 'Property List'}</h2>
-            <div className="count">({filteredData.length})</div>
-          </div>
-
-
+        <div className="township-banner">
+          <h1>
+            {townshipName || 'Property List'}
+            <span className="banner-count">({filteredData.length})</span>
+          </h1>
         </div>
 
         <div className="project-details-cards-grid">
@@ -376,7 +368,6 @@ const PropertyListings: React.FC<PropertyListingsProps> = ({ initialData, townsh
                 <div className="card-header-compact">
                   <div className="header-left-side">
                     <span className="plot-id">Plot {plot.plotNo}</span>
-                    <span className="card-subtitle">{plot.size}</span>
                   </div>
                   <div className="header-right-side">
                     <span className="compact-price">{plot.price > 0 ? `₹${plot.price} L` : ''}</span>

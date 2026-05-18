@@ -69,6 +69,12 @@ export const getCategoryIcon = (category: string): IconConfig => {
   if (cat.includes('pharmacy') || cat.includes('medicine')) 
     return { icon: Pill, color: '#db2777', bg: '#fce7f3' };
 
+  if (cat.includes('temple') || cat.includes('worship') || cat.includes('church') || cat.includes('mosque')) 
+    return { icon: Landmark, color: '#d97706', bg: '#fef3c7' };
+
+  if (cat.includes('place') || cat.includes('landmark') || cat.includes('location')) 
+    return { icon: MapPin, color: '#0ea5e9', bg: '#f0f9ff' };
+
   // Amenities
   if (cat.includes('gym') || cat.includes('fitness') || cat.includes('workout')) 
     return { icon: Dumbbell, color: '#f97316', bg: '#fff7ed' };

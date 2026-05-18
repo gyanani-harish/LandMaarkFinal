@@ -13,7 +13,9 @@
 }
 
 .place-card-new {
-  flex: 0 0 160px; /* Fixed width for cards */
+  flex: 0 0 auto; /* Flexible flex container */
+  min-width: 170px;
+  max-width: 320px;
   background: white;
   border: 1px solid #f2f3f8;
   border-radius: 12px;
@@ -25,7 +27,8 @@
 
 @media (min-width: 768px) {
   .place-card-new {
-    flex: 0 0 200px;
+    min-width: 210px;
+    max-width: 380px;
   }
 }
 
@@ -57,10 +60,12 @@
   flex-shrink: 0;
 }
 
-.place-name-new {
+.place-category-new {
   font-size: 0.8125rem;
   font-weight: 700;
   color: #1e293b;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -70,28 +75,35 @@
   padding: 0.75rem;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
   flex-grow: 1;
-  min-height: 60px;
+  min-height: 48px;
 }
 
-.category-name-new {
+.place-info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.place-name-new {
   font-size: 0.75rem;
-  color: #64748b;
+  color: #475569;
   margin: 0;
-  text-transform: uppercase;
-  letter-spacing: 0.025em;
   font-weight: 600;
+  word-break: break-word;
+  flex-grow: 1;
 }
 
 .place-distance-tag {
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   font-weight: 700;
   color: #4f46e5;
-  margin-top: 0.5rem;
   background: #f5f3ff;
-  padding: 2px 8px;
+  padding: 2px 6px;
   border-radius: 6px;
-  display: inline-block;
-  width: fit-content;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
