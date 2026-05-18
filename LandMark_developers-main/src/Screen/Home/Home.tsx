@@ -414,11 +414,7 @@ const Home: React.FC = () => {
             </form>
           </div>
 
-          <div className="enquiry-footer-mobile">
-            <h2 className="enquiry-footer-title-mobile">
-              Live the luxury
-            </h2>
-          </div>
+
 
         </section>
       </>

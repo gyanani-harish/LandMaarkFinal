@@ -73,7 +73,7 @@ const About: React.FC = () => {
           <h2 className="ab-heading">
             What Makes Us <span>Different</span>
           </h2>
-          <p className="ab-text ab-text-muted mx-auto" style={{ maxWidth: '48rem' }}>
+          <p className="ab-text" style={{ maxWidth: '48rem' }}>
             In a competitive real estate market, we stand out through strategic planning,
             premium quality, and long-term client relationships.
           </p>
@@ -107,13 +107,11 @@ const About: React.FC = () => {
         <h2 className="ab-heading">
           Ready to Find Your <span>Dream Property?</span>
         </h2>
-        <p className="ab-text mx-auto" style={{ maxWidth: '42rem', marginBottom: '2.5rem' }}>
+        <p className="ab-text mx-auto" style={{ maxWidth: '42rem', }}>
           Let us help you invest in a property that offers comfort,
           growth, and long-term value.
         </p>
-        <button className="ab-cta-btn">
-          Contact Us Today
-        </button>
+
       </section>
     </div>
   );

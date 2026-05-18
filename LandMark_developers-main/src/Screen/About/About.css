@@ -46,7 +46,8 @@
   position: relative;
   z-index: 10;
   padding: 0 1rem;
-  margin-top: -2rem; /* Pulls text higher up in the hero section */
+  margin-top: -2rem;
+  /* Pulls text higher up in the hero section */
 }
 
 .ab-hero-title {
@@ -106,7 +107,7 @@
 
 /* Section Common */
 .ab-section {
-  padding: 3rem 1rem;
+  padding: 1rem;
 }
 
 .ab-section-light {
@@ -179,9 +180,8 @@
 
 .ab-text {
   color: #334155;
-  font-size: 0.875rem;
-  line-height: 1.8;
-  margin-bottom: 1.5rem;
+  font-size: 1.2rem;
+  line-height: 1.4;
 }
 
 .ab-text-muted {
@@ -290,11 +290,12 @@
 .ab-feature-desc {
   color: #4b5563;
   line-height: 1.6;
+  font-size: large;
 }
 
 /* CTA Section */
 .ab-cta {
-  padding: 3rem 1rem;
+  padding: 1rem;
   text-align: center;
   background-color: #f5f2ec;
   color: #000000;
@@ -310,19 +311,4 @@
   .ab-cta {
     padding: 7rem 1.5rem;
   }
-}
-
-.ab-cta-btn {
-  padding: 1rem 3rem;
-  background-color: #ffffff;
-  color: #000000;
-  font-weight: 600;
-  border-radius: 0.5rem;
-  border: 1px solid #e2e8f0;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.ab-cta-btn:hover {
-  background-color: #f1f5f9;
 }

@@ -12,7 +12,7 @@ const SectionCard: React.FC<SectionCardProps> = ({ title, description }) => {
       {/* Top Accent Line */}
 
       {/* Title */}
-      <h3 className="text-2xl font-semibold text-black mb-5 tracking-wide">
+      <h3 className="text-2xl font-semibold text-black mb-2 tracking-wide">
         {title}
       </h3>
 

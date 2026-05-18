@@ -206,7 +206,7 @@
   width: 100%;
   background-color: #f3f4f6;
   /* bg-gray-100 */
-  padding: 3rem 1.5rem;
+  padding: 1.5rem;
 }
 
 @media (min-width: 768px) {
@@ -222,7 +222,7 @@
 }
 
 .section-2-title {
-  font-size: 1.5rem;
+  font-size: 1.875rem;
   font-family: Georgia, Cambria, "Times New Roman", Times, serif;
   letter-spacing: 3px;
   color: #113028;
@@ -298,7 +298,7 @@
   position: relative;
   width: 100%;
   background-color: #f5f2ec;
-  padding: 3rem 1.5rem;
+  padding: 1rem;
 }
 
 @media (min-width: 768px) {
@@ -522,7 +522,7 @@
   position: relative;
   width: 100%;
   background-color: #f6f3ee;
-  padding: 3rem 1.5rem;
+  padding: 1.5rem;
 }
 
 @media (min-width: 768px) {
@@ -1169,12 +1169,7 @@
   }
 }
 
-.enquiry-footer-mobile {
-  background-color: #e6e6e6;
-  padding: 1.5rem;
-  margin-top: 1rem;
-  border-radius: 0.75rem;
-}
+
 
 @media (min-width: 640px) {
   .enquiry-footer-mobile {

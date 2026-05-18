@@ -99,6 +99,7 @@ html {
 
 .logo-img {
   height: 3rem;
+  padding-left: 1rem;
   object-fit: contain;
   width: auto;
 }
@@ -312,9 +313,7 @@ html {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: calc(100vh - 6rem);
-  padding: 2rem;
-  gap: 2.5rem;
+  gap: 2rem;
 }
 
 .drawer-link {
