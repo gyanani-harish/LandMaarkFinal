@@ -1,0 +1,204 @@
+/* TownShip.css */
+
+.township-card {
+  background-color: #ffffff;
+  border-radius: 0.75rem; /* rounded-xl */
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); /* shadow-md */
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.township-card:hover {
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); /* hover:shadow-xl */
+}
+
+.township-card-img-wrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3; /* aspect-[4/3] */
+  overflow: hidden;
+}
+
+.township-card-slider {
+  display: flex;
+  height: 100%;
+}
+
+.township-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  flex-shrink: 0;
+  transition: transform 0.3s ease;
+}
+
+/* Navigation Arrows - Housing.com style */
+.township-card-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 2.25rem;
+  height: 2.25rem;
+  background-color: rgba(255, 255, 255, 0.95);
+  color: #1f2937;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  opacity: 0; /* Hidden by default */
+  transition: opacity 0.3s ease, background-color 0.2s ease, transform 0.2s ease;
+  z-index: 10;
+}
+
+/* Show arrows on hovering over the card */
+.township-card:hover .township-card-arrow {
+  opacity: 1;
+}
+
+.township-card-arrow.left {
+  left: 0.75rem;
+}
+
+.township-card-arrow.right {
+  right: 0.75rem;
+}
+
+.township-card-arrow:hover {
+  background-color: #ffffff;
+  transform: translateY(-50%) scale(1.08);
+}
+
+.township-card-arrow:focus,
+.township-card-arrow:active,
+.township-card-arrow:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Story-style Segmented Line Indicators in Top-Left */
+.township-card-lines {
+  position: absolute;
+  top: 0.75rem; /* top-3 */
+  left: 0.75rem; /* left-3 */
+  display: flex;
+  gap: 0.25rem; /* gap-1 */
+  z-index: 10;
+}
+
+.township-card-line {
+  width: 1.25rem; /* 20px */
+  height: 3px;
+  border-radius: 1.5px;
+  background-color: rgba(255, 255, 255, 0.4);
+  transition: background-color 0.3s ease;
+}
+
+.township-card-line.active {
+  background-color: #ffffff;
+}
+
+.township-card-info {
+  padding: 1rem; /* p-4 */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 0.5rem; /* pb-2 */
+}
+
+@media (min-width: 768px) {
+  .township-card-info {
+    padding: 1.5rem; /* p-6 */
+    padding-bottom: 0.5rem;
+  }
+}
+
+.township-card-text {
+  text-align: left;
+  flex: 1;
+  min-width: 0;
+  padding-right: 1rem; /* pr-4 */
+}
+
+.township-card-title {
+  font-size: 1.125rem; /* text-lg */
+  font-weight: 600; /* font-semibold */
+  color: #1f2937; /* text-gray-800 */
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis; /* truncate */
+}
+
+.township-card-location {
+  font-size: 0.875rem; /* text-sm */
+  color: #6b7280; /* text-gray-500 */
+  margin: 0.25rem 0 0 0; /* mt-1 */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis; /* truncate */
+}
+
+.township-card-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem; /* gap-2 */
+  flex-shrink: 0;
+}
+
+.township-card-info-share-btn {
+  padding: 0.5rem;
+  background-color: #f3f4f6; /* bg-gray-100 */
+  color: #4b5563; /* text-gray-600 */
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.township-card-info-share-btn:hover {
+  background-color: #e5e7eb; /* hover:bg-gray-200 */
+  color: #111827; /* hover:text-gray-900 */
+}
+
+.township-card-info-share-btn:focus,
+.township-card-info-share-btn:active,
+.township-card-info-share-btn:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.township-card-badge {
+  display: inline-block;
+  padding: 0.25rem 0.625rem; /* px-2.5 py-1 */
+  font-size: 0.75rem; /* text-xs */
+  font-weight: 600; /* font-semibold */
+  color: #0f766e; /* text-teal-800 */
+  background-color: #f0fdfa; /* bg-teal-50 */
+  border-radius: 9999px; /* rounded-full */
+}
+
+.township-card-desc {
+  padding: 0 1rem 1rem 1rem; /* px-4 pb-4 */
+  text-align: left;
+  color: #4b5563; /* text-gray-600 */
+  font-size: 0.875rem; /* text-sm */
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /* line-clamp-3 */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+@media (min-width: 768px) {
+  .township-card-desc {
+    padding: 0 1.5rem 1.5rem 1.5rem; /* md:px-6 md:pb-6 */
+  }
+}

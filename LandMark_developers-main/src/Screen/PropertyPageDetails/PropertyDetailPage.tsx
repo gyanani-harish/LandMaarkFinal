@@ -91,7 +91,7 @@ const PropertyDetailPage = () => {
           return out;
         };
 
-        const normalizedData = normalizeData(result.data);
+        const normalizedData = normalizeData(result.data) || {};
         const properties: any[] = normalizedData.properties || [];
         setTownshipName(normalizedData.name || '');
         setTownshipData(normalizedData || null);
@@ -103,6 +103,22 @@ const PropertyDetailPage = () => {
         // Fallback: If not found by ID, just take the first property from the list
         if (!propertyData && properties.length > 0) {
           propertyData = properties[0];
+        }
+
+        // Ultimate Fallback: If still no propertyData (e.g. township has no properties yet),
+        // we create a virtual propertyData shell so the township detail page still loads beautifully!
+        if (!propertyData && result.success && result.data) {
+          propertyData = {
+            property_id: Number(id),
+            title: normalizedData.name || '',
+            image: (normalizedData.images && normalizedData.images[0]) || normalizedData.image || '',
+            description: normalizedData.description || '',
+            location: normalizedData.location || '',
+            price: normalizedData.avg_price || 'Contact us',
+            amenities: [],
+            places: [],
+            specifications: []
+          };
         }
 
         if (propertyData) {
@@ -178,7 +194,7 @@ const PropertyDetailPage = () => {
               })) || []),
             specifications: (topLevelData.mapped_specifications && topLevelData.mapped_specifications.length > 0)
               ? topLevelData.mapped_specifications
-              : propertyData.specifications,
+              : propertyData.specifications || [],
             overview: propertyData.overview || propertyData.key_values?.reduce((acc: any, kv: any) => {
               acc[kv.key] = kv.value;
               return acc;
