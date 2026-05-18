@@ -185,6 +185,9 @@ const PropertyDetailPage = () => {
             }, {}) || {},
             verified: true,
             tag: '',
+            video: topLevelData.video || propertyData.video,
+            pdf: topLevelData.pdf || propertyData.pdf,
+            additionalDetails: normalizedData["Additional Details"] || propertyData["Additional Details"] || [],
           };
 
           setProperty(transformedProperty);
@@ -325,33 +328,25 @@ const PropertyDetailPage = () => {
                 </span>
               </h2>
               <div className="items-grid">
-                <OverviewItem
-                  label="Parking"
-                  value={property.amenities?.some(a => a.amenity_name === 'Parking') ? 'Available' : 'Not Available'}
-                  icon={Car}
-                />
-                <OverviewItem
-                  label="Balcony"
-                  value={property.specifications?.Balcony || 'Not Specified'}
-                  icon={Home}
-                />
-                <OverviewItem
-                  label="Property Type"
-                  value={property.propertyType}
-                  icon={Building2}
-                />
-                <OverviewItem
-                  label="Verified"
-                  value={property.verified ? 'Yes' : 'No'}
-                  icon={ShieldCheck}
-                />
+                {property.additionalDetails && property.additionalDetails.length > 0 ? (
+                  property.additionalDetails.map((detail: any, idx: number) => (
+                    <OverviewItem
+                      key={idx}
+                      label={detail.key}
+                      value={detail.value}
+                      icon={Info}
+                    />
+                  ))
+                ) : (
+                  null
+                )}
               </div>
             </div>
           </div>
         </div>
 
-        <div className="mt-[0.75rem]">
-          <PropertyListings initialData={allTownshipProperties} townshipId={id} townshipName={townshipName} />
+        <div className="">
+          <PropertyListings initialData={allTownshipProperties} townshipId={id} townshipName={townshipName} pdf={property.pdf} />
         </div>
       </div>
     );
@@ -417,7 +412,29 @@ const PropertyDetailPage = () => {
       <div className="full-width-sections">
         <PropertyOverview property={property} pricePerSqft={pricePerSqft} townshipName={townshipName} townshipData={townshipData} />
         <AmenitiesSpecs property={property} />
-        <PropertyListings initialData={allTownshipProperties} townshipId={id} townshipName={townshipName} />
+
+        {/* Desktop Additional Details Section */}
+        <div className="tab-content-card additional-details-section" style={{ marginTop: '0.75rem' }}>
+          <h2 className="section-title">
+            <span className="title-underline">Additional Details</span>
+          </h2>
+          <div className="items-grid">
+            {property.additionalDetails && property.additionalDetails.length > 0 ? (
+              property.additionalDetails.map((detail: any, idx: number) => (
+                <OverviewItem
+                  key={idx}
+                  label={detail.key}
+                  value={detail.value}
+                  icon={Info}
+                />
+              ))
+            ) : (
+              null
+            )}
+          </div>
+        </div>
+
+        <PropertyListings initialData={allTownshipProperties} townshipId={id} townshipName={townshipName} pdf={property.pdf} />
       </div>
     </div>
   );

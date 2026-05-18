@@ -1,7 +1,7 @@
 // PropertyListings.tsx
 import React, { useState, useEffect } from 'react';
 import './PropertyListings.css'; // Import the CSS file for styling
-import { ChevronRight, FileText, Download } from 'lucide-react';
+import { ChevronRight, FileText, Download, Eye } from 'lucide-react';
 import { ApiConstants } from '../../../constants/ApiConstants';
 import { ApiEndPoints } from '../../../constants/ApiEndpoints';
 interface Property {
@@ -52,9 +52,10 @@ interface PropertyListingsProps {
   initialData?: any[];
   townshipId?: string | number;
   townshipName?: string;
+  pdf?: string[];
 }
 
-const PropertyListings: React.FC<PropertyListingsProps> = ({ initialData, townshipId, townshipName: initialTownshipName }) => {
+const PropertyListings: React.FC<PropertyListingsProps> = ({ initialData, townshipId, townshipName: initialTownshipName, pdf }) => {
   const [plotData, setPlotData] = useState<Property[]>([]);
   const [filteredData, setFilteredData] = useState<Property[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
@@ -71,6 +72,21 @@ const PropertyListings: React.FC<PropertyListingsProps> = ({ initialData, townsh
   const [activeDetails, setActiveDetails] = useState<number | null>(null);
   const [townshipName, setTownshipName] = useState<string>(initialTownshipName || '');
   const [pdfData, setPdfData] = useState<any[]>([]);
+
+  useEffect(() => {
+    if (pdf && pdf.length > 0) {
+      const mappedPdfs = pdf.map((url: string, index: number) => {
+        const fileName = url.split('/').pop() || '';
+        const nameWithoutExt = fileName.substring(0, fileName.lastIndexOf('.')) || fileName;
+        const cleanName = nameWithoutExt.replace(/[-_]/g, ' ').toUpperCase();
+        return {
+          name: cleanName || `DOCUMENT ${index + 1}`,
+          url: url
+        };
+      });
+      setPdfData(mappedPdfs);
+    }
+  }, [pdf]);
 
   const [filters, setFilters] = useState({
     subTownship: '',
@@ -448,7 +464,7 @@ const PropertyListings: React.FC<PropertyListingsProps> = ({ initialData, townsh
 
       {/* PDF Section */}
       {(pdfData && pdfData.length > 0) && (
-        <div className="pdf-section-wrapper mt-8  ">
+        <div className="pdf-section-wrapper">
           <div className="tab-content-card">
             <h2 className="section-title">
               <span className="title-underline">Brochures & Documents</span>
@@ -461,7 +477,7 @@ const PropertyListings: React.FC<PropertyListingsProps> = ({ initialData, townsh
                   </div>
                   <div className="pdf-info">
                     <p className="pdf-name">{pdf.name || `Document ${index + 1}`}</p>
-                    <p className="pdf-size">PDF • Click to download</p>
+                    <p className="pdf-size">PDF • Click to view details</p>
                   </div>
                   <a
                     href={pdf.url || pdf.file_path || '#'}
@@ -469,8 +485,8 @@ const PropertyListings: React.FC<PropertyListingsProps> = ({ initialData, townsh
                     rel="noopener noreferrer"
                     className="pdf-download-btn"
                   >
-                    <Download className="download-icon" />
-                    <span>Download</span>
+                    <Eye className="download-icon" />
+                    <span>View Details</span>
                   </a>
                 </div>
               ))}

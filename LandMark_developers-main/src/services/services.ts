@@ -56,6 +56,9 @@ construction_type?:string;  property_type?: string;
   land_area?: string;
   total_units?: string | number;
   created_at?: string;
+  video?: string[];
+  pdf?: string[];
+  additionalDetails?: Array<{ key: string; value: string }>;
 }
 
 // Interface for property images from API

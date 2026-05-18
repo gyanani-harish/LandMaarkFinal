@@ -6,7 +6,27 @@
 .amenities-specs-container {
   max-width: 1280px;
   margin: 0 auto;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+/* Ensure items-grid layout matches Township Overview exactly */
+.items-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.5rem;
+}
+
+@media (min-width: 768px) {
+  .items-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .items-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+  }
 }
 
 .amenities-main-grid {
@@ -24,10 +44,8 @@
 .tab-content-card {
   background-color: white;
   border-radius: 1rem;
-  padding: 1.25rem;
   border: 1px solid #f1f5f9;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02), 0 1px 2px rgba(0, 0, 0, 0.03);
-  margin-bottom: 1rem;
   width: 100%;
 }
 
@@ -49,8 +67,7 @@
 }
 
 .amenities-list-wrapper {
-  display: flex;
-  justify-content: flex-start;
+  width: 100%;
   margin-top: 1rem;
 }
 
@@ -194,9 +211,9 @@
 }
 
 .spec-label {
-  color: #6b7280;
+  color: #718096;
   font-weight: 500;
-  font-size: 1rem;
+  font-size: 1.25rem;
   margin-bottom: 0.125rem;
   text-transform: capitalize;
   line-height: 1.3;
@@ -204,7 +221,17 @@
 
 .spec-value {
   color: #1a202c;
-  font-size: 1.25rem;
+  font-size: 1.125rem;
   font-weight: 700;
   line-height: 1.3;
+}
+
+/* Ensure overview items are perfectly centered within the tab content cards in the amenities section */
+.tab-content-card .overview-item-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  width: 100%;
 }

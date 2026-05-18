@@ -102,7 +102,7 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   overflow: hidden;
   margin-top: 20px;
-  margin-bottom: 36px; /* Added beautiful spacing between property cards grid and footer */
+  margin-bottom: 20px; /* Consistent gap between sections */
 }
 
 .table-header {
@@ -1081,6 +1081,8 @@ tbody tr {
 /* PDF Section Styles */
 .pdf-section-wrapper {
   width: 100%;
+  margin-top: 20px; /* Standard section top margin, matching all other card elements! */
+  margin-bottom: 36px; /* Retains beautiful footer separation at the end of the page! */
 }
 
 .pdf-grid {

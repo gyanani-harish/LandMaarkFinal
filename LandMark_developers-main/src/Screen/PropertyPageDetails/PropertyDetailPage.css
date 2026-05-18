@@ -213,9 +213,7 @@
   margin-top: 0;
 }
 
-.component-spacing-mobile {
-  margin-top: 0.75rem;
-}
+
 
 .desktop-main-content {
   grid-column: span 2;

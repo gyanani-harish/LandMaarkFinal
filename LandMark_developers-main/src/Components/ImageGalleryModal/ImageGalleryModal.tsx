@@ -1,6 +1,6 @@
 // src/components/ImageGalleryModal/ImageGalleryModal.jsx
 import React, { useState, useEffect, useRef } from 'react';
-import { X, ChevronLeft, ChevronRight } from 'lucide-react';
+import { X, ChevronLeft, ChevronRight, Play } from 'lucide-react';
 import './ImageGalleryModal.css';
 
 import { CityProperty } from '../../services/services';
@@ -13,7 +13,7 @@ interface ImageGalleryModalProps {
 }
 
 const ImageGalleryModal: React.FC<ImageGalleryModalProps> = ({ isOpen, onClose, property, initialImageIndex = 0 }) => {
-  const [images, setImages] = useState<string[]>([]);
+  const [mediaItems, setMediaItems] = useState<Array<{ type: 'image' | 'video'; url: string }>>([]);
   const [currentIndex, setCurrentIndex] = useState<number>(initialImageIndex);
   const [loading, setLoading] = useState<boolean>(true);
   const [isZoomed, setIsZoomed] = useState<boolean>(false);
@@ -43,26 +43,33 @@ const ImageGalleryModal: React.FC<ImageGalleryModalProps> = ({ isOpen, onClose, 
       if (!propertyImages || propertyImages.length === 0) {
         propertyImages = ['https://via.placeholder.com/800x600?text=No+Images+Available'];
       }
-      setImages(propertyImages);
-      const validIndex = Math.min(initialImageIndex, propertyImages.length - 1);
+
+      const videos = property.video || [];
+      const items = [
+        ...propertyImages.map(url => ({ type: 'image' as const, url })),
+        ...videos.map(url => ({ type: 'video' as const, url }))
+      ];
+      
+      setMediaItems(items);
+      const validIndex = Math.min(initialImageIndex, items.length - 1);
       setCurrentIndex(validIndex >= 0 ? validIndex : 0);
     } catch (err) {
       console.error('Error loading images:', err);
-      setImages(['https://via.placeholder.com/800x600?text=Error+Loading+Images']);
+      setMediaItems([{ type: 'image', url: 'https://via.placeholder.com/800x600?text=Error+Loading+Images' }]);
     } finally {
       setLoading(false);
     }
   };
 
   const handlePrevious = () => {
-    if (images.length === 0) return;
-    setCurrentIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
+    if (mediaItems.length === 0) return;
+    setCurrentIndex((prev) => (prev === 0 ? mediaItems.length - 1 : prev - 1));
     setIsZoomed(false);
   };
 
   const handleNext = () => {
-    if (images.length === 0) return;
-    setCurrentIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
+    if (mediaItems.length === 0) return;
+    setCurrentIndex((prev) => (prev === mediaItems.length - 1 ? 0 : prev + 1));
     setIsZoomed(false);
   };
 
@@ -93,14 +100,17 @@ const ImageGalleryModal: React.FC<ImageGalleryModalProps> = ({ isOpen, onClose, 
     if (isOpen) {
       document.addEventListener('keydown', handleKeyDown);
       document.body.style.overflow = 'hidden';
+      document.body.classList.add('gallery-modal-open');
     }
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
       document.body.style.overflow = 'unset';
+      document.body.classList.remove('gallery-modal-open');
     };
-  }, [isOpen, images.length]);
+  }, [isOpen, mediaItems.length]);
 
   const toggleZoom = () => {
+    if (mediaItems[currentIndex]?.type === 'video') return; // Disable zoom on video slides
     setIsZoomed(!isZoomed);
     setZoomPosition({ x: 0, y: 0 });
   };
@@ -117,6 +127,8 @@ const ImageGalleryModal: React.FC<ImageGalleryModalProps> = ({ isOpen, onClose, 
 
   if (!isOpen) return null;
 
+  const currentMedia = mediaItems[currentIndex] || { type: 'image', url: '' };
+
   return (
     <div className="gallery-overlay">
       <div className="gallery-container">
@@ -129,10 +141,10 @@ const ImageGalleryModal: React.FC<ImageGalleryModalProps> = ({ isOpen, onClose, 
           <X size={24} />
         </button>
 
-        {/* Image counter */}
-        {!loading && images.length > 0 && (
+        {/* Counter */}
+        {!loading && mediaItems.length > 0 && (
           <div className="gallery-counter">
-            <span>{currentIndex + 1} / {images.length}</span>
+            <span>{currentIndex + 1} / {mediaItems.length}</span>
           </div>
         )}
 
@@ -146,45 +158,57 @@ const ImageGalleryModal: React.FC<ImageGalleryModalProps> = ({ isOpen, onClose, 
           {loading ? (
             <div className="gallery-loading">
               <div className="gallery-spinner"></div>
-              <p>Loading images...</p>
+              <p>Loading gallery...</p>
             </div>
-          ) : images.length > 0 ? (
+          ) : mediaItems.length > 0 ? (
             <div className="gallery-image-wrapper">
               <div 
                 ref={imageRef}
-                className={`gallery-image-container ${isZoomed ? 'cursor-zoom-out' : 'cursor-zoom-in'}`}
+                className={`gallery-image-container ${currentMedia.type === 'video' ? 'cursor-default' : (isZoomed ? 'cursor-zoom-out' : 'cursor-zoom-in')}`}
                 onClick={toggleZoom}
               >
-                <img
-                  src={images[currentIndex]}
-                  alt={property?.title || `Property image ${currentIndex + 1}`}
-                  className="gallery-main-image"
-                  style={{
-                    transform: isZoomed ? 'scale(1.5)' : 'scale(1)',
-                    transformOrigin: isZoomed ? `${zoomPosition.x}% ${zoomPosition.y}%` : 'center'
-                  }}
-                  onError={(e) => {
-                    const target = e.target as HTMLImageElement;
-                    target.onerror = null;
-                    target.src = 'https://via.placeholder.com/800x600?text=Image+Load+Error';
-                  }}
-                />
+                {currentMedia.type === 'video' ? (
+                  <video
+                    src={currentMedia.url}
+                    className="gallery-main-image"
+                    controls
+                    autoPlay
+                    muted
+                    playsInline
+                    style={{ objectFit: 'contain', maxHeight: '80vh', width: '100%' }}
+                  />
+                ) : (
+                  <img
+                    src={currentMedia.url}
+                    alt={property?.title || `Property image ${currentIndex + 1}`}
+                    className="gallery-main-image"
+                    style={{
+                      transform: isZoomed ? 'scale(1.5)' : 'scale(1)',
+                      transformOrigin: isZoomed ? `${zoomPosition.x}% ${zoomPosition.y}%` : 'center'
+                    }}
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      target.onerror = null;
+                      target.src = 'https://via.placeholder.com/800x600?text=Image+Load+Error';
+                    }}
+                  />
+                )}
               </div>
               
               {/* Navigation arrows */}
-              {images.length > 1 && (
+              {mediaItems.length > 1 && (
                 <>
                   <button
                     onClick={handlePrevious}
                     className="gallery-nav-btn prev"
-                    aria-label="Previous image"
+                    aria-label="Previous slide"
                   >
                     <ChevronLeft size={32} />
                   </button>
                   <button
                     onClick={handleNext}
                     className="gallery-nav-btn next"
-                    aria-label="Next image"
+                    aria-label="Next slide"
                   >
                     <ChevronRight size={32} />
                   </button>
@@ -193,16 +217,16 @@ const ImageGalleryModal: React.FC<ImageGalleryModalProps> = ({ isOpen, onClose, 
             </div>
           ) : (
             <div className="gallery-loading">
-              <p>No images available</p>
+              <p>No media available</p>
             </div>
           )}
         </div>
 
         {/* Thumbnail strip */}
-        {!loading && images.length > 1 && (
+        {!loading && mediaItems.length > 1 && (
           <div className="thumbnail-strip-container">
             <div className="thumbnail-strip">
-              {images.map((image, idx) => (
+              {mediaItems.map((item, idx) => (
                 <button
                   key={idx}
                   onClick={() => {
@@ -210,18 +234,41 @@ const ImageGalleryModal: React.FC<ImageGalleryModalProps> = ({ isOpen, onClose, 
                     setIsZoomed(false);
                   }}
                   className={`thumbnail-btn ${idx === currentIndex ? 'active' : ''}`}
-                  aria-label={`Go to image ${idx + 1}`}
+                  aria-label={`Go to slide ${idx + 1}`}
+                  style={{ position: 'relative' }}
                 >
-                  <img
-                    src={image}
-                    alt={`Thumbnail ${idx + 1}`}
-                    className="thumbnail-img"
-                    onError={(e) => {
-                      const target = e.target as HTMLImageElement;
-                      target.onerror = null;
-                      target.src = 'https://via.placeholder.com/64x64?text=Error';
-                    }}
-                  />
+                  {item.type === 'video' ? (
+                    <div style={{ position: 'relative', width: '100%', height: '100%' }}>
+                      <img
+                        src={property.allImages?.[0] || property.image || 'https://via.placeholder.com/64x64?text=Video'}
+                        alt="Video Thumbnail"
+                        className="thumbnail-img"
+                      />
+                      <div style={{
+                        position: 'absolute',
+                        inset: 0,
+                        background: 'rgba(0, 0, 0, 0.45)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        color: '#ffffff',
+                        borderRadius: '4px'
+                      }}>
+                        <Play size={16} fill="#ffffff" strokeWidth={2} />
+                      </div>
+                    </div>
+                  ) : (
+                    <img
+                      src={item.url}
+                      alt={`Thumbnail ${idx + 1}`}
+                      className="thumbnail-img"
+                      onError={(e) => {
+                        const target = e.target as HTMLImageElement;
+                        target.onerror = null;
+                        target.src = 'https://via.placeholder.com/64x64?text=Error';
+                      }}
+                    />
+                  )}
                 </button>
               ))}
             </div>
