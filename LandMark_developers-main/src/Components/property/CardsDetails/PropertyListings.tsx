@@ -69,7 +69,7 @@ const PropertyListings: React.FC<PropertyListingsProps> = ({ initialData, townsh
     bhkMin: 0,
     bhkMax: 0,
   });
-  const [activeDetails, setActiveDetails] = useState<number | null>(null);
+  const [expandedIndices, setExpandedIndices] = useState<Set<number>>(new Set());
   const [townshipName, setTownshipName] = useState<string>(initialTownshipName || '');
   const [pdfData, setPdfData] = useState<any[]>([]);
   const [pdfThumbnails, setPdfThumbnails] = useState<{ [key: string]: string }>({});
@@ -131,7 +131,7 @@ const PropertyListings: React.FC<PropertyListingsProps> = ({ initialData, townsh
             });
             const pdfDoc = await loadingTask.promise;
             const page = await pdfDoc.getPage(1);
-            
+
             const scale = 0.5; // Load smaller preview for high performance
             const viewport = page.getViewport({ scale });
             const canvas = document.createElement('canvas');
@@ -144,7 +144,7 @@ const PropertyListings: React.FC<PropertyListingsProps> = ({ initialData, townsh
                 canvasContext: context,
                 viewport: viewport
               }).promise;
-              
+
               const dataUrl = canvas.toDataURL('image/jpeg', 0.8);
               setPdfThumbnails(prev => ({
                 ...prev,
@@ -393,7 +393,15 @@ const PropertyListings: React.FC<PropertyListingsProps> = ({ initialData, townsh
   };
 
   const toggleDetails = (index: number) => {
-    setActiveDetails(activeDetails === index ? null : index);
+    setExpandedIndices(prev => {
+      const next = new Set(prev);
+      if (next.has(index)) {
+        next.delete(index);
+      } else {
+        next.add(index);
+      }
+      return next;
+    });
   };
 
   const handleFilterChange = (key: keyof typeof filters, value: string) => {
@@ -406,6 +414,7 @@ const PropertyListings: React.FC<PropertyListingsProps> = ({ initialData, townsh
 
   useEffect(() => {
     filterData();
+    setExpandedIndices(new Set());
   }, [filters, plotData]);
 
   useEffect(() => {
@@ -426,14 +435,39 @@ const PropertyListings: React.FC<PropertyListingsProps> = ({ initialData, townsh
     );
   }
 
+  const isAllExpanded = expandedIndices.size === filteredData.length && filteredData.length > 0;
+  const handleToggleAll = () => {
+    if (isAllExpanded) {
+      setExpandedIndices(new Set());
+    } else {
+      setExpandedIndices(new Set(filteredData.map((_, i) => i)));
+    }
+  };
+
   return (
     <div className="container">
       <div className="table-container">
-        <div className="township-banner">
-          <h1>
-            {townshipName || 'Property List'}
-            <span className="banner-count">({filteredData.length})</span>
-          </h1>
+        <div className="township-banner-header">
+          <div className="township-banner">
+            <h1>
+              {townshipName || 'Property List'}
+              <span className="banner-count">({filteredData.length})</span>
+            </h1>
+          </div>
+
+          {/* Expand / Collapse All Cards Button */}
+          {filteredData.length > 0 && (
+            <div className="listings-expand-all-wrapper">
+              <button
+                className={`listings-expand-all-btn ${isAllExpanded ? 'expanded' : ''}`}
+                onClick={handleToggleAll}
+                title={isAllExpanded ? "Collapse All Cards" : "Expand All Cards"}
+              >
+                <span>{isAllExpanded ? 'Collapse All' : 'Expand All'}</span>
+                <ChevronRight size={16} className="toggle-chevron" />
+              </button>
+            </div>
+          )}
         </div>
 
         <div className="project-details-cards-grid">
@@ -451,7 +485,7 @@ const PropertyListings: React.FC<PropertyListingsProps> = ({ initialData, townsh
             filteredData.map((plot, index) => (
               <div
                 key={plot.sno}
-                className={`project-detail-card ${activeDetails === index ? 'active' : ''}`}
+                className={`project-detail-card ${expandedIndices.has(index) ? 'active' : ''}`}
                 onClick={() => toggleDetails(index)}
               >
                 <div className="card-header-compact">
@@ -460,10 +494,10 @@ const PropertyListings: React.FC<PropertyListingsProps> = ({ initialData, townsh
                   </div>
                   <div className="header-right-side">
                     <span className="compact-price">{plot.price > 0 ? `₹${plot.price} L` : ''}</span>
-                    <ChevronRight size={18} className={`arrow-icon ${activeDetails === index ? 'rotate' : ''}`} />
+                    <ChevronRight size={18} className={`arrow-icon ${expandedIndices.has(index) ? 'rotate' : ''}`} />
                   </div>
                 </div>
-                {activeDetails === index && (
+                {expandedIndices.has(index) && (
                   <div className="card-expanded-panel" onClick={(e) => e.stopPropagation()}>
                     <div className="expanded-info-grid">
                       {plot.rawKeyValues.filter(kv => {
@@ -559,7 +593,7 @@ const PropertyListings: React.FC<PropertyListingsProps> = ({ initialData, townsh
                           <span className="fallback-pdf-badge">PDF Document</span>
                         </div>
                       )}
-                      
+
                       {/* Glassmorphic Overlay Buttons */}
                       <div className="pdf-glass-overlay">
                         <a
@@ -583,7 +617,7 @@ const PropertyListings: React.FC<PropertyListingsProps> = ({ initialData, townsh
                         </a>
                       </div>
                     </div>
-                    
+
                     <div className="pdf-card-footer">
                       <h4 className="pdf-card-name">{pdf.name || `Document ${index + 1}`}</h4>
                       <p className="pdf-card-size">PDF BROCHURE</p>

@@ -68,19 +68,38 @@
   margin-left: 4px;
 }
 
-.township-banner {
-  padding: 24px 24px 0 24px;
+.township-banner-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 24px;
   background: white;
-  text-align: center;
+  border-bottom: 1px solid #f1f5f9;
+  gap: 16px;
+}
+
+.township-banner {
+  padding: 0;
+  background: transparent;
+  text-align: left;
+  flex: 1;
+  min-width: 0;
 }
 
 .township-banner h1 {
   margin: 0;
-  font-size: 28px;
+  font-size: 26px;
   font-weight: 800;
   color: #4f46e5;
   /* Custom Indigo */
   letter-spacing: -0.02em;
+  word-break: break-word;
+}
+
+@media (max-width: 768px) {
+  .township-banner h1 {
+    font-size: 20px;
+  }
 }
 
 .banner-count {
@@ -806,6 +825,17 @@ tbody td {
   white-space: nowrap;
 }
 
+.plot-sqyds {
+  font-size: 12px;
+  font-weight: 600;
+  color: #475569;
+  background: #f8fafc;
+  padding: 4px 8px;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  white-space: nowrap;
+}
+
 .subtitle-divider {
   color: #cbd5e0;
   font-size: 12px;
@@ -1301,4 +1331,51 @@ tbody tr {
     border: 1px solid rgba(255, 255, 255, 0.15);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
   }
+}
+
+/* Expand All / Collapse All Button */
+.listings-expand-all-wrapper {
+  padding: 0;
+  background: transparent;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.listings-expand-all-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #f8fafc;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  color: #4f46e5;
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  outline: none;
+  white-space: nowrap;
+}
+
+.listings-expand-all-btn:hover {
+  background: #e0e7ff;
+  color: #4338ca;
+  box-shadow: 0 2px 4px rgba(79, 70, 229, 0.05);
+}
+
+.listings-expand-all-btn .toggle-chevron {
+  transition: transform 0.2s ease;
+}
+
+.listings-expand-all-btn.expanded .toggle-chevron {
+  transform: rotate(90deg);
+}
+
+.listings-expand-all-btn:focus,
+.listings-expand-all-btn:active,
+.listings-expand-all-btn:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+  border: none !important;
 }
