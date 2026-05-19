@@ -11,7 +11,7 @@ html {
   right: 12px;
   z-index: 1000;
   transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-  background: rgba(10, 10, 10, 0.75);
+  background: var(--nav-bg);
   backdrop-filter: blur(16px) saturate(180%);
   -webkit-backdrop-filter: blur(16px) saturate(180%);
   border: 1px solid rgba(255, 255, 255, 0.12);
@@ -21,7 +21,7 @@ html {
 }
 
 .navbar-header.scrolled {
-  background: rgba(5, 5, 5, 0.85);
+  background: rgba(0, 0, 0, 0.6);
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
   border-color: rgba(255, 255, 255, 0.18);
   padding: 0.3rem 1rem;

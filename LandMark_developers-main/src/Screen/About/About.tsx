@@ -34,7 +34,7 @@ const About: React.FC = () => {
           >
             <span className="ab-label">ESTABLISHED</span>
             <h2 className="ab-heading">
-              Who <span>We Are</span>
+              Who <span>We Are ?</span>
             </h2>
             <p className="ab-text">
               LaandMark Developers was founded with a vision to transform
