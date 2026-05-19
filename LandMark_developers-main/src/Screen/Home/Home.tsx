@@ -1,23 +1,33 @@
 import React, { useState, useEffect } from "react";
 import "./Home.css";
 import SectionCard from "../../Components/HomePage/sectionCard3";
-import { sectionData as initialSectionData, SectionItem } from "../../store/HomePage/section";
 import Section3Card from "../../Components/HomePage/Section2Card";
-import { Section3Data as initialSection3Data, Section3Item } from "../../store/HomePage/Section3";
-
 import Section5Card from "../../Components/HomePage/Section5Card";
-import { Section5Card as initialSection5Data, Cards as Section5Item } from "../../store/HomePage/Section5Card";
 import Section6Card from "../../Components/HomePage/Section6Card";
-import { Section6Data as initialSection6Data, Section6Type as Section6Item } from "../../store/HomePage/Section6Card";
 import useCarousel from "../../hooks/useCarousel";
-
 import Section7Card from "../../Components/HomePage/Section7Card";
-import { Section7Data as initialSection7Data, Section7Type as Section7Item } from "../../store/HomePage/section7Card";
-
 import Section8Card from "../../Components/HomePage/Section8Card";
-import { Section8Data as initialSection8Data, Section8Type as Section8Item } from "../../store/HomePage/section8Card";
 import Section9Card from "../../Components/HomePage/section9Card";
-import { Section9Data as initialSection9Data, Section9Type as Section9Item } from "../../store/HomePage/section9Card";
+
+// Mock data imports commented out as requested:
+/*
+import { sectionData as initialSectionData } from "../../store/HomePage/section";
+import { Section3Data as initialSection3Data } from "../../store/HomePage/Section3";
+import { Section5Card as initialSection5Data } from "../../store/HomePage/Section5Card";
+import { Section6Data as initialSection6Data } from "../../store/HomePage/Section6Card";
+import { Section7Data as initialSection7Data } from "../../store/HomePage/section7Card";
+import { Section8Data as initialSection8Data } from "../../store/HomePage/section8Card";
+import { Section9Data as initialSection9Data } from "../../store/HomePage/section9Card";
+*/
+
+// Interfaces are still needed for typing state variables:
+import { SectionItem } from "../../store/HomePage/section";
+import { Section3Item } from "../../store/HomePage/Section3";
+import { Cards as Section5Item } from "../../store/HomePage/Section5Card";
+import { Section6Type as Section6Item } from "../../store/HomePage/Section6Card";
+import { Section7Type as Section7Item } from "../../store/HomePage/section7Card";
+import { Section8Type as Section8Item } from "../../store/HomePage/section8Card";
+import { Section9Type as Section9Item } from "../../store/HomePage/section9Card";
 
 import AIPrompt from "../AIPrompt/AIPrompt";
 import { fetchHomepageData, HeroSlide } from "../../services/HomeService";
@@ -28,6 +38,8 @@ const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
   console.log("Form Submitted");
 };
 
+// Mock data initial slides commented out as requested
+/*
 const initialHeroSlides: HeroSlide[] = [
   {
     id: 1,
@@ -51,58 +63,47 @@ const initialHeroSlides: HeroSlide[] = [
     subtitle: "SOPHISTICATED HOMES BLENDING MODERN INNOVATION & TIMELESS COMFORT"
   }
 ];
+*/
 
 const Home: React.FC = () => {
-  // Hero slide states
-  const [heroSlides, setHeroSlides] = useState<HeroSlide[]>(initialHeroSlides);
-  const [heroTitle, setHeroTitle] = useState<string>("Hero Section");
+  // Hero slide states - initialized empty (will load from API)
+  const [heroSlides, setHeroSlides] = useState<HeroSlide[]>([]);
+  const [heroTitle, setHeroTitle] = useState<string>("");
 
   // Section 2 (FIND YOUR PERFECT HOME)
-  const [section3Title, setSection3Title] = useState<string>("FIND YOUR PERFECT HOME");
-  const [section3Data, setSection3Data] = useState<Section3Item[]>(initialSection3Data);
+  const [section3Title, setSection3Title] = useState<string>("");
+  const [section3Data, setSection3Data] = useState<Section3Item[]>([]);
 
   // Section 3 (WHY LandMaark PROPERTIES?)
-  const [secTitle, setSecTitle] = useState<string>("WHY LandMaark PROPERTIES?");
-  const [secSubtitle, setSecSubtitle] = useState<string>(
-    "Renowned for iconic developments and exceptional craftsmanship, LandMaark Properties blends elegance, innovation, and world-class amenities."
-  );
-  const [secData, setSecData] = useState<SectionItem[]>(initialSectionData);
+  const [secTitle, setSecTitle] = useState<string>("");
+  const [secSubtitle, setSecSubtitle] = useState<string>("");
+  const [secData, setSecData] = useState<SectionItem[]>([]);
 
   // Section 5 (EXPLORE OUR ICONIC PROPERTIES)
-  const [section5Title, setSection5Title] = useState<string>("EXPLORE OUR ICONIC PROPERTIES");
-  const [section5Subtitle, setSection5Subtitle] = useState<string>(
-    "LandMaark Properties is known for creating exceptional living spaces that combine luxury, comfort, and timeless design."
-  );
-  const [section5FooterText, setSection5FooterText] = useState<string>(
-    "Explore LandMaark premier residential townhouses, exquisite luxury villas, and cutting-edge off-plan projects in Ajmer that redefine modern living."
-  );
-  const [section5Data, setSection5Data] = useState<Section5Item[]>(initialSection5Data);
+  const [section5Title, setSection5Title] = useState<string>("");
+  const [section5Subtitle, setSection5Subtitle] = useState<string>("");
+  const [section5FooterText, setSection5FooterText] = useState<string>("");
+  const [section5Data, setSection5Data] = useState<Section5Item[]>([]);
 
   // Section 6 (A WORLD OF LUXURY)
-  const [section6Title, setSection6Title] = useState<string>("A WORLD OF LUXURY");
-  const [section6Subtitle, setSection6Subtitle] = useState<string>(
-    "Discover the finest in DAMAC Properties Dubai from expansive master communities to exclusive designer branded residences."
-  );
-  const [section6Data, setSection6Data] = useState<Section6Item[]>(initialSection6Data);
+  const [section6Title, setSection6Title] = useState<string>("");
+  const [section6Subtitle, setSection6Subtitle] = useState<string>("");
+  const [section6Data, setSection6Data] = useState<Section6Item[]>([]);
 
   // Section 7 (CURATED COLLABORATIONS)
-  const [section7Title, setSection7Title] = useState<string>("CURATED COLLABORATIONS");
-  const [section7Subtitle, setSection7Subtitle] = useState<string>(
-    "LandMaark Properties brings new and exciting living concepts to life, with superior designs and details."
-  );
-  const [section7Data, setSection7Data] = useState<Section7Item[]>(initialSection7Data);
+  const [section7Title, setSection7Title] = useState<string>("");
+  const [section7Subtitle, setSection7Subtitle] = useState<string>("");
+  const [section7Data, setSection7Data] = useState<Section7Item[]>([]);
 
   // Section 8 (EMPOWERING COMMUNITIES, BUILDING FUTURES)
-  const [section8Title, setSection8Title] = useState<string>("EMPOWERING COMMUNITIES, BUILDING FUTURES");
-  const [section8Subtitle, setSection8Subtitle] = useState<string>(
-    "The LandMaark Properties Foundation is a testament to our commitment to creating a positive impact."
-  );
-  const [section8VideoUrl, setSection8VideoUrl] = useState<string>("https://www.youtube.com/embed/dQw4w9WgXcQ");
-  const [section8Data, setSection8Data] = useState<Section8Item[]>(initialSection8Data);
+  const [section8Title, setSection8Title] = useState<string>("");
+  const [section8Subtitle, setSection8Subtitle] = useState<string>("");
+  const [section8VideoUrl, setSection8VideoUrl] = useState<string>("");
+  const [section8Data, setSection8Data] = useState<Section8Item[]>([]);
 
   // Section 9 (WHY INVEST IN US?)
-  const [section9Title, setSection9Title] = useState<string>("WHY INVEST IN US?");
-  const [section9Data, setSection9Data] = useState<Section9Item[]>(initialSection9Data);
+  const [section9Title, setSection9Title] = useState<string>("");
+  const [section9Data, setSection9Data] = useState<Section9Item[]>([]);
 
   // Form toggle
   const [showEnquiryForm, setShowEnquiryForm] = useState<boolean>(true);
@@ -113,50 +114,54 @@ const Home: React.FC = () => {
 
   useEffect(() => {
     const loadData = async () => {
-      const data = await fetchHomepageData();
-      if (data) {
-        if (typeof data.showEnquiryForm === "boolean") {
-          setShowEnquiryForm(data.showEnquiryForm);
+      try {
+        const data = await fetchHomepageData();
+        if (data) {
+          if (typeof data.showEnquiryForm === "boolean") {
+            setShowEnquiryForm(data.showEnquiryForm);
+          }
+          if (data.hero) {
+            if (data.hero.title) setHeroTitle(data.hero.title);
+            if (data.hero.slides) setHeroSlides(data.hero.slides);
+          }
+          if (data.section3) {
+            if (data.section3.title) setSection3Title(data.section3.title);
+            if (data.section3.items) setSection3Data(data.section3.items);
+          }
+          if (data.section) {
+            if (data.section.title) setSecTitle(data.section.title);
+            if (data.section.subtitle) setSecSubtitle(data.section.subtitle);
+            if (data.section.items) setSecData(data.section.items);
+          }
+          if (data.section5) {
+            if (data.section5.title) setSection5Title(data.section5.title);
+            if (data.section5.subtitle) setSection5Subtitle(data.section5.subtitle);
+            if (data.section5.footerText) setSection5FooterText(data.section5.footerText);
+            if (data.section5.items) setSection5Data(data.section5.items);
+          }
+          if (data.section6) {
+            if (data.section6.title) setSection6Title(data.section6.title);
+            if (data.section6.subtitle) setSection6Subtitle(data.section6.subtitle);
+            if (data.section6.items) setSection6Data(data.section6.items);
+          }
+          if (data.section7) {
+            if (data.section7.title) setSection7Title(data.section7.title);
+            if (data.section7.subtitle) setSection7Subtitle(data.section7.subtitle);
+            if (data.section7.items) setSection7Data(data.section7.items);
+          }
+          if (data.section8) {
+            if (data.section8.title) setSection8Title(data.section8.title);
+            if (data.section8.subtitle) setSection8Subtitle(data.section8.subtitle);
+            if (data.section8.videoUrl) setSection8VideoUrl(data.section8.videoUrl);
+            if (data.section8.items) setSection8Data(data.section8.items);
+          }
+          if (data.section9) {
+            if (data.section9.title) setSection9Title(data.section9.title);
+            if (data.section9.items) setSection9Data(data.section9.items);
+          }
         }
-        if (data.hero) {
-          if (data.hero.title) setHeroTitle(data.hero.title);
-          if (data.hero.slides && data.hero.slides.length > 0) setHeroSlides(data.hero.slides);
-        }
-        if (data.section3) {
-          if (data.section3.title) setSection3Title(data.section3.title);
-          if (data.section3.items && data.section3.items.length > 0) setSection3Data(data.section3.items);
-        }
-        if (data.section) {
-          if (data.section.title) setSecTitle(data.section.title);
-          if (data.section.subtitle) setSecSubtitle(data.section.subtitle);
-          if (data.section.items && data.section.items.length > 0) setSecData(data.section.items);
-        }
-        if (data.section5) {
-          if (data.section5.title) setSection5Title(data.section5.title);
-          if (data.section5.subtitle) setSection5Subtitle(data.section5.subtitle);
-          if (data.section5.footerText) setSection5FooterText(data.section5.footerText);
-          if (data.section5.items && data.section5.items.length > 0) setSection5Data(data.section5.items);
-        }
-        if (data.section6) {
-          if (data.section6.title) setSection6Title(data.section6.title);
-          if (data.section6.subtitle) setSection6Subtitle(data.section6.subtitle);
-          if (data.section6.items && data.section6.items.length > 0) setSection6Data(data.section6.items);
-        }
-        if (data.section7) {
-          if (data.section7.title) setSection7Title(data.section7.title);
-          if (data.section7.subtitle) setSection7Subtitle(data.section7.subtitle);
-          if (data.section7.items && data.section7.items.length > 0) setSection7Data(data.section7.items);
-        }
-        if (data.section8) {
-          if (data.section8.title) setSection8Title(data.section8.title);
-          if (data.section8.subtitle) setSection8Subtitle(data.section8.subtitle);
-          if (data.section8.videoUrl) setSection8VideoUrl(data.section8.videoUrl);
-          if (data.section8.items && data.section8.items.length > 0) setSection8Data(data.section8.items);
-        }
-        if (data.section9) {
-          if (data.section9.title) setSection9Title(data.section9.title);
-          if (data.section9.items && data.section9.items.length > 0) setSection9Data(data.section9.items);
-        }
+      } catch (error) {
+        console.error("Error loading dynamic homepage data from API:", error);
       }
     };
     loadData();

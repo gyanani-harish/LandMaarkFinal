@@ -2,11 +2,13 @@
 
 .sec9-card {
   cursor: pointer;
+  padding: 1rem;
 }
+
 
 .sec9-card-img-wrapper {
   overflow: hidden;
-  border-radius: 12px;
+  border-radius: 23px;
 }
 
 .sec9-card-img {

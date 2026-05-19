@@ -1,5 +1,6 @@
 import axios from "axios";
 import { ApiConstants } from "../constants/ApiConstants";
+import { ApiEndPoints } from "../constants/ApiEndpoints";
 import { Section3Item } from "../store/HomePage/Section3";
 import { SectionItem } from "../store/HomePage/section";
 import { Cards as Section5Item } from "../store/HomePage/Section5Card";
@@ -77,90 +78,20 @@ export interface HomepageData {
 }
 
 export const fetchHomepageData = async (): Promise<HomepageData> => {
-  // 1. Try fetching from ngrok base API endpoint first
+  // 1. Try fetching from live backend API first
   try {
     const response = await axios.get(
-      `${ApiConstants.API_BASE_URL}api/homepage`,
+      `${ApiConstants.API_BASE_URL}${ApiEndPoints.HomePageData}`,
       { headers: ApiConstants.HEADERS }
     );
     if (response.data && response.data.data) {
       return response.data.data;
     }
   } catch (error) {
-    console.warn("Backend /api/homepage endpoint unavailable, falling back to static file...");
+    console.warn("Backend /api/home unavailable, falling back to static homepage.json for mockup view...");
   }
 
-  // 2. Fallback: Fetch from public static JSON structure
-  try {
-    const response = await axios.get("/data/homepage.json");
-    return response.data;
-  } catch (fallbackError) {
-    console.error("Error fetching homepage static JSON:", fallbackError);
-    
-    // Ultimate fallback if network is completely down and static file cannot be resolved
-    return {
-      showEnquiryForm: true,
-      hero: {
-        title: "Hero Carousel",
-        slides: [
-          {
-            id: 1,
-            image: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=2075",
-            title: "LEGACY OF EXCELLENCE IN",
-            titleHighlight: "LUXURY REAL ESTATE",
-            subtitle: "CHOOSE FROM A RANGE OF APARTMENTS, VILLAS AND TOWNHOUSES"
-          }
-        ]
-      },
-      section3: {
-        title: "FIND YOUR PERFECT HOME",
-        items: []
-      },
-      section: {
-        title: "WHY LandMaark PROPERTIES?",
-        subtitle: "",
-        items: []
-      },
-      section5: {
-        title: "EXPLORE OUR ICONIC PROPERTIES",
-        subtitle: "",
-        footerText: "",
-        items: []
-      },
-      section6: {
-        title: "A WORLD OF LUXURY",
-        subtitle: "",
-        items: []
-      },
-      section7: {
-        title: "CURATED COLLABORATIONS",
-        subtitle: "",
-        items: []
-      },
-      section8: {
-        title: "EMPOWERING COMMUNITIES",
-        subtitle: "",
-        videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-        items: []
-      },
-      section9: {
-        title: "WHY INVEST IN US?",
-        items: []
-      },
-      footer: {
-        logoText: "LandMaark",
-        locations: [
-          {
-            city: "Ajmer LandMaark Properties",
-            address: "Pushkar Bypass Rd, Ajmer",
-            phone: "CALL NOW"
-          }
-        ],
-        socialLinks: [],
-        websiteUrl: "www.LandMaarkproperties.com",
-        websiteHref: "https://damacproperties.com",
-        copyrightPattern: "© {year} LandMaark Properties. All rights reserved."
-      }
-    };
-  }
+  // 2. Mock Fallback: Fetch from public static JSON structure for view time
+  const response = await axios.get("/data/homepage.json");
+  return response.data;
 };
