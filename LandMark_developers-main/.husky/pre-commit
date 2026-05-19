@@ -1,0 +1,2 @@
+#!/bin/sh
+cd LandMark_developers-main && npx lint-staged
