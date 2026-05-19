@@ -1,5 +1,6 @@
 /* eslint-disable */
 import React, { useState, useEffect } from 'react';
+import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 import { useParams } from 'react-router-dom';
 import { Loader, Info } from 'lucide-react';
 import useIsMobile from '../../hooks/useIsMobile';
@@ -241,11 +242,8 @@ const PropertyDetailPage = () => {
       <div className="error-wrapper-premium">
         <div className="error-content-premium">
           <div className="lottie-container-premium">
-            {/* @ts-ignore */}
-            <dotlottie-player
+            <DotLottieReact
               src="https://assets-v2.lottiefiles.com/a/358e0c5e-1176-11ee-8663-8f76e1809294/JmwXG8XzU7.lottie"
-              background="transparent"
-              speed="1"
               style={{ width: '220px', height: '220px', margin: '0 auto' }}
               loop
               autoplay
