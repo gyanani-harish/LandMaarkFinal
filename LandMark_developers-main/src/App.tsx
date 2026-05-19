@@ -15,6 +15,7 @@ import PropertyListings from "./Components/property/CardsDetails/PropertyListing
 function App() {
   return (
     <>
+
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
