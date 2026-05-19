@@ -22,7 +22,7 @@
 .main-image-wrapper {
   position: relative;
   width: 100%;
-  height: 350px;
+  height: 330px;
   overflow: hidden;
   cursor: pointer;
   border-radius: 0;
@@ -125,7 +125,7 @@
 /* RERA capsule badge - mobile top-left */
 .rera-badge-capsule {
   position: absolute;
-  top: 30px;
+  top: 80px;
   left: 16px;
   background: white;
   padding: 4px 10px 4px 4px;
@@ -189,7 +189,7 @@
 /* Mobile circular action buttons */
 .prop-gallery-actions-unique {
   position: absolute;
-  top: 30px;
+  top: 70px;
   right: 16px;
   display: flex;
   gap: 12px;
@@ -197,12 +197,13 @@
 }
 
 .prop-gallery-action-btn-unique {
-  width: 64px;
-  height: 64px;
+  width: 57px;
+  height: 57px;
   border-radius: 50%;
   background: white;
   border: none;
   display: flex;
+  font-size: 14px;
   align-items: center;
   justify-content: center;
   color: #4a5568;

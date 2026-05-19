@@ -9,21 +9,21 @@ export default defineConfig({
     allowedHosts: ["smokiness-armful-wackiness.ngrok-free.dev"],
     proxy: {
       '/api': {
-        target: 'https://unimmunized-rosella-hedonistically.ngrok-free.dev', // Use the working URL
+        target: 'https://ointment-bath-icky.ngrok-free.dev', // Use the working URL
         changeOrigin: true,
         secure: false,
         configure: (proxy) => {
-          proxy.on('proxyReq', (proxyReq, req, res) => {
+          proxy.on('proxyReq', (proxyReq) => {
             proxyReq.setHeader('ngrok-skip-browser-warning', 'true');
           });
         }
       },
       '/uploads': {
-        target: 'https://unimmunized-rosella-hedonistically.ngrok-free.dev', // Use the working URL
+        target: 'https://ointment-bath-icky.ngrok-free.dev', // Use the working URL
         changeOrigin: true,
         secure: false,
         configure: (proxy) => {
-          proxy.on('proxyReq', (proxyReq, req, res) => {
+          proxy.on('proxyReq', (proxyReq) => {
             proxyReq.setHeader('ngrok-skip-browser-warning', 'true');
           });
         }
