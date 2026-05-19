@@ -14,7 +14,6 @@ import PropertySearch2 from "./Screen/Searching2/PropertySearch2";
 import PropertyListings from "./Components/property/CardsDetails/PropertyListings";
 function App() {
   return (
-
     <>
       <Navbar />
       <Routes>
