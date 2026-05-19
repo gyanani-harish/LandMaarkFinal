@@ -1,0 +1,309 @@
+{
+  "showEnquiryForm": true,
+  "hero": {
+    "title": "Hero Carousel",
+    "slides": [
+      {
+        "id": 1,
+        "image": "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=2075",
+        "title": "LEGACY OF EXCELLENCE IN",
+        "titleHighlight": "LUXURY REAL ESTATE",
+        "subtitle": "CHOOSE FROM A RANGE OF APARTMENTS, VILLAS AND TOWNHOUSES"
+      },
+      {
+        "id": 2,
+        "image": "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=2075",
+        "title": "ARCHITECTURAL SPLENDOR IN",
+        "titleHighlight": "PREMIER TOWNSHIPS",
+        "subtitle": "EXPERIENCE EXTRAORDINARY LIVING, EFFORTLESSLY WITHIN YOUR REACH"
+      },
+      {
+        "id": 3,
+        "image": "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=2075",
+        "title": "YOUR DREAM HOME IN",
+        "titleHighlight": "PRIME LOCATIONS",
+        "subtitle": "SOPHISTICATED HOMES BLENDING MODERN INNOVATION & TIMELESS COMFORT"
+      }
+    ]
+  },
+  "section3": {
+    "title": "FIND YOUR PERFECT HOME",
+    "items": [
+      {
+        "id": 1,
+        "image": "https://images.unsplash.com/photo-1600585154340-be6161a56a0c",
+        "title": "APARTMENTS",
+        "price": "From INR 1.8 Crores*"
+      },
+      {
+        "id": 2,
+        "image": "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c",
+        "title": "VILLAS & TOWNHOUSES",
+        "price": "From INR 6.7 Crores*"
+      },
+      {
+        "id": 3,
+        "image": "https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=600&auto=format&fit=crop&q=60",
+        "title": "HOTEL APARTMENTS",
+        "price": "From INR 1.7 Crores*"
+      },
+      {
+        "id": 4,
+        "image": "https://images.unsplash.com/photo-1600607687644-c7171b42498f",
+        "title": "LUXURY APARTMENTS",
+        "price": "From INR 4.8 Crores*"
+      }
+    ]
+  },
+  "section": {
+    "title": "WHY LandMaark PROPERTIES?",
+    "subtitle": "Renowned for iconic developments and exceptional craftsmanship, LandMaark Properties blends elegance, innovation, and world-class amenities.",
+    "items": [
+      {
+        "title": "Prime Locations",
+        "description": "Carefully selected locations offering strong growth potential, accessibility, and lifestyle convenience."
+      },
+      {
+        "title": "Luxury Design",
+        "description": "Architecturally stunning developments with world-class amenities."
+      },
+      {
+        "title": "High ROI",
+        "description": "Strong rental yields and appreciation in premium communities."
+      },
+      {
+        "title": "Trusted Brand",
+        "description": "Backed by decades of real estate excellence."
+      },
+      {
+        "title": "Flexible Payment",
+        "description": "Investor-friendly payment plans for convenience."
+      },
+      {
+        "title": "Global Presence",
+        "description": "Iconic developments across international markets."
+      }
+    ]
+  },
+  "section5": {
+    "title": "EXPLORE OUR ICONIC PROPERTIES",
+    "subtitle": "LandMaark Properties is known for creating exceptional living spaces that combine luxury, comfort, and timeless design. From elegant residential towers to thoughtfully planned communities, every LandMaark development reflects a commitment to quality craftsmanship and modern living. Each property is designed to offer residents a refined lifestyle with outstanding amenities and a sense of lasting value.",
+    "footerText": "Explore LandMaark premier residential townhouses, exquisite luxury villas, and cutting-edge off-plan projects in Ajmer that redefine modern living. With flexible payment plans and prime locations across Ajmer, investing in premium real estate with LandMaark Developers has never been more accessible.",
+    "items": [
+      {
+        "id": 1,
+        "title": "LandMaark Globe Vihar",
+        "location": "Panchsheel Nagar, Ajmer, Rajasthan",
+        "price": "FROM INR 45 LAKHS*",
+        "image": "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=600"
+      },
+      {
+        "id": 2,
+        "title": "LandMaark Royal Meadows",
+        "location": "Gughra, Ajmer, Rajasthan",
+        "price": "FROM INR 65 LAKHS*",
+        "image": "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=600"
+      },
+      {
+        "id": 3,
+        "title": "LandMaark Aravalli Heights",
+        "location": "Pushkar Road, Ajmer, Rajasthan",
+        "price": "FROM INR 85 LAKHS*",
+        "image": "https://images.unsplash.com/photo-1613977257363-707ba9348227?q=80&w=600"
+      },
+      {
+        "id": 4,
+        "title": "LandMaark Golden Sands",
+        "location": "Jaipur Road, Ajmer, Rajasthan",
+        "price": "FROM INR 55 LAKHS*",
+        "image": "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=600"
+      }
+    ]
+  },
+  "section6": {
+    "title": "A WORLD OF LUXURY",
+    "subtitle": "Discover the finest in DAMAC Properties Dubai from expansive master communities to exclusive designer branded residences through the LandMaark Properties official website and experience extraordinary living, effortlessly within your reach.",
+    "items": [
+      {
+        "id": 2,
+        "image": "https://v.fastcdn.co/cdn-cgi/image/format=auto,fit=scale-down,sharpen=1,width=1198,dpr=2,trim.top=3,trim.width=1200,trim.left=0,trim.height=675/u/a43967b2/65553310-0-Canal-Heights.webp",
+        "title": "Canal Heights",
+        "subtitle": "Luxury waterfront residences offering panoramic canal views and modern elegance.",
+        "button": "View More"
+      },
+      {
+        "id": 3,
+        "image": "https://v.fastcdn.co/cdn-cgi/image/format=auto,fit=scale-down,sharpen=1,width=1198,dpr=2,trim.top=3,trim.width=1200,trim.left=0,trim.height=674/u/a43967b2/65553307-0-DAMAC-Casa.webp",
+        "title": "DAMAC Casa",
+        "subtitle": "Where architectural brilliance meets sophisticated urban lifestyle.",
+        "button": "View More"
+      },
+      {
+        "id": 4,
+        "image": "https://v.fastcdn.co/cdn-cgi/image/format=auto,fit=scale-down,sharpen=1,width=1198,dpr=2,trim.top=3,trim.width=1200,trim.left=0,trim.height=674/u/a43967b2/65553309-0-Couture-by-Cavalli.webp",
+        "title": "Couture by Cavalli",
+        "subtitle": "An iconic fusion of fashion and luxury living crafted for the elite.",
+        "button": "View More"
+      },
+      {
+        "id": 5,
+        "image": "https://img.freepik.com/free-photo/lavender-field-sunset-near-valensole_268835-3910.jpg?semt=ais_hybrid&w=740&q=80",
+        "title": "Golden Horizon Villas",
+        "subtitle": "Exclusive villas surrounded by nature with world-class amenities.",
+        "button": "View More"
+      },
+      {
+        "id": 6,
+        "image": "https://img.freepik.com/free-photo/lavender-field-sunset-near-valensole_268835-3910.jpg?semt=ais_hybrid&w=740&q=80",
+        "title": "Emerald Bay Residences",
+        "subtitle": "Discover contemporary elegance in a masterfully designed community.",
+        "button": "View More"
+      }
+    ]
+  },
+  "section7": {
+    "title": "CURATED COLLABORATIONS",
+    "subtitle": "LandMaark Properties brings new and exciting living concepts to life, with superior designs and details, by working with the finest designers and partnering with some of the most prestigious fashion and lifestyle brands.",
+    "items": [
+      {
+        "id": 1,
+        "image": "https://v.fastcdn.co/u/a43967b2/65553309-0-Couture-by-Cavalli.webp",
+        "title": "LandMaark Signature Towers",
+        "subtitle": "Exquisite luxury apartments offering modern amenities and a premium lifestyle in Ajmer."
+      },
+      {
+        "id": 2,
+        "image": "https://v.fastcdn.co/u/a43967b2/65553310-0-Canal-Heights.webp",
+        "title": "LandMaark Lakeview Heights",
+        "subtitle": "Sleek waterfront residences featuring panoramic views of Ana Sagar Lake, Ajmer."
+      },
+      {
+        "id": 3,
+        "image": "https://v.fastcdn.co/u/a43967b2/65553307-0-DAMAC-Casa.webp",
+        "title": "LandMaark Heritage Residency",
+        "subtitle": "Sophisticated homes blending heritage-inspired architecture with contemporary comfort in Ajmer."
+      },
+      {
+        "id": 4,
+        "image": "https://v.fastcdn.co/u/a43967b2/65553307-0-DAMAC-Casa.webp",
+        "title": "LandMaark Royal Meadows",
+        "subtitle": "Exclusive residential community nestled in lush greenery near Vaishali Nagar, Ajmer."
+      }
+    ]
+  },
+  "section8": {
+    "title": "EMPOWERING COMMUNITIES, BUILDING FUTURES",
+    "subtitle": "The LandMaark Properties Foundation is a testament to our commitment to creating a positive impact. From supporting the One Million Arab Coders Initiative to our sustainability efforts, we believe in building a better tomorrow. Discover how we’re making a difference, one initiative at a time.",
+    "videoUrl": "https://www.youtube.com/embed/dQw4w9WgXcQ",
+    "items": [
+      {
+        "id": 1,
+        "icon": "👨‍💻",
+        "title": "One Million Arab Coders Initiative"
+      },
+      {
+        "id": 2,
+        "icon": "🏘️",
+        "title": "Community Development Programs"
+      },
+      {
+        "id": 3,
+        "icon": "🌱",
+        "title": "Sustainability"
+      },
+      {
+        "id": 4,
+        "icon": "🎓",
+        "title": "Educational Support Initiatives"
+      }
+    ]
+  },
+  "section9": {
+    "title": "WHY INVEST IN US?",
+    "items": [
+      {
+        "id": 1,
+        "image": "https://images.unsplash.com/photo-1512453979798-5ea266f8880c",
+        "title": "Higher Rental Yields",
+        "description": "Investors can earn rental yields of up to 8-10% annually, surpassing many global markets."
+      },
+      {
+        "id": 2,
+        "image": "https://images.unsplash.com/photo-1580674285054-bed31e145f59",
+        "title": "Zero Taxes",
+        "description": "Investors benefit from a tax-friendly environment with no income, capital gains, or wealth taxes, allowing for greater financial growth and returns."
+      },
+      {
+        "id": 3,
+        "image": "https://images.unsplash.com/photo-1579684385127-1ef15d508118",
+        "title": "Premium Healthcare",
+        "description": "With strong healthcare investments, the city is ideal for supporting your health and wellbeing."
+      },
+      {
+        "id": 4,
+        "image": "https://images.unsplash.com/photo-1588072432836-e10032774350",
+        "title": "World Class Education",
+        "description": "Residents benefit from access to top-tier schools and universities offering globally recognized curricula."
+      },
+      {
+        "id": 5,
+        "image": "https://images.unsplash.com/photo-1534438327276-14e5300c3a48",
+        "title": "Entertainment Hub",
+        "description": "From iconic landmaarks to exciting theme parks, the region offers world-class entertainment experiences."
+      },
+      {
+        "id": 6,
+        "image": "https://images.unsplash.com/photo-1621905251918-48416bd8575a",
+        "title": "UAE Golden Visa",
+        "description": "Real estate investments can provide opportunities for long-term residency benefits for qualified buyers."
+      },
+      {
+        "id": 7,
+        "image": "https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91",
+        "title": "Communal Safety",
+        "description": "The region is known for its strong safety standards, providing peace of mind for families and residents."
+      },
+      {
+        "id": 8,
+        "image": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e",
+        "title": "Touristic Appeal",
+        "description": "Iconic landmaarks, a luxurious lifestyle, and beautiful beaches attract millions of visitors every year."
+      }
+    ]
+  },
+  "footer": {
+    "logoText": "LandMaark",
+    "locations": [
+      {
+        "city": "Ajmer LandMaark Properties",
+        "address": "Pushkar Bypass Rd, opp. AIT College, Panchsheel Nagar, Ajmer, Rajasthan 305004",
+        "phone": "CALL NOW"
+      }
+    ],
+    "socialLinks": [
+      {
+        "platform": "Facebook",
+        "href": "https://facebook.com/damacproperties"
+      },
+      {
+        "platform": "Twitter",
+        "href": "https://twitter.com/damacproperties"
+      },
+      {
+        "platform": "Instagram",
+        "href": "https://instagram.com/damacproperties"
+      },
+      {
+        "platform": "YouTube",
+        "href": "https://youtube.com/damacproperties"
+      },
+      {
+        "platform": "LinkedIn",
+        "href": "https://linkedin.com/company/damac-properties"
+      }
+    ],
+    "websiteUrl": "www.LandMaarkproperties.com",
+    "websiteHref": "https://damacproperties.com",
+    "copyrightPattern": "© {year} LandMaark Properties. All rights reserved."
+  }
+}

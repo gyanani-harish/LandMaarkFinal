@@ -107,7 +107,7 @@
 
 /* Section Common */
 .ab-section {
-  padding: 1rem;
+  padding: 0.5rem;
 }
 
 .ab-section-light {
@@ -130,7 +130,7 @@
 .ab-grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 4rem;
+  gap: 2rem;
   align-items: center;
 }
 
@@ -141,19 +141,15 @@
 }
 
 .ab-label {
-  font-size: 0.875rem;
-  letter-spacing: 0.25em;
+  font-size: 1.5rem;
   color: #1e293b;
   display: block;
-  margin-bottom: 0.75rem;
   font-weight: 600;
 }
 
 .ab-heading {
   font-size: 1.5rem;
   font-weight: 300;
-  margin-bottom: 1rem;
-  line-height: 1.2;
 }
 
 .ab-heading span {
@@ -180,8 +176,7 @@
 
 .ab-text {
   color: #334155;
-  font-size: 1.2rem;
-  line-height: 1.4;
+  font-size: 1rem;
 }
 
 .ab-text-muted {
@@ -269,7 +264,7 @@
 
 .ab-feature-card {
   background-color: #ffffff;
-  padding: 2.5rem;
+  padding: 1rem;
   border-radius: 0.75rem;
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
   transition: all 0.3s;
@@ -284,13 +279,12 @@
 .ab-feature-title {
   font-size: 1.5rem;
   font-weight: 700;
-  margin-bottom: 1rem;
+
 }
 
 .ab-feature-desc {
   color: #4b5563;
-  line-height: 1.6;
-  font-size: large;
+  font-size: 1rem;
 }
 
 /* CTA Section */

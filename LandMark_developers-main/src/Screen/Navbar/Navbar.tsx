@@ -48,62 +48,65 @@ const Navbar: React.FC = () => {
       <header className={`navbar-header ${scrolled ? "scrolled" : "not-scrolled"}`}>
         <div className="navbar-container">
           <div className="navbar-flex">
-            {/* Logo / Page Title */}
-            <div className="navbar-brand">
-              {location.pathname !== "/" && (
-                <button 
-                  onClick={() => window.history.back()} 
-                  className="nav-back-btn" 
+            {/* Left Slot: Back navigation button or Home brand link */}
+            <div className="nav-left-slot">
+              {location.pathname !== "/" ? (
+                <button
+                  onClick={() => window.history.back()}
+                  className="nav-back-btn"
                   aria-label="Go Back"
                 >
-                  <ArrowLeft size={30} className="back-icon-svg" />
+                  <ArrowLeft size={16} strokeWidth={1.5} className="back-icon-svg" />
                 </button>
-              )}
-              {location.pathname === "/" ? (
-                <Link to="/" className="logo-link">
-                  <img
-                    src="https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=768,fit=scale-down,q=100/YNqMEWZ1PXT9OR5G/untitled-removebg-preview---edited-ad0zeWFJjhv7eqm2.png"
-                    alt="Real Estate"
-                    className="logo-img"
-                  />
-                </Link>
               ) : (
+                <Link to="/" className="logo-text-link">
+                  Home
+                </Link>
+              )}
+            </div>
+
+            {/* Center Slot: Brand / Page Title */}
+            <div className="nav-center-slot">
+              {location.pathname !== "/" && (
                 <span className="page-title">
                   {location.pathname.toLowerCase() === "/township" && "Our Townships"}
                   {location.pathname.toLowerCase() === "/about" && "About Us"}
                   {location.pathname.toLowerCase() === "/contactus" && "Contact Us"}
-                  {!["/township", "/about", "/contactus"].includes(location.pathname.toLowerCase()) && "LandMaark"}
+                  {!["/township", "/about", "/contactus"].includes(location.pathname.toLowerCase()) && "LandMaarkdeveloper"}
                 </span>
               )}
             </div>
 
-            {/* Desktop Menu */}
-            <nav className="desktop-nav">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.name}
-                  to={link.path}
-                  className={`nav-link ${location.pathname === link.path ? "active" : ""}`}
-                >
-                  {link.name}
-                  <span className="nav-underline" />
-                </Link>
-              ))}
-            </nav>
+            {/* Right Slot: Desktop Nav & Mobile Hamburger Toggle */}
+            <div className="nav-right-slot">
+              {/* Desktop Menu */}
+              <nav className="desktop-nav">
+                {navLinks.map((link) => (
+                  <Link
+                    key={link.name}
+                    to={link.path}
+                    className={`nav-link ${location.pathname === link.path ? "active" : ""}`}
+                  >
+                    {link.name}
+                    <span className="nav-underline" />
+                  </Link>
+                ))}
+              </nav>
 
-            {/* Mobile Menu Button */}
-            <button
-              className="mobile-menu-btn"
-              onClick={() => setIsOpen(!isOpen)}
-              aria-label={isOpen ? "Close menu" : "Open menu"}
-              aria-expanded={isOpen}
-            >
-              {isOpen ? (
-                <X size={28} className="menu-icon-svg" />
-              ) : (
-                <AlignRight size={28} className="menu-icon-svg" />
-              )}
-            </button>
+              {/* Mobile Menu Button */}
+              <button
+                className="mobile-menu-btn"
+                onClick={() => setIsOpen(!isOpen)}
+                aria-label={isOpen ? "Close menu" : "Open menu"}
+                aria-expanded={isOpen}
+              >
+                <div className={`hamburger-pill-icon ${isOpen ? 'open' : ''}`}>
+                  <span className="hamburger-line line-1" />
+                  <span className="hamburger-line line-2" />
+                  <span className="hamburger-line line-3" />
+                </div>
+              </button>
+            </div>
           </div>
         </div>
       </header>

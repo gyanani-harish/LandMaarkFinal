@@ -3,7 +3,7 @@
   /* Restored top padding */
   /* Small padding for breathing room */
   margin-bottom: 0;
-  background: #edebeb;
+  background: #e0e0e0;
   color: #1e293b;
 
   position: relative;
@@ -99,7 +99,6 @@
 .cu-description {
   color: #64748b;
   font-size: 0.875rem;
-  margin-top: 1.5rem;
   line-height: 1.7;
   max-width: 36rem;
 }
