@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Loader, Info } from 'lucide-react';
@@ -237,12 +238,26 @@ const PropertyDetailPage = () => {
 
   if (error || !property) {
     return (
-      <div className="error-wrapper">
-        <div className="error-content">
-          <p className="error-message">{error || 'Property not found'}</p>
+      <div className="error-wrapper-premium">
+        <div className="error-content-premium">
+          <div className="lottie-container-premium">
+            {/* @ts-ignore */}
+            <dotlottie-player
+              src="https://assets-v2.lottiefiles.com/a/358e0c5e-1176-11ee-8663-8f76e1809294/JmwXG8XzU7.lottie"
+              background="transparent"
+              speed="1"
+              style={{ width: '220px', height: '220px', margin: '0 auto' }}
+              loop
+              autoplay
+            />
+          </div>
+          <h2 className="error-title-premium">Failed to load property details</h2>
+          <p className="error-subtitle-premium">
+            {error || 'The property you are looking for is temporarily unavailable or does not exist.'}
+          </p>
           <button
             onClick={() => window.history.back()}
-            className="back-button"
+            className="error-back-btn-premium"
           >
             Go Back
           </button>

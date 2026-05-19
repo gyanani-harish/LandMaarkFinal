@@ -224,3 +224,67 @@ body:has(.property-detail-container) .nav-back-btn {
 .desktop-main-content {
   grid-column: span 2;
 }
+
+/* ===== Premium Error Screen ===== */
+.error-wrapper-premium {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - 120px);
+  padding: 2rem;
+  background-color: #f9fafb;
+}
+
+.error-content-premium {
+  text-align: center;
+  max-width: 480px;
+  background: white;
+  padding: 3rem 2.5rem;
+  border-radius: 1.5rem;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(0, 0, 0, 0.03);
+}
+
+.lottie-container-premium {
+  margin-bottom: 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.error-title-premium {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1f2937;
+  margin-bottom: 0.75rem;
+}
+
+.error-subtitle-premium {
+  font-size: 0.95rem;
+  color: #6b7280;
+  line-height: 1.5;
+  margin-bottom: 2rem;
+}
+
+.error-back-btn-premium {
+  background-color: #5e40e0;
+  color: white;
+  padding: 0.75rem 2rem;
+  border-radius: 0.75rem;
+  border: none;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 14px 0 rgba(94, 64, 224, 0.3);
+  transition: all 0.2s ease-in-out;
+}
+
+.error-back-btn-premium:hover {
+  background-color: #4b30c3;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px 0 rgba(94, 64, 224, 0.4);
+}
+
+.error-back-btn-premium:active {
+  transform: translateY(0);
+}
