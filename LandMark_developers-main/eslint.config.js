@@ -553,6 +553,41 @@ const customRulesPlugin = {
         };
       },
     },
+
+    'one-component-per-file': {
+      meta: {
+        type: 'problem',
+        docs: { description: 'Enforce one component per file.' },
+      },
+      create(context) {
+        let componentCount = 0;
+        const componentNodes = [];
+        return {
+          FunctionDeclaration(node) {
+            if (node.id && node.id.name && /^[A-Z]/.test(node.id.name)) {
+              componentCount++;
+              componentNodes.push({ node, name: node.id.name });
+            }
+          },
+          VariableDeclarator(node) {
+            if (node.id && node.id.type === 'Identifier' && /^[A-Z]/.test(node.id.name) && node.init && (node.init.type === 'ArrowFunctionExpression' || node.init.type === 'FunctionExpression')) {
+              componentCount++;
+              componentNodes.push({ node: node.init, name: node.id.name });
+            }
+          },
+          'Program:exit'() {
+            if (componentCount > 1) {
+              for (const comp of componentNodes) {
+                context.report({
+                  node: comp.node,
+                  message: `File contains multiple components (${componentNodes.map(c => c.name).join(', ')}). Enforce single component per file.`,
+                });
+              }
+            }
+          }
+        };
+      },
+    },
   },
 };
 
@@ -584,10 +619,18 @@ export default defineConfig([
       'custom/no-literal-strings-in-jsx': 'error',
       'custom/a11y-strictness': 'error',
       'custom/performance-strictness': 'error',
+      'custom/one-component-per-file': 'error',
 
       // Avoid console.log in production
       'no-console': ['error', { allow: ['warn', 'error'] }],
     },
+  },
+  {
+    // Rule: Max 100 lines/file for UI components (.tsx files)
+    files: ['**/*.tsx'],
+    rules: {
+      'max-lines': ['error', { max: 100, skipBlankLines: true, skipComments: true }],
+    }
   },
   {
     // Override: Check hex/rgb/rgba hardcoded colors strictly outside theme definitions

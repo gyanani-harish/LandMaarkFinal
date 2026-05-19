@@ -624,4 +624,41 @@ export const rules: Record<string, Rule.RuleModule> = {
       };
     },
   },
+
+  'one-component-per-file': {
+    meta: {
+      type: 'problem',
+      docs: { description: 'Enforce one component per file.' },
+    },
+    create(context) {
+      let componentCount = 0;
+      const componentNodes: { node: ESTree.Node; name: string }[] = [];
+      return {
+        FunctionDeclaration(node) {
+          const fnNode = node as unknown as ESTree.FunctionDeclaration;
+          if (fnNode.id && fnNode.id.name && /^[A-Z]/.test(fnNode.id.name)) {
+            componentCount++;
+            componentNodes.push({ node: fnNode, name: fnNode.id.name });
+          }
+        },
+        VariableDeclarator(node) {
+          const decNode = node as unknown as ESTree.VariableDeclarator;
+          if (decNode.id && decNode.id.type === 'Identifier' && /^[A-Z]/.test(decNode.id.name) && decNode.init && (decNode.init.type === 'ArrowFunctionExpression' || decNode.init.type === 'FunctionExpression')) {
+            componentCount++;
+            componentNodes.push({ node: decNode.init, name: decNode.id.name });
+          }
+        },
+        'Program:exit'() {
+          if (componentCount > 1) {
+            for (const comp of componentNodes) {
+              context.report({
+                node: comp.node as unknown as Rule.Node,
+                message: `File contains multiple components (${componentNodes.map(c => c.name).join(', ')}). Enforce single component per file.`,
+              });
+            }
+          }
+        }
+      };
+    },
+  },
 };
