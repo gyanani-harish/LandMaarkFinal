@@ -36,7 +36,7 @@ export const Section9Data: Section9Type[] = [
   },
   {
     id: 5,
-    image: "https://propertyadviser.in/assets/front/images/real-estate-news/s1/entertainment-room-design-tips-11-s1.jpg",
+    image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48",
     title: "Entertainment Hub",
     description:
       "From iconic landmaarks to exciting theme parks, the region offers world-class entertainment experiences.",

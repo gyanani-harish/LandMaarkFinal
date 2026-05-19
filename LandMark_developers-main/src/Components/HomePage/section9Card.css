@@ -1,0 +1,38 @@
+/* section9Card.css */
+
+.sec9-card {
+  cursor: pointer;
+}
+
+.sec9-card-img-wrapper {
+  overflow: hidden;
+  border-radius: 12px;
+}
+
+.sec9-card-img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  transition: transform 0.7s ease;
+}
+
+.sec9-card:hover .sec9-card-img {
+  transform: scale(1.1);
+}
+
+.sec9-card-content {
+  margin-top: 20px;
+}
+
+.sec9-card-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #0d2c24;
+}
+
+.sec9-card-desc {
+  color: #4b5563;
+  line-height: 1.625;
+  font-size: 1rem;
+  margin: 0;
+}

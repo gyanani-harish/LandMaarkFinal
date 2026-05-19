@@ -1,5 +1,6 @@
 import React from "react";
 import { Section9Type } from "../../store/HomePage/section9Card";
+import "./section9Card.css";
 
 interface Props {
   item: Section9Type;
@@ -7,22 +8,22 @@ interface Props {
 
 const Section9Card: React.FC<Props> = ({ item }) => {
   return (
-    <div className="group cursor-pointer">
+    <div className="sec9-card">
       {/* Image */}
-      <div className="overflow-hidden rounded-xl">
+      <div className="sec9-card-img-wrapper">
         <img
           src={item.image}
           alt={item.title}
-          className="w-full h-[220px] object-cover transition-transform duration-700 group-hover:scale-110"
+          className="sec9-card-img"
         />
       </div>
 
       {/* Content */}
-      <div className="mt-5">
-        <h3 className="text-xl font-semibold text-[#0d2c24] mb-2">
+      <div className="sec9-card-content">
+        <h3 className="sec9-card-title">
           {item.title}
         </h3>
-        <p className="text-gray-600 leading-relaxed text-sm">
+        <p className="sec9-card-desc">
           {item.description}
         </p>
       </div>

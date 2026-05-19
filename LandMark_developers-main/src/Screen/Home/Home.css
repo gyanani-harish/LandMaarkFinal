@@ -91,6 +91,7 @@
 
 .hero-content-wrapper {
   position: relative;
+  background-color: rgba(56, 51, 51, 0.7);
   z-index: 10;
   height: 100%;
   display: flex;
@@ -374,7 +375,7 @@
   margin-left: auto;
   margin-right: auto;
   line-height: 1.625;
-  font-size: 0.875rem;
+  font-size: 1rem;
 }
 
 @media (min-width: 640px) {
@@ -464,7 +465,7 @@
   color: #4b5563;
   line-height: 1.625;
   margin-bottom: 2.5rem;
-  font-size: 0.75rem;
+  font-size: 1rem;
 }
 
 @media (min-width: 640px) {
@@ -501,7 +502,7 @@
 
 .section-5-footer-text {
   margin-top: 2rem;
-  font-size: 0.75rem;
+  font-size: 1rem;
   color: #4b5563;
 }
 
@@ -549,7 +550,8 @@
   letter-spacing: 2px;
   font-weight: 600;
   color: #1c3b2a;
-  margin-bottom: 1.5rem;
+  margin-top: 0;
+  margin-bottom: 0.5rem;
 }
 
 @media (min-width: 640px) {
@@ -562,18 +564,19 @@
   .section-6-title {
     font-size: 3rem;
     letter-spacing: 3px;
-    margin-bottom: 2rem;
+    margin-bottom: 0.75rem;
   }
 }
 
 .section-6-subtitle {
   max-width: 48rem;
+  margin-top: 0;
   margin-left: auto;
   margin-right: auto;
   color: #4b5563;
   line-height: 1.625;
   margin-bottom: 2rem;
-  font-size: 0.75rem;
+  font-size: 1rem;
 }
 
 @media (min-width: 640px) {
@@ -1086,7 +1089,7 @@
 
 .enquiry-desc-mobile {
   color: #4b5563;
-  font-size: 0.75rem;
+  font-size: 1rem;
   margin-bottom: 2rem;
 }
 

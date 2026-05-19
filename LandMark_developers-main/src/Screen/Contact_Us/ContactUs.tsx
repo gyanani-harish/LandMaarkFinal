@@ -44,9 +44,9 @@ const ContactUs: React.FC = () => {
         <div className="cu-form-card">
           <form className="cu-form">
             {[
-              { label: "Full Name", type: "text", placeholder: "Rahul" },
-              { label: "Email", type: "email", placeholder: "rahul@gmail.com" },
-              { label: "Phone", type: "tel", placeholder: "+91 4343422332" },
+              { label: "Full Name", type: "text", placeholder: "Name" },
+              { label: "Email", type: "email", placeholder: "Email" },
+              { label: "Phone", type: "tel", placeholder: "Phone" },
             ].map((field, index) => (
               <div key={index} className="cu-field">
                 <label className="cu-label">{field.label}</label>

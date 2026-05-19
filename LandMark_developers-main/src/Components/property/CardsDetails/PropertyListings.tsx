@@ -491,6 +491,13 @@ const PropertyListings: React.FC<PropertyListingsProps> = ({ initialData, townsh
                 <div className="card-header-compact">
                   <div className="header-left-side">
                     <span className="plot-id">Plot {plot.plotNo}</span>
+                    {plot.size && plot.size !== '-' && (
+                      <span className="plot-sqyds">
+                        {plot.size.toLowerCase().includes('yd') || plot.size.toLowerCase().includes('sq')
+                          ? plot.size
+                          : `${plot.size} Sq Yds`}
+                      </span>
+                    )}
                   </div>
                   <div className="header-right-side">
                     <span className="compact-price">{plot.price > 0 ? `₹${plot.price} L` : ''}</span>

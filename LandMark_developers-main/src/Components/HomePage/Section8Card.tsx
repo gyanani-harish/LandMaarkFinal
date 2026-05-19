@@ -1,5 +1,6 @@
 import React from "react";
 import { Section8Type } from "../../store/HomePage/section8Card";
+import "./Section8Card.css";
 
 interface Props {
   item: Section8Type;
@@ -7,9 +8,9 @@ interface Props {
 
 const Section8Card: React.FC<Props> = ({ item }) => {
   return (
-    <div className="bg-white rounded-xl shadow-md p-10 text-center hover:shadow-xl transition duration-300">
-      <div className="text-5xl mb-6">{item.icon}</div>
-      <h3 className="text-lg font-medium text-[#1c3b2a] leading-snug">
+    <div className="sec8-card">
+      <div className="sec8-card-icon">{item.icon}</div>
+      <h3 className="sec8-card-title">
         {item.title}
       </h3>
     </div>

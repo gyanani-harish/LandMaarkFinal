@@ -68,6 +68,7 @@ html {
   box-shadow: none !important;
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   flex-shrink: 0;
+  margin-left: 0.2rem;
   margin-right: 0.75rem;
 }
 
@@ -292,7 +293,6 @@ html {
   color: #fbbf24;
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   background: transparent;
-  border: 1px solid rgba(251, 191, 36, 0.3);
   cursor: pointer;
   padding: 0.5rem;
   border-radius: 0.5rem;
@@ -313,13 +313,13 @@ html {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 2rem;
+  /* gap: 1rem; */
 }
 
 .drawer-link {
   position: relative;
   color: #e5e7eb;
-  font-size: 2rem;
+  font-size: 1.25rem;
   /* Large, premium typographic scale */
   font-weight: 600;
   letter-spacing: 0.05em;

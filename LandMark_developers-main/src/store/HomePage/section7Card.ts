@@ -1,7 +1,6 @@
 export interface Section7Type {
   id: number;
   image: string;
-  brand: string;
   title: string;
   subtitle: string;
 }
@@ -11,36 +10,32 @@ export const Section7Data: Section7Type[] = [
     id: 1,
     image:
       "https://v.fastcdn.co/u/a43967b2/65553309-0-Couture-by-Cavalli.webp",
-    brand: "roberto cavalli",
-    title: "Cavalli Tower",
+    title: "LandMaark Signature Towers",
     subtitle:
-      "Luxurious residences crafted with signature Cavalli style and opulence",
+      "Exquisite luxury apartments offering modern amenities and a premium lifestyle in Ajmer.",
   },
   {
     id: 2,
     image:
       "https://v.fastcdn.co/u/a43967b2/65553310-0-Canal-Heights.webp",
-    brand: "de GRISOGONO",
-    title: "Canal Heights 1 & 2",
+    title: "LandMaark Lakeview Heights",
     subtitle:
-      "Waterfront homes inspired by de GRISOGONO's timeless elegance",
+      "Sleek waterfront residences featuring panoramic views of Ana Sagar Lake, Ajmer.",
   },
   {
     id: 3,
     image:
       "https://v.fastcdn.co/u/a43967b2/65553307-0-DAMAC-Casa.webp",
-    brand: "CHELSEA F.C.",
-    title: "Chelsea Residences by DAMAC",
+    title: "LandMaark Heritage Residency",
     subtitle:
-      "The world's first football-club branded residences",
+      "Sophisticated homes blending heritage-inspired architecture with contemporary comfort in Ajmer.",
   },
   {
     id: 4,
     image:
       "https://v.fastcdn.co/u/a43967b2/65553307-0-DAMAC-Casa.webp",
-    brand: "Rotana",
-    title: "DAMAC Hills 2 Hotel",
+    title: "LandMaark Royal Meadows",
     subtitle:
-      "An exquisite three-star property managed by Edge by Rotana",
+      "Exclusive residential community nestled in lush greenery near Vaishali Nagar, Ajmer.",
   },
 ];

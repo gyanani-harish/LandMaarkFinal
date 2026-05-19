@@ -33,7 +33,6 @@ const Section6Card: React.FC<Props> = ({ item, isActive }) => {
           </p>
         </div>
       </div>
-      <button className="sec6-card-btn rounded-btn">{item.button}</button>
     </div>
   );
 };

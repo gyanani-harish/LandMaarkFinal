@@ -103,12 +103,12 @@
 }
 
 .banner-count {
-  font-size: 1.15rem;
+  font-size: 0.85rem;
   color: #64748b;
   font-weight: 600;
   margin-left: 12px;
   background: #f1f5f9;
-  padding: 4px 12px;
+  padding: 2px 8px;
   border-radius: 9999px;
   /* Pill-shaped badge */
   display: inline-block;
@@ -799,7 +799,7 @@ tbody td {
 }
 
 .card-header-compact {
-  padding: 12px 16px;
+  padding: 12px;
   /* Increased padding for spacious premium feel */
   display: flex;
   justify-content: space-between;
@@ -1048,9 +1048,7 @@ tbody td {
 }
 
 @media (max-width: 768px) {
-  .township-banner {
-    padding: 16px 16px 0 16px;
-  }
+  .township-banner {}
 
   .township-banner h1 {
     font-size: 20px;
