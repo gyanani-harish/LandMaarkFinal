@@ -12,6 +12,7 @@ import PropertySearch from "./Screen/Seaching/PropertySearch";
 import PropertyDetailPage from "./Screen/PropertyPageDetails/PropertyDetailPage";
 import PropertySearch2 from "./Screen/Searching2/PropertySearch2";
 import PropertyListings from "./Components/property/CardsDetails/PropertyListings";
+import LanguageSwitcher from "./Screen/LanguageSwitcher/LanguageSwitcher";
 function App() {
   return (
     <>
@@ -31,6 +32,7 @@ function App() {
 
       </Routes>
       <Footer />
+      <LanguageSwitcher />
     </>
   );
 }

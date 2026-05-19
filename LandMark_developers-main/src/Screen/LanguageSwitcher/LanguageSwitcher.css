@@ -1,0 +1,39 @@
+.language-switcher-container {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  display: flex;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 30px;
+  padding: 4px;
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.15);
+  z-index: 9999;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.lang-btn {
+  background: transparent;
+  border: none;
+  color: #333333;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 8px 16px;
+  border-radius: 20px;
+  transition: all 0.3s ease;
+  outline: none;
+}
+
+.lang-btn:hover {
+  color: #b5893d;
+}
+
+.lang-btn.active {
+  background: #b5893d;
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(181, 137, 61, 0.3);
+}

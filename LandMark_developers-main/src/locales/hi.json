@@ -1,0 +1,41 @@
+{
+  "common": {
+    "appName": "लैंडमार्क डेवलपर्स",
+    "loading": "लोड हो रहा है...",
+    "retry": "पुनः प्रयास करें",
+    "cancel": "रद्द करें",
+    "save": "सहेजें",
+    "delete": "हटाएं",
+    "search": "खोजें",
+    "offlineMessage": "आप वर्तमान में ऑफ़लाइन हैं। कृपया अपना इंटरनेट कनेक्शन जांचें।",
+    "langEN": "EN",
+    "langHI": "HI"
+  },
+  "buttons": {
+    "login": "लॉगिन",
+    "logout": "लॉगआउट",
+    "submit": "जमा करें"
+  },
+  "errors": {
+    "unexpected": "एक अप्रत्याशित त्रुटि हुई। कृपया बाद में पुनः प्रयास करें।",
+    "network": "एक नेटवर्क त्रुटि हुई। कृपया अपना कनेक्शन जांचें।"
+  },
+  "home": {
+    "enquireNow": "अभी पूछताछ करें",
+    "viewMore": "और देखें",
+    "luxuryMeetsLegacy": "जहाँ विलासिता विरासत से मिलती है",
+    "luxuryMeetsLegacyDesc": "लैंडमार्क प्रॉपर्टीज में विलासिता और विरासत के सही मिश्रण की खोज करें।",
+    "discoverNextAddress": "अपना अगला पता खोजें",
+    "fieldsCompulsory": "*सभी फ़ील्ड अनिवार्य हैं",
+    "firstNamePlaceholder": "पहला नाम *",
+    "emailPlaceholder": "ईमेल *",
+    "phonePlaceholder": "+91 फोन *",
+    "commentsPlaceholder": "अपनी टिप्पणियाँ लिखें...",
+    "getCallback": "कॉल बैक प्राप्त करें!",
+    "liveTheLuxury": "विलासिता का अनुभव करें",
+    "videoTitle": "लैंडमार्क प्रॉपर्टीज",
+    "defaultHeroTitle": "उत्कृष्टता की विरासत",
+    "defaultHeroTitleHighlight": "लक्ज़री रियल एस्टेट",
+    "defaultHeroSubtitle": "अपार्टमेंट, विला और टाउनहाउस की एक श्रृंखला से चुनें"
+  }
+}
