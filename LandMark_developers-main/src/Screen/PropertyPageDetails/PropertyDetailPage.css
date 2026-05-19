@@ -1,4 +1,8 @@
 /* PropertyDetailPage.css */
+body:has(.property-detail-container) .nav-back-btn {
+  display: none !important;
+}
+
 .property-detail-container {
   max-width: 1280px;
   margin: 0 auto;
