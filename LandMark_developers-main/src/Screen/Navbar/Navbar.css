@@ -10,7 +10,7 @@ html {
 /* Navbar container */
 .navbar-header {
   position: fixed;
-  top: 12px;
+  top: 13px;
   left: 12px;
   right: 12px;
   z-index: 1000;
