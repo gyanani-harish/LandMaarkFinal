@@ -238,11 +238,6 @@ body:has(.property-detail-container) .nav-back-btn {
 .error-content-premium {
   text-align: center;
   max-width: 480px;
-  background: white;
-  padding: 3rem 2.5rem;
-  border-radius: 1.5rem;
-  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
-  border: 1px solid rgba(0, 0, 0, 0.03);
 }
 
 .lottie-container-premium {
