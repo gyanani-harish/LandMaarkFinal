@@ -308,7 +308,7 @@ const Home: React.FC = () => {
               }
               className="rounded-btn text-sm sm:text-base"
             >
-              ENQUIRE NOW
+              ENQUIRE NOWS
             </button>
           </div>
         </div>
