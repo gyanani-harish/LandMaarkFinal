@@ -17,5 +17,23 @@
   "errors": {
     "unexpected": "An unexpected error occurred. Please try again later.",
     "network": "A network error occurred. Please check your connection."
+  },
+  "home": {
+    "enquireNow": "ENQUIRE NOW",
+    "viewMore": "VIEW MORE",
+    "luxuryMeetsLegacy": "Where Luxury Meets Legacy",
+    "luxuryMeetsLegacyDesc": "Discover the perfect blend of luxury and legacy at LandMaark Properties.",
+    "discoverNextAddress": "DISCOVER YOUR NEXT ADDRESS",
+    "fieldsCompulsory": "*All fields are compulsory",
+    "firstNamePlaceholder": "First Name *",
+    "emailPlaceholder": "Email *",
+    "phonePlaceholder": "+91 Phone *",
+    "commentsPlaceholder": "Write your comments...",
+    "getCallback": "Get a call back!",
+    "liveTheLuxury": "Live the luxury",
+    "videoTitle": "LandMaark Properties",
+    "defaultHeroTitle": "LEGACY OF EXCELLENCE IN",
+    "defaultHeroTitleHighlight": "LUXURY REAL ESTATE",
+    "defaultHeroSubtitle": "CHOOSE FROM A RANGE OF APARTMENTS, VILLAS AND TOWNHOUSES"
   }
 }

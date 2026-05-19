@@ -1,0 +1,9 @@
+export { HeroSection } from "./HeroSection";
+export { PerfectHomeSection } from "./PerfectHomeSection";
+export { WhyPropertiesSection } from "./WhyPropertiesSection";
+export { IconicPropertiesSection } from "./IconicPropertiesSection";
+export { LuxuryWorldSection } from "./LuxuryWorldSection";
+export { CollaborationsSection } from "./CollaborationsSection";
+export { CommunitiesSection } from "./CommunitiesSection";
+export { InvestSection } from "./InvestSection";
+export { EnquiryFormSection } from "./EnquiryFormSection";
