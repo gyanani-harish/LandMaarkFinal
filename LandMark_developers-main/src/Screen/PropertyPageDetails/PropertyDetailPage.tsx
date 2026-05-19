@@ -1,5 +1,5 @@
 /* eslint-disable */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 import { useParams } from 'react-router-dom';
 import { Loader, Info } from 'lucide-react';
@@ -31,8 +31,7 @@ const PropertyDetailPage = () => {
 
   const { id } = useParams();
 
-  useEffect(() => {
-    const loadProperty = async () => {
+  const loadProperty = useCallback(async () => {
       if (!id) return;
 
       try {
@@ -219,10 +218,11 @@ const PropertyDetailPage = () => {
       } finally {
         setLoading(false);
       }
-    };
-
-    loadProperty();
   }, [id]);
+
+  useEffect(() => {
+    loadProperty();
+  }, [loadProperty]);
 
   const isMobile = useIsMobile();
 
@@ -254,10 +254,10 @@ const PropertyDetailPage = () => {
             {error || 'The property you are looking for is temporarily unavailable or does not exist.'}
           </p>
           <button
-            onClick={() => window.history.back()}
+            onClick={loadProperty}
             className="error-back-btn-premium"
           >
-            Go Back
+            Retry
           </button>
         </div>
       </div>
