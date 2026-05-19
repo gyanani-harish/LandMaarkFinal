@@ -34,13 +34,15 @@ export const CommunitiesSection: React.FC<CommunitiesSectionProps> = ({
             ))}
           </div>
 
-          <div className="section-8-video-wrapper">
-            <iframe
-              src={videoUrl}
-              title={t("home.videoTitle")}
-              allowFullScreen
-            />
-          </div>
+          {videoUrl && (
+            <div className="section-8-video-wrapper">
+              <iframe
+                src={videoUrl}
+                title={t("home.videoTitle")}
+                allowFullScreen
+              />
+            </div>
+          )}
         </div>
       </div>
     </section>

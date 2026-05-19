@@ -75,23 +75,72 @@ export interface HomepageData {
     items: Section9Item[];
   };
   footer: FooterDetails;
+  logoText?: string;
+  locations?: Array<{
+    city: string;
+    address: string;
+    phone: string;
+  }>;
+  socialLinks?: Array<{
+    platform: string;
+    href: string;
+  }>;
+  websiteUrl?: string;
+  websiteHref?: string;
+  copyrightPattern?: string;
 }
 
-export const fetchHomepageData = async (): Promise<HomepageData> => {
-  // 1. Try fetching from live backend API first
-  try {
-    const response = await axios.get(
-      `${ApiConstants.API_BASE_URL}${ApiEndPoints.HomePageData}`,
-      { headers: ApiConstants.HEADERS }
-    );
-    if (response.data && response.data.data) {
-      return response.data.data;
-    }
-  } catch (error) {
-    console.warn("Backend /api/home unavailable, falling back to static homepage.json for mockup view...");
+let homepageDataPromise: Promise<HomepageData> | null = null;
+
+export const fetchHomepageData = (): Promise<HomepageData> => {
+  if (homepageDataPromise) {
+    return homepageDataPromise;
   }
 
-  // 2. Mock Fallback: Fetch from public static JSON structure for view time
-  const response = await axios.get("/data/homepage.json");
-  return response.data;
+  homepageDataPromise = (async () => {
+    // Try fetching from live backend API first
+    try {
+      const response = await axios.get(
+        `${ApiConstants.API_BASE_URL}${ApiEndPoints.HomePageData}`,
+        { headers: ApiConstants.HEADERS }
+      );
+      if (response.data) {
+        const data = response.data.data || response.data;
+        if (data.footer) {
+          if (data.websiteUrl && !data.footer.websiteUrl) {
+            data.footer.websiteUrl = data.websiteUrl;
+          }
+          if (data.websiteHref && !data.footer.websiteHref) {
+            data.footer.websiteHref = data.websiteHref;
+          }
+        }
+        return data;
+      }
+    } catch (error) {
+      console.error("Backend /api/home unavailable:", error);
+    }
+
+    // Return clean, minimal structure if API is down
+    return {
+      showEnquiryForm: false,
+      hero: { title: "", slides: [] },
+      section3: { title: "", items: [] },
+      section: { title: "", subtitle: "", items: [] },
+      section5: { title: "", subtitle: "", footerText: "", items: [] },
+      section6: { title: "", subtitle: "", items: [] },
+      section7: { title: "", subtitle: "", items: [] },
+      section8: { title: "", subtitle: "", videoUrl: "", items: [] },
+      section9: { title: "", items: [] },
+      footer: {
+        logoText: "",
+        locations: [],
+        socialLinks: [],
+        websiteUrl: "",
+        websiteHref: "",
+        copyrightPattern: "© {year} LandMaark Properties. All rights reserved."
+      }
+    };
+  })();
+
+  return homepageDataPromise;
 };

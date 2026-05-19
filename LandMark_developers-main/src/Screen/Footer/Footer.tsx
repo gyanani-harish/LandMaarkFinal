@@ -11,26 +11,15 @@ import {
 } from "lucide-react";
 import "./Footer.css";
 import { fetchHomepageData, FooterDetails } from "../../services/HomeService";
+import { useTranslation } from "../../hooks/useTranslation";
 
 const initialFooterDetails: FooterDetails = {
-  logoText: "LandMaark",
-  locations: [
-    {
-      city: "Ajmer LandMaark Properties",
-      address: "Pushkar Bypass Rd, opp. AIT College, Panchsheel Nagar, Ajmer, Rajasthan 305004",
-      phone: "CALL NOW",
-    },
-  ],
-  socialLinks: [
-    { platform: "Facebook", href: "https://facebook.com/damacproperties" },
-    { platform: "Twitter", href: "https://twitter.com/damacproperties" },
-    { platform: "Instagram", href: "https://instagram.com/damacproperties" },
-    { platform: "YouTube", href: "https://youtube.com/damacproperties" },
-    { platform: "LinkedIn", href: "https://linkedin.com/company/damac-properties" }
-  ],
-  websiteUrl: "www.LandMaarkproperties.com",
-  websiteHref: "https://damacproperties.com",
-  copyrightPattern: "© {year} LandMaark Properties. All rights reserved."
+  logoText: "",
+  locations: [],
+  socialLinks: [],
+  websiteUrl: "",
+  websiteHref: "",
+  copyrightPattern: ""
 };
 
 const getSocialIcon = (platform: string) => {
@@ -51,13 +40,22 @@ const getSocialIcon = (platform: string) => {
 };
 
 const Footer: React.FC = () => {
+  const { t } = useTranslation();
   const [footerDetails, setFooterDetails] = useState<FooterDetails>(initialFooterDetails);
 
   useEffect(() => {
     const loadFooter = async () => {
       const data = await fetchHomepageData();
-      if (data && data.footer) {
-        setFooterDetails(data.footer);
+      if (data) {
+        const footerSrc = data.footer || {};
+        setFooterDetails({
+          logoText: footerSrc.logoText || data.logoText || "LandMaark",
+          locations: footerSrc.locations || data.locations || [],
+          socialLinks: footerSrc.socialLinks || data.socialLinks || [],
+          websiteUrl: footerSrc.websiteUrl || data.websiteUrl || "www.LandMaarkproperties.com",
+          websiteHref: footerSrc.websiteHref || data.websiteHref || "https://www.LandMaarkproperties.com",
+          copyrightPattern: footerSrc.copyrightPattern || data.copyrightPattern || "© {year} LandMaark Properties. All rights reserved."
+        });
       }
     };
     loadFooter();
@@ -86,10 +84,10 @@ const Footer: React.FC = () => {
               <div className="locations-grid">
                 {footerDetails.locations.map((location, index) => (
                   <div key={index} className="location-item">
-                    <h3 className="location-title">
+                    <h2 className="location-title">
                       <MapPin className="location-icon" />
                       <span>{location.city}</span>
-                    </h3>
+                    </h2>
                     <p className="location-address">
                       {location.address}
                     </p>
@@ -106,10 +104,10 @@ const Footer: React.FC = () => {
 
             {/* Social Media Links */}
             <div className="footer-social-section">
-              <h3 className="social-heading">
-                Follow Us
+              <h2 className="social-heading">
+                {t("footer.followUs")}
                 <div className="social-heading-underline"></div>
-              </h3>
+              </h2>
 
               <div className="social-icons">
                 {footerDetails.socialLinks.map((social, index) => {

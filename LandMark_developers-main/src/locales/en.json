@@ -37,5 +37,8 @@
     "defaultHeroTitle": "LEGACY OF EXCELLENCE IN",
     "defaultHeroTitleHighlight": "LUXURY REAL ESTATE",
     "defaultHeroSubtitle": "CHOOSE FROM A RANGE OF APARTMENTS, VILLAS AND TOWNHOUSES"
+  },
+  "footer": {
+    "followUs": "Follow Us"
   }
 }
