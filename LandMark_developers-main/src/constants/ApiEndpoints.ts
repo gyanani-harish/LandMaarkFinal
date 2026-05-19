@@ -4,7 +4,6 @@
 
 
 export const ApiEndPoints = {
-
     OPTIONS: 'api/options',
     AI_SEARCH: 'api/propSearch/ai',
     TOWNSHIPS: "api/townships",

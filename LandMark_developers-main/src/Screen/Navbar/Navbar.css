@@ -3,6 +3,10 @@ html {
   scroll-behavior: smooth;
 }
 
+:root {
+  --nav-bg: rgba(0, 0, 0, 0.45);
+}
+
 /* Navbar container */
 .navbar-header {
   position: fixed;
@@ -11,7 +15,7 @@ html {
   right: 12px;
   z-index: 1000;
   transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-  background: var(--nav-bg);
+  background: var(--nav-bg, rgba(0, 0, 0, 0.45));
   backdrop-filter: blur(16px) saturate(180%);
   -webkit-backdrop-filter: blur(16px) saturate(180%);
   border: 1px solid rgba(255, 255, 255, 0.12);
