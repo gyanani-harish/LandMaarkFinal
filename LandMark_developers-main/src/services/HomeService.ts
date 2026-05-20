@@ -98,7 +98,6 @@ export const fetchHomepageData = (): Promise<HomepageData> => {
   }
 
   homepageDataPromise = (async () => {
-    // Try fetching from live backend API first
     try {
       const response = await axios.get(
         `${ApiConstants.API_BASE_URL}${ApiEndPoints.HomePageData}`,
@@ -116,30 +115,12 @@ export const fetchHomepageData = (): Promise<HomepageData> => {
         }
         return data;
       }
+      throw new Error("Empty response from API");
     } catch (error) {
-      console.error("Backend /api/home unavailable:", error);
+      // Clear the cached promise so retry() fetches fresh
+      homepageDataPromise = null;
+      throw error;
     }
-
-    // Return clean, minimal structure if API is down
-    return {
-      showEnquiryForm: false,
-      hero: { title: "", slides: [] },
-      section3: { title: "", items: [] },
-      section: { title: "", subtitle: "", items: [] },
-      section5: { title: "", subtitle: "", footerText: "", items: [] },
-      section6: { title: "", subtitle: "", items: [] },
-      section7: { title: "", subtitle: "", items: [] },
-      section8: { title: "", subtitle: "", videoUrl: "", items: [] },
-      section9: { title: "", items: [] },
-      footer: {
-        logoText: "",
-        locations: [],
-        socialLinks: [],
-        websiteUrl: "",
-        websiteHref: "",
-        copyrightPattern: "© {year} LandMaark Properties. All rights reserved."
-      }
-    };
   })();
 
   return homepageDataPromise;

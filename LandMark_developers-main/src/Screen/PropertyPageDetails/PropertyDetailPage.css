@@ -247,6 +247,12 @@ body:has(.property-detail-container) .nav-back-btn {
   align-items: center;
 }
 
+.lottie-player-premium {
+  width: 220px;
+  height: 220px;
+  margin: 0 auto;
+}
+
 .error-title-premium {
   font-size: 1.5rem;
   font-weight: 700;

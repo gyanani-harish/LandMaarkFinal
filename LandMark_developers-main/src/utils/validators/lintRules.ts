@@ -211,7 +211,7 @@ export const rules: Record<string, Rule.RuleModule> = {
             }
           }
         },
-        JSXAttribute(node) {
+        JSXAttribute(node: Rule.Node) {
           const attrNode = node as unknown as { name: { name: string }; value?: ESTree.Literal };
           if (attrNode.name.name === 'className' && attrNode.value && attrNode.value.type === 'Literal' && typeof attrNode.value.value === 'string') {
             const classes = attrNode.value.value.split(/\s+/);
@@ -280,7 +280,7 @@ export const rules: Record<string, Rule.RuleModule> = {
             }
           }
         },
-        JSXAttribute(node) {
+        JSXAttribute(node: Rule.Node) {
           const attrNode = node as unknown as { name: { name: string }; value?: ESTree.Literal };
           if (attrNode.name.name === 'className' && attrNode.value && attrNode.value.type === 'Literal' && typeof attrNode.value.value === 'string') {
             const classes = attrNode.value.value.split(/\s+/);
@@ -426,7 +426,7 @@ export const rules: Record<string, Rule.RuleModule> = {
             }
           }
         },
-        JSXAttribute(node) {
+        JSXAttribute(node: Rule.Node) {
           const attrNode = node as unknown as { value?: { type: string; expression: ESTree.Expression } };
           if (attrNode.value && attrNode.value.type === 'JSXExpressionContainer') {
             const expr = attrNode.value.expression;
@@ -494,7 +494,7 @@ export const rules: Record<string, Rule.RuleModule> = {
     },
     create(context) {
       return {
-        JSXText(node) {
+        JSXText(node: Rule.Node) {
           const textNode = node as unknown as { value: string };
           const rawText = textNode.value.trim();
           if (/[a-zA-Z]/.test(rawText)) {
@@ -504,7 +504,7 @@ export const rules: Record<string, Rule.RuleModule> = {
             });
           }
         },
-        JSXAttribute(node) {
+        JSXAttribute(node: Rule.Node) {
           const attrNode = node as unknown as { name?: { name?: string }; value?: ESTree.Literal };
           const userFacingAttrs = ['placeholder', 'alt', 'title', 'label', 'aria-label'];
           if (attrNode.name && attrNode.name.name && userFacingAttrs.includes(attrNode.name.name) && attrNode.value && attrNode.value.type === 'Literal') {
@@ -530,7 +530,7 @@ export const rules: Record<string, Rule.RuleModule> = {
       let highestHeadingSeen = 0;
 
       return {
-        JSXOpeningElement(node) {
+        JSXOpeningElement(node: Rule.Node) {
           const openNode = node as unknown as { name: { type: string; name: string }; attributes: { type: string; name: { name: string }; value?: ESTree.Literal }[] };
           const nameNode = openNode.name;
           if (nameNode.type === 'JSXIdentifier') {
@@ -595,7 +595,7 @@ export const rules: Record<string, Rule.RuleModule> = {
     },
     create(context) {
       return {
-        JSXOpeningElement(node) {
+        JSXOpeningElement(node: Rule.Node) {
           const openNode = node as unknown as { name: { type: string; name: string }; attributes: { type: string; name: { name: string }; value?: ESTree.Literal }[] };
           const nameNode = openNode.name;
           if (nameNode.type === 'JSXIdentifier') {

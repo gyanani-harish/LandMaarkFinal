@@ -19,6 +19,7 @@ export interface Township {
   longitude?: string;
   total_area_acres?: string;
   created_at?: string;
+  property_count?: number;
 }
 
 // export const townshipData: Township[] = [

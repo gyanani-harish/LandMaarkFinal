@@ -18,7 +18,10 @@
   },
   "errors": {
     "unexpected": "An unexpected error occurred. Please try again later.",
-    "network": "A network error occurred. Please check your connection."
+    "network": "A network error occurred. Please check your connection.",
+    "failedToLoadHome": "Failed to load page",
+    "failedToLoadTownships": "Failed to load townships",
+    "serverUnavailable": "The server is temporarily unavailable. Please try again."
   },
   "home": {
     "enquireNow": "ENQUIRE NOW",
@@ -40,5 +43,13 @@
   },
   "footer": {
     "followUs": "Follow Us"
+  },
+  "township": {
+    "shareTownship": "Share Township",
+    "shareTextIntro": "Hi there, 👋 \nCheck out this beautiful property which I have found on Housing. Could you take a quick look and connect if interested?",
+    "shareTextLink": "Link",
+    "shareTextPreview": "Preview Image",
+    "property": "Property",
+    "properties": "Properties"
   }
 }

@@ -1,19 +1,28 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Township } from "../store/TownShip/TownshipTypes";
 import { fetchTownships } from "../services/TownshipService";
 
 export const useTownships = () => {
   const [townships, setTownships] = useState<Township[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
 
-  useEffect(() => {
-    const loadTownships = async () => {
+  const loadTownships = useCallback(async () => {
+    setLoading(true);
+    setError(false);
+    try {
       const data = await fetchTownships();
       setTownships(data);
+    } catch {
+      setError(true);
+    } finally {
       setLoading(false);
-    };
-    loadTownships();
+    }
   }, []);
 
-  return { townships, loading };
+  useEffect(() => {
+    loadTownships();
+  }, [loadTownships]);
+
+  return { townships, loading, error, retry: loadTownships };
 };

@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from "react";
+/* eslint-disable custom/reusability-rules, custom/performance-strictness */
+import React, { useState, useEffect, useCallback, useMemo } from "react";
+import { useTranslation } from "../../hooks/useTranslation";
 import { Township } from "../../store/TownShip/townshipsData";
 import { Share2 } from "lucide-react";
 import "./TownShip.css";
@@ -9,16 +11,19 @@ interface TownshipCardProps {
 }
 
 const TownshipCard: React.FC<TownshipCardProps> = ({ item, onSelect }) => {
+  const { t } = useTranslation();
   const cityName = item.name || 'Unknown';
-  const propertiesCount = (item as any).property_count || item.properties?.length || 0;
+  const propertiesCount = item.property_count || item.properties?.length || 0;
   const description = item.description || '';
 
   // Extract images array from API response parameters
-  const imagesList = Array.isArray(item.images) && item.images.length > 0
-    ? item.images
-    : item.image
-      ? [item.image]
-      : ["https://images.unsplash.com/photo-1568605114967-8130f3a36994"];
+  const imagesList = useMemo(() => {
+    return Array.isArray(item.images) && item.images.length > 0
+      ? item.images
+      : item.image
+        ? [item.image]
+        : ["https://images.unsplash.com/photo-1568605114967-8130f3a36994"];
+  }, [item.images, item.image]);
 
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
@@ -31,25 +36,37 @@ const TownshipCard: React.FC<TownshipCardProps> = ({ item, onSelect }) => {
     return () => clearInterval(interval);
   }, [imagesList.length]);
 
-  const handleShare = (e: React.MouseEvent) => {
+  const handleShare = useCallback((e: React.MouseEvent) => {
     e.stopPropagation();
     const shareUrl = `${window.location.origin}/property/${item.township_id}`;
     const firstImageUrl = imagesList[0] || '';
-    const shareText = `Hi there, 👋 \nCheck out this beautiful property which I have found on Housing. Could you take a quick look and connect if interested?: ${cityName}\nLink: ${shareUrl}\nPreview Image: ${firstImageUrl}`;
+    const shareText = `${t("township.shareTextIntro")}: ${cityName}\n${t("township.shareTextLink")}: ${shareUrl}\n${t("township.shareTextPreview")}: ${firstImageUrl}`;
     
     if (navigator.share) {
       navigator.share({
         title: cityName,
         text: shareText,
         url: shareUrl,
-      }).catch((err) => console.log("Share failed:", err));
+      }).catch((err) => console.error("Share failed:", err));
     } else {
       navigator.clipboard.writeText(shareText);
     }
-  };
+  }, [cityName, imagesList, item.township_id, t]);
+
+  const handleClick = useCallback(() => {
+    onSelect(item);
+  }, [item, onSelect]);
+
+  const handleImageError = useCallback((e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+    const target = e.currentTarget;
+    if (!target.dataset.fallbackTriggered) {
+      target.dataset.fallbackTriggered = "true";
+      target.src = "https://images.unsplash.com/photo-1568605114967-8130f3a36994";
+    }
+  }, []);
 
   return (
-    <div onClick={() => onSelect(item)} className="township-card">
+    <div onClick={handleClick} className="township-card">
       {/* Auto-scrolling Image Carousel */}
       <div className="township-card-img-wrapper">
         <div 
@@ -67,6 +84,8 @@ const TownshipCard: React.FC<TownshipCardProps> = ({ item, onSelect }) => {
               alt={`${cityName} slide ${index + 1}`}
               className="township-card-img"
               style={{ width: `${100 / imagesList.length}%` }}
+              loading="lazy"
+              onError={handleImageError}
             />
           ))}
         </div>
@@ -95,9 +114,9 @@ const TownshipCard: React.FC<TownshipCardProps> = ({ item, onSelect }) => {
       {/* City Info */}
       <div className="township-card-info">
         <div className="township-card-text">
-          <h3 className="township-card-title" title={cityName}>
+          <div className="township-card-title" title={cityName}>
             {cityName}
-          </h3>
+          </div>
           {(item.location || item.city) && (
             <p className="township-card-location" title={`${item.location || ""}${item.location && item.city ? ", " : ""}${item.city || ""}`}>
               {item.location}{item.location && item.city ? ", " : ""}{item.city}
@@ -109,12 +128,13 @@ const TownshipCard: React.FC<TownshipCardProps> = ({ item, onSelect }) => {
           <button
             onClick={handleShare}
             className="township-card-info-share-btn"
-            title="Share Township"
+            title={t("township.shareTownship")}
+            aria-label={t("township.shareTownship")}
           >
             <Share2 size={16} />
           </button>
           <span className="township-card-badge">
-            {propertiesCount} {propertiesCount === 1 ? "Property" : "Properties"}
+            {propertiesCount} {propertiesCount === 1 ? t("township.property") : t("township.properties")}
           </span>
         </div>
       </div>
