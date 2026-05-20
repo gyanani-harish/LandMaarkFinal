@@ -234,3 +234,23 @@
   text-align: center;
   width: 100%;
 }
+
+.specifications-categories-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.specification-category-group {
+  width: 100%;
+}
+
+.specification-category-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #4b5563;
+  text-align: left;
+  border-left: 3px solid #4f46e5;
+  padding-left: 0.75rem;
+}

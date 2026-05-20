@@ -6,15 +6,20 @@ interface OverviewItemProps {
   label: string;
   value: string | number;
   icon?: LucideIcon;
+  imageSrc?: string;
   subText?: string;
 }
 
-const OverviewItem: React.FC<OverviewItemProps> = ({ label, value, icon: Icon, subText }) => {
+const OverviewItem: React.FC<OverviewItemProps> = ({ label, value, icon: Icon, imageSrc, subText }) => {
   return (
     <div className="overview-item-container">
-      {Icon && (
+      {(Icon || imageSrc) && (
         <div className="overview-icon-wrapper">
-          <Icon className="overview-icon" />
+          {imageSrc ? (
+            <img src={imageSrc} className="overview-icon" alt={label} loading="lazy" />
+          ) : (
+            Icon && <Icon className="overview-icon" />
+          )}
         </div>
       )}
       <div className="overview-text-content">

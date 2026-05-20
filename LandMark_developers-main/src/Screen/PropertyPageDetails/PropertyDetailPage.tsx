@@ -174,11 +174,13 @@ const PropertyDetailPage = () => {
             amenities: (topLevelData.mapped_amenities && topLevelData.mapped_amenities.length > 0)
               ? topLevelData.mapped_amenities.map((a: any) => ({
                 amenity_id: a.amenity_id || a.id || 0,
-                amenity_name: a.name || a.amenity_name || ''
+                amenity_name: a.value || a.name || a.amenity_name || '',
+                iconUrl: a.icon?.value || a.iconUrl || undefined
               }))
               : (propertyData.amenities?.map((a: any) => ({
                 amenity_id: a.amenity_id || a.id || 0,
-                amenity_name: a.amenity_name || a.name || ''
+                amenity_name: a.value || a.amenity_name || a.name || '',
+                iconUrl: a.icon?.value || a.iconUrl || undefined
               })) || []),
             places: (topLevelData.nearby_places && topLevelData.nearby_places.length > 0)
               ? topLevelData.nearby_places.map((p: any) => ({
@@ -193,7 +195,7 @@ const PropertyDetailPage = () => {
                 place_category: p.place_category || p.category || '',
                 distance_meters: String(p.distance_meters || p.distance || 0)
               })) || []),
-            specifications: (topLevelData.mapped_specifications && topLevelData.mapped_specifications.length > 0)
+            specifications: (topLevelData.mapped_specifications && Object.keys(topLevelData.mapped_specifications).length > 0)
               ? topLevelData.mapped_specifications
               : propertyData.specifications || [],
             overview: propertyData.overview || propertyData.key_values?.reduce((acc: any, kv: any) => {

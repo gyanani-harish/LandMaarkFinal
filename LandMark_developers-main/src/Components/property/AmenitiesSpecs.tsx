@@ -1,10 +1,9 @@
+/* eslint-disable custom/reusability-rules */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
-import React, { useState } from 'react';
+import React from 'react';
 import {
-  ChevronDown,
-  ChevronUp,
   Grid,
-  MoreHorizontal,
   Dumbbell,
   Waves,
   Trees,
@@ -13,15 +12,18 @@ import {
   ArrowUpDown,
   ParkingCircle,
   Building2,
-  Home
+  Home,
+  LucideIcon
 } from 'lucide-react';
 import { CityProperty } from '../../services/services';
 import OverviewItem from './Overview/OverviewItem';
+import { useTranslation } from '../../hooks/useTranslation';
 
 interface AmenitiesSpecsProps {
   property: CityProperty;
 }
-const iconMap: Record<string, any> = {
+
+const iconMap: Record<string, LucideIcon> = {
   Dumbbell: Dumbbell,
   Waves: Waves,
   Trees: Trees,
@@ -32,13 +34,12 @@ const iconMap: Record<string, any> = {
   Building2: Building2,
   Home: Home,
 };
+
 import './AmenitiesSpecs.css';
 
 const AmenitiesSpecs: React.FC<AmenitiesSpecsProps> = ({ property }) => {
-  const [openSection, setOpenSection] = useState<string>("amenities");
-  const renderIcon = (IconComponent: any, className: string = "w-6 h-6") => {
-    return <IconComponent className={className} />;
-  };
+  const { t } = useTranslation();
+
   const getAmenityIcon = (amenityName: string): string => {
     const name = amenityName.toLowerCase();
     const amenityIconMap: Record<string, string> = {
@@ -63,36 +64,52 @@ const AmenitiesSpecs: React.FC<AmenitiesSpecsProps> = ({ property }) => {
     }
     return 'Building2';
   };
-  // Show specifications as-is from API (no filtering, no deduplication)
-  let specificationsArray: Array<{ label: string; value: string }> = [];
+
+  // Grouped specifications logic
+  const groupedSpecifications: Record<string, Array<{ label: string; value: string; iconUrl?: string }>> = {};
+
   if (property.specifications) {
     if (Array.isArray(property.specifications)) {
-      specificationsArray = property.specifications.map((item: any) => ({
+      groupedSpecifications['General'] = property.specifications.map((item: any) => ({
         label: item.name || item.key || item.label || 'Feature',
         value: item.value || 'Not specified',
+        iconUrl: item.icon?.value || item.iconUrl || undefined
       }));
-    } else if (typeof property.specifications === 'object') {
-      specificationsArray = Object.entries(property.specifications).map(([key, value]) => ({
-        label: key,
-        value: String(value),
-      }));
+    } else if (typeof property.specifications === 'object' && property.specifications !== null) {
+      const isGrouped = Object.values(property.specifications).some(val => Array.isArray(val));
+      if (isGrouped) {
+        Object.entries(property.specifications).forEach(([category, group]: [string, any]) => {
+          if (Array.isArray(group)) {
+            groupedSpecifications[category] = group.map((item: any) => ({
+              label: item.name || item.key || item.label || 'Feature',
+              value: item.value || 'Not specified',
+              iconUrl: item.icon?.value || item.iconUrl || undefined
+            }));
+          }
+        });
+      } else {
+        groupedSpecifications['General'] = Object.entries(property.specifications).map(([key, value]) => ({
+          label: key,
+          value: String(value),
+        }));
+      }
     }
   }
-  const toggleSection = (section: string) => {
-    setOpenSection(openSection === section ? "" : section);
-  };
+
   const hasAmenities = property.amenities && property.amenities.length > 0;
-  const hasSpecifications = specificationsArray.length > 0;
+  const hasSpecifications = Object.keys(groupedSpecifications).length > 0 &&
+    Object.values(groupedSpecifications).some(arr => arr.length > 0);
+
   return (
     <div className="amenities-specs-wrapper">
       <div className="amenities-specs-container">
         <div id="amenities-section" className="amenities-main-grid">
           <div className="tab-content-card">
-            <h2 className="section-title">
+            <div className="section-title">
               <span className="title-underline">
-                Top Amenities
+                {t('property.topAmenities')}
               </span>
-            </h2>
+            </div>
             {/* Amenities Section */}
             {hasAmenities && (
               <div className="amenities-list-wrapper">
@@ -105,7 +122,8 @@ const AmenitiesSpecs: React.FC<AmenitiesSpecsProps> = ({ property }) => {
                         key={i}
                         label={item.amenity_name}
                         value=""
-                        icon={IconComponent}
+                        icon={item.iconUrl ? undefined : IconComponent}
+                        imageSrc={item.iconUrl}
                       />
                     );
                   })}
@@ -115,21 +133,36 @@ const AmenitiesSpecs: React.FC<AmenitiesSpecsProps> = ({ property }) => {
           </div>
 
           <div className="tab-content-card" id="specifications-section">
-            <h2 className="section-title">
+            <div className="section-title">
               <span className="title-underline">
-                Specifications
+                {t('property.specifications')}
               </span>
-            </h2>
+            </div>
             {hasSpecifications && (
-              <div className="items-grid py-4">
-                {specificationsArray.map((item, i) => (
-                  <OverviewItem
-                    key={i}
-                    label={item.label.replace(/_/g, ' ')}
-                    value={item.value}
-                    icon={Grid}
-                  />
-                ))}
+              <div className="specifications-categories-wrapper">
+                {Object.entries(groupedSpecifications).map(([category, specs], idx) => {
+                  if (specs.length === 0) return null;
+                  return (
+                    <div key={idx} className="specification-category-group">
+                      {category !== 'General' && (
+                        <div className="specification-category-title">
+                          {category}
+                        </div>
+                      )}
+                      <div className="items-grid py-4">
+                        {specs.map((item, i) => (
+                          <OverviewItem
+                            key={i}
+                            label={item.label.replace(/_/g, ' ')}
+                            value={item.value}
+                            icon={item.iconUrl ? undefined : Grid}
+                            imageSrc={item.iconUrl}
+                          />
+                        ))}
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
             )}
           </div>

@@ -22,8 +22,8 @@
 /* Container Styles */
 .container {
   max-width: 1400px;
-  margin: 0 auto;
-  padding: 0 1rem;
+  margin-top: -2rem;
+  padding: 1rem;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
 }
 
@@ -1018,7 +1018,7 @@ tbody td {
 /* Print Styles */
 @media print {
   .container {
-    padding: 0;
+    padding-top: 0;
     max-width: 100%;
   }
 

@@ -1,4 +1,5 @@
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ApiConstants } from "../constants/ApiConstants";
 import { ApiEndPoints } from "../constants/ApiEndpoints";
  
@@ -21,7 +22,7 @@ export interface CityProperty {
   images: string[]; // Array of all property images
   allImages: string[]; // Combined array of all images (main + gallery)
   
-  amenities: Array<{ amenity_id: number; amenity_name: string }>;
+  amenities: Array<{ amenity_id: number; amenity_name: string; iconUrl?: string }>;
   places: Array<{
     place_id: number;
     place_name: string;
@@ -122,7 +123,7 @@ export const fetchProperties = async (townshipId: number = 9): Promise<CityPrope
           } else if (typeof item.image === 'string') {
             mainImageUrl = item.image;
           }
-        } catch (e) {
+        } catch {
           // If parsing fails, treat as direct URL
           mainImageUrl = item.image;
         }
@@ -273,7 +274,7 @@ export const parseImageArray = (imageString: string | null | undefined): string[
       return Array.isArray(parsed) ? parsed : [];
     }
     return [imageString];
-  } catch (e) {
+  } catch {
     return [imageString];
   }
 };

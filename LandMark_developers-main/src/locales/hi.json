@@ -51,5 +51,9 @@
     "shareTextPreview": "पूर्वावलोकन छवि",
     "property": "संपत्ति",
     "properties": "संपत्तियां"
+  },
+  "property": {
+    "topAmenities": "शीर्ष सुविधाएं",
+    "specifications": "विशेष विवरण"
   }
 }
